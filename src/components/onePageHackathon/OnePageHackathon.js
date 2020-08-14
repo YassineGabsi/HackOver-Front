@@ -1,5 +1,5 @@
 import React from 'react';
-import "./one-hackathon.scss";
+import "./one-hackathon.sass";
 
 function OnePageHackathon (props) {
     return(

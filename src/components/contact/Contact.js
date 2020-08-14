@@ -1,5 +1,5 @@
 import React from 'react';
-import "./contact.scss";
+import "./contact.sass";
 
 function Contact (props) {
     return(

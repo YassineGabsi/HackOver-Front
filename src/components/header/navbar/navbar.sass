@@ -1,0 +1,76 @@
+@import "../../../stylesheets/index"
+@import "../../../stylesheets/variables"
+
+
+.hack-future
+  color: rgba(208, 214, 224, 0.6)
+  text-align: right
+  font-size: var(--small-titles-desktop)
+  line-height: 1.1em
+  position: relative
+  margin-top: 10px
+  margin-right: 10px
+  z-index: 100
+  float: right
+
+.navbar-brand-image
+  margin-top: -25px
+
+
+.button-toggler
+  margin-left: auto
+  margin-right: 0
+  color: white
+  margin-bottom: -20px
+  z-index: 1
+  top: 0
+
+.navbar-toggler
+  border: none
+
+.nav-link
+  color: white !important
+  font-family: $general_font
+  margin-top: -15px
+  font-size: var(--text-desktop)
+  margin-right: 40px !important
+  transition: 0.5s
+  &:hover
+    color: $red_styling_color !important
+  @media screen and (max-width: 1025px)
+    margin-top: auto
+
+.navbar-collapse
+  margin-left: auto
+
+
+
+.sidenav
+  height: 100%
+  width: 250px  /* 0 width - change this with JavaScript */
+  position: fixed
+  z-index: 1
+  top: 0
+  left: 0
+  background-color: #ffffff
+  overflow-x: hidden   /* Disable horizontal scroll */
+  padding-top: 60px
+  transition: 0.5s  /* 0.5 second transition effect to slide in the sidenav */
+  a
+    padding: 8px 8px 8px 32px
+    text-decoration: none
+    font-size: var(--small-titles-tablet)
+    font-weight: bold
+    color: $background_color
+    display: block
+    transition: 0.3s
+    @media screen and (max-width: 768px)
+      font-size: var(--small-titles-mobile)
+    &:hover
+      color: $red_styling_color
+  .closebtn
+    position: absolute
+    top: 0
+    right: 25px
+    font-size: 36px
+    margin-left: 50px

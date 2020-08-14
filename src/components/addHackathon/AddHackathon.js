@@ -1,5 +1,5 @@
 import React from 'react';
-import "./add-hackathon.scss";
+import "./add-hackathon.sass";
 
 function AddHackathon (props) {
     return(

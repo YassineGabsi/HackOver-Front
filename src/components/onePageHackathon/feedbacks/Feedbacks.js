@@ -1,5 +1,5 @@
 import React from 'react';
-import "./feedbacks.scss";
+import "./feedbacks.sass";
 
 function Feedbacks(props) {
     return(

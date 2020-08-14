@@ -1,5 +1,5 @@
 import React from 'react';
-import "./card-org.scss";
+import "./card-org.sass";
 import Card from "reactstrap/es/Card";
 
 function CardHackOrg (props) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import "./messaging.scss";
+import "./messaging.sass";
 
 function Messaging (props) {
     return(

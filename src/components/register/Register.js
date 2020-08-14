@@ -1,5 +1,5 @@
 import React from 'react';
-import "./register.scss";
+import "./register.sass";
 
 function Register (props) {
     return(

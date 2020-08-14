@@ -1,5 +1,5 @@
 import React from 'react';
-import "./winners.scss";
+import "./winners.sass";
 
 function Winners (props) {
     return(

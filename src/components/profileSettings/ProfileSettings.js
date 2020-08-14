@@ -1,5 +1,5 @@
 import React from 'react';
-import "./profile-settings.scss";
+import "./profile-settings.sass";
 
 function ProfileSettings (props) {
     return(

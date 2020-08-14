@@ -1,5 +1,5 @@
 import React from 'react';
-import "./participants.scss";
+import "./participants.sass";
 
 function Participants (props) {
     return(

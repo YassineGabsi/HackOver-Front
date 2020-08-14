@@ -1,5 +1,5 @@
 import React from 'react';
-import "./advSearch.scss";
+import "./advSearch.sass";
 
 function AdvancedSearchModal (props) {
     return(

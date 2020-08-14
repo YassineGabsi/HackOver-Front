@@ -1,5 +1,5 @@
 import React from 'react';
-import "./hackathons.scss";
+import "./hackathons.sass";
 
 function Hackathons (props) {
     return(

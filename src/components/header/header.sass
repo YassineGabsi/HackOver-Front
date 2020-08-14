@@ -1,0 +1,31 @@
+@import "../../stylesheets/index"
+
+header
+  @extend %footer_and_header
+  margin-top: 40px
+  top: 0
+  z-index: 1
+
+  .mid
+    @extend %all_design_footer_header
+    width: 100%
+    border-top: $border
+    bottom: 0
+
+  .left
+    @extend %all_design_footer_header
+    @extend %left_right_design
+    bottom: 0
+    left: 0
+    z-index: 100
+    background-image: url(../../img/left.png)
+
+    &:after
+      display: block
+      position: absolute
+      color: rgba(208, 214, 224, 0.6)
+
+@media screen and (max-width: 1025px)
+  header
+    margin-left: -20px
+

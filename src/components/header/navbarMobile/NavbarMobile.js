@@ -1,5 +1,5 @@
 import React from 'react';
-import "./navbarMobile.scss";
+import "./navbarMobile.sass";
 
 
 function NavbarMobile (props) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import "./hack-activities.scss";
+import "./hack-activities.sass";
 
 function HackActivities (props) {
     return(

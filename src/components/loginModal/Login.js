@@ -1,5 +1,5 @@
 import React from 'react';
-import "./login.scss";
+import "./login.sass";
 
 function Login (props) {
     return(

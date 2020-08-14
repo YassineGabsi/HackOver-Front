@@ -1,0 +1,26 @@
+@import "../../stylesheets/index"
+@import "../../stylesheets/variables"
+
+footer
+  @extend %footer_and_header
+  bottom: 0
+  .mid
+    @extend %all_design_footer_header
+    bottom: 24px
+    border-bottom: $border
+    width: 100%
+
+  .right
+    @extend %all_design_footer_header
+    @extend %left_right_design
+    text-align: center
+    right: 0
+    bottom: 19.5px
+    z-index: 99
+    background-image: url(../../img/right.png)
+
+  &:after
+    display: block
+    position: absolute
+    color: rgba(208, 214, 224, 0.6)
+    bottom: 4px
