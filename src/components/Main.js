@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
 import Home from "./home/Home";
+import About from "./about/About";
 
 const Main = props => {
     return(
@@ -13,7 +14,10 @@ const Main = props => {
                 isLoggedIn={props.isLoggedIn}
                 logout={props.logout}
             />
-            <Home/>
+            <Switch>
+                <Route path='/about' component={About}/>
+                <Route path={"/"} component={Home}/>
+            </Switch>
             <Footer/>
         </div>
     );

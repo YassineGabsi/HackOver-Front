@@ -35,8 +35,7 @@ body
   font-style: normal
   color: #ffffff
   background-color: $background_color
-  margin-top: 70px
-
+  margin-top: 100px
 
 a
   margin-top: 10px
@@ -46,17 +45,42 @@ h1, h2, h5
   font-weight: bold
   padding-bottom: 20px
 
+p
+  font-size: var(--text-desktop)
+  @media screen and (max-width: 1024px)
+    font-size: var(--text-tablet)
+  @media screen and (max-width: 768px)
+    font-size: var(--text-mobile)
+
+.big-titles
+  font-size: var(--big-titles-desktop)
+  @media screen and (max-width: 1024px)
+    font-size: var(--big-titles-tablet)
+  @media screen and (max-width: 768px)
+    font-size: var(--big-titles-mobile)
+
+.small-titles
+  font-size: var(--small-titles-desktop)
+  @media screen and (max-width: 1024px)
+    font-size: var(--small-titles-tablet)
+  @media screen and (max-width: 768px)
+    font-size: var(--small-titles-mobile)
+
 .page-name
   font-size: var(--small-titles-desktop)
   padding-bottom: 25px
   font-weight: bold
 
 .middle-content
-  min-height: 83vh
+  min-height: 80vh
   padding-bottom: 70px
 
 .red-colored
   color: $red_styling_color
+
+.brand
+  color: $blue_styling_color
+  font-weight: bold
 
 @media screen and (max-width: 1025px)
   .desktop-only
