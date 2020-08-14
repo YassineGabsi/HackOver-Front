@@ -3,6 +3,7 @@ import "./navbar.sass";
 import {    Navbar, NavbarBrand} from 'reactstrap';
 import NavbarToggler from "reactstrap/es/NavbarToggler";
 
+
 class Navb extends Component {
     constructor(props) {
         super(props);
@@ -34,13 +35,13 @@ class Navb extends Component {
                         <div className="collapse navbar-collapse col-lg-10 ">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item active">
-                                    <a className="nav-link vivify flipInX delay-150" href="#">Home </a>
+                                    <a className="nav-link vivify flipInX delay-150"  href="/home">Home </a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link vivify flipInX delay-150" href="#">Hackathons</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link vivify flipInX delay-150" href="#">About us</a>
+                                    <a className="nav-link vivify flipInX delay-150" href="/about">About us</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link vivify flipInX delay-150" href="#">Contact us</a>

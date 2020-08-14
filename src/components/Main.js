@@ -5,6 +5,7 @@ import Header from "./header/Header";
 import Footer from "./footer/Footer";
 import Home from "./home/Home";
 import About from "./about/About";
+import NotFound from "./notFound/NotFound";
 
 const Main = props => {
     return(
@@ -16,7 +17,8 @@ const Main = props => {
             />
             <Switch>
                 <Route path='/about' component={About}/>
-                <Route path={"/"} component={Home}/>
+                <Route path='/home' component={Home}/>
+                <Route component={NotFound}/>
             </Switch>
             <Footer/>
         </div>
