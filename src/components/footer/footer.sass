@@ -3,7 +3,9 @@
 
 footer
   @extend %footer_and_header
-  bottom: 0
+
+  @media screen and (max-width: 1025px)
+    margin-left: -20px
   .mid
     @extend %all_design_footer_header
     bottom: 24px
@@ -24,3 +26,4 @@ footer
     position: absolute
     color: rgba(208, 214, 224, 0.6)
     bottom: 4px
+

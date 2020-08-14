@@ -35,6 +35,8 @@ body
   font-style: normal
   color: #ffffff
   background-color: $background_color
+  margin-top: 70px
+
 
 a
   margin-top: 10px
@@ -42,11 +44,19 @@ a
 
 h1, h2, h5
   font-weight: bold
+  padding-bottom: 20px
 
 .page-name
   font-size: var(--small-titles-desktop)
   padding-bottom: 25px
   font-weight: bold
+
+.middle-content
+  min-height: 83vh
+  padding-bottom: 70px
+
+.red-colored
+  color: $red_styling_color
 
 @media screen and (max-width: 1025px)
   .desktop-only
@@ -55,10 +65,7 @@ h1, h2, h5
   body
     height: 100%
     padding: 70px 20px 0 20px
-
-  .fixed-view
-    height: auto !important
-    display: block !important
+    margin-top: 0
 
   .scrolling-view
     .left-desc-mobile
@@ -67,12 +74,7 @@ h1, h2, h5
       padding-right: 10px
 
 
-  footer
-    margin-left: -20px
-    bottom: auto
-    margin-top: 100px
-    .right
-      background-image: url(../img/right.png)
+
 
   .log-and-reg
     text-align: center
@@ -134,7 +136,10 @@ h1, h2, h5
   margin-bottom: 10px
   z-index: 0
   transition: .2s transform ease-in-out
-
+  @media screen and (max-width: 1024px)
+    font-size: var(--text-tablet)
+  @media screen and (max-width: 768px)
+    font-size: var(--text-mobile)
 
   &:hover
     color: white

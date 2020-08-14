@@ -3,6 +3,7 @@ import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
+import Home from "./home/Home";
 
 const Main = props => {
     return(
@@ -12,6 +13,7 @@ const Main = props => {
                 isLoggedIn={props.isLoggedIn}
                 logout={props.logout}
             />
+            <Home/>
             <Footer/>
         </div>
     );

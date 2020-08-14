@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import "./navbar.sass";
 import {    Navbar, NavbarBrand} from 'reactstrap';
 import NavbarToggler from "reactstrap/es/NavbarToggler";
-import Collapse from "reactstrap/es/Collapse";
-import NavbarLoggedIn from "./NavbarLoggedIn";
 
 class Navb extends Component {
     constructor(props) {
