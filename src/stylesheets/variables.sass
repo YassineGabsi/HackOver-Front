@@ -1,3 +1,50 @@
+
+$background_color: rgba(37, 44, 55, 1)
+$general_font: 'Raleway', sans-serif
+$blue_styling_color: #7fd4e8
+$red_styling_color: #CC544E
+$border: 1.5px solid #7fd4e8
+$button_radius: 60px
+$button_radius_mobile: 30px
+$breakpoint_tablet: 768px
+
+
+%footer_and_header
+  position: absolute
+  width: 100%
+
+%all_design_footer_header
+  position: absolute
+  height: 32px
+
+%left_right_design
+  width: 212.6153846154px
+  background-size: contain
+  background-repeat: no-repeat
+  background-color: $background_color
+
+%text-size
+  font-size: var(--text-desktop)
+  @media screen and (max-width: 1024px)
+    font-size: var(--text-tablet)
+  @media screen and (max-width: 768px)
+    font-size: var(--text-mobile)
+
+%big-titles
+  font-size: var(--big-titles-desktop)
+  @media screen and (max-width: 1024px)
+    font-size: var(--big-titles-tablet)
+  @media screen and (max-width: 768px)
+    font-size: var(--big-titles-mobile)
+
+%small-titles
+  font-size: var(--small-titles-desktop)
+  @media screen and (max-width: 1024px)
+    font-size: var(--small-titles-tablet)
+  @media screen and (max-width: 768px)
+    font-size: var(--small-titles-mobile)
+
+
 body
   --big-titles-desktop: 3rem
   --small-titles-desktop: 2rem
@@ -10,3 +57,4 @@ body
   --big-titles-mobile: 2rem
   --small-titles-mobile: 1.3rem
   --text-mobile: 1rem
+

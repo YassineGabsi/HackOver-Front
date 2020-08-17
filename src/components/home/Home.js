@@ -11,13 +11,14 @@ function Home (props) {
                 <h1 className=" col-12 first-title vivify flipInX delay-150">We <span className="red-colored">connect</span> you to the best hackathons</h1>
                 <h2 className="col-12 vivify flipInX delay-250">Play, Compete, <span className="red-colored">Win</span></h2>
                 <div className="row vivify popIn">
-                    <a className="button row mx-5" data-toggle="modal"
-                            data-target="#myModal">
+                    <button className="button row mx-5"
+                       data-toggle="modal"
+                       onClick={props.loginModalOpen}>
                         Log In
-                    </a>
-                    <a className="button  row mx-5">
+                    </button>
+                    <button className="button  row mx-5">
                         Register
-                    </a>
+                    </button>
                 </div>
 
             </div>

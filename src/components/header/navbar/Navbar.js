@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import "./navbar.sass";
 import {    Navbar, NavbarBrand} from 'reactstrap';
 import NavbarToggler from "reactstrap/es/NavbarToggler";
+import Login from "../../loginModal/Login";
 
 
 class Navb extends Component {
@@ -9,7 +10,7 @@ class Navb extends Component {
         super(props);
         this.toggleNav = this.toggleNav.bind(this);
         this.state = {
-            isNavOpen: false
+            isNavOpen: false,
         };
     }
 
@@ -17,8 +18,6 @@ class Navb extends Component {
         this.setState({
             isNavOpen: !this.state.isNavOpen
         });
-        console.log(this.state.isNavOpen);
-
     }
 
     render() {
@@ -49,6 +48,7 @@ class Navb extends Component {
                             </ul>
                             <div className=" desktop-only row">
                                 <button className="button button-reg-log row mx-3" data-toggle="modal"
+                                        onClick={this.props.loginModalOpen}
                                         data-target="#myModal">
                                     Log In
                                 </button>
@@ -64,7 +64,7 @@ class Navb extends Component {
                         <img src={require('../../../img/logo-original.png')} className="mx-auto d-block "
                              alt=""/>
                         <a className="closebtn" onClick={this.toggleNav}>&times;</a>
-                        <a href="#">Login</a>
+                        <a href="#" onClick={this.props.loginModalOpen}>Login</a>
                         <a href="#">Register</a>
                         <div className="line-squared"/>
                         <a href="#">Home</a>
@@ -72,6 +72,12 @@ class Navb extends Component {
                         <a href="#">About Us</a>
                         <a href="#">Contact Us</a>
                     </div>
+                ) : null}
+                {this.props.isModalOpen ? (
+                    <Login
+                        loginModalOpen = {this.props.loginModalOpen}
+                        loginModalClose = {this.props.loginModalClose}
+                    />
                 ) : null}
             </div>
         );
