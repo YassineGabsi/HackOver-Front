@@ -14,6 +14,9 @@ import Button from "reactstrap/es/Button";
 
 
 function Login(props) {
+    const handleSubmit = values => {
+        console.log(JSON.stringify(values));
+    };
     return (
         <Modal isOpen="active" >
             <div className="align-items-center modal-header">
@@ -28,7 +31,7 @@ function Login(props) {
                 <div className="row d-flex justify-content-center">
                     <div className="line-squared my-3"/>
                 </div>
-                <LocalForm>
+                <LocalForm onSubmit={(values) => handleSubmit(values)}>
                     <div className="form-group mx-3">
                         <Label htmlFor="email" className="label">Email</Label>
                         <Control.text  model=".email"

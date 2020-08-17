@@ -6,7 +6,7 @@ function Footer (props) {
         <footer className="vivify fadeIn delay-150">
             <div className="container">
                 <div className="row log-and-reg col-lg-6 col-md-8 col-sm-12">
-                    <h1 className="page-name tablet-and-dekstop-only vivify popIn delay-250">Live the experience</h1>
+                    <h1 className="page-name tablet-and-desktop-only vivify popIn delay-250">Live the experience</h1>
                 </div>
             </div>
             <div className="mid"/>

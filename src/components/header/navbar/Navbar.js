@@ -37,13 +37,13 @@ class Navb extends Component {
                                     <a className="nav-link vivify flipInX delay-150"  href="/home">Home </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link vivify flipInX delay-150" href="#">Hackathons</a>
+                                    <a to className="nav-link vivify flipInX delay-150" href="#">Hackathons</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link vivify flipInX delay-150" href="/about">About us</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link vivify flipInX delay-150" href="#">Contact us</a>
+                                    <a className="nav-link vivify flipInX delay-150" href="/contact">Contact us</a>
                                 </li>
                             </ul>
                             <div className=" desktop-only row">

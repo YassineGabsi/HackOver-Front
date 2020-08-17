@@ -9,6 +9,8 @@ import Footer from "./footer/Footer";
 import Home from "./home/Home";
 import About from "./about/About";
 import NotFound from "./notFound/NotFound";
+import Contact from "./contact/Contact";
+import Register from "./register/Register";
 
 const Main = props => {
     const HomePage = () => {
@@ -28,6 +30,8 @@ const Main = props => {
             <Switch>
                 <Route path='/about' component={About}/>
                 <Route path='/home' component={HomePage}/>
+                <Route path='/contact' component={Contact}/>
+                <Route path='/register' component={Register}/>
                 <Route component={NotFound}/>
             </Switch>
             <Footer/>
