@@ -3,6 +3,8 @@ import "./register.sass";
 import {Control, LocalForm} from "react-redux-form";
 import Label from "reactstrap/es/Label";
 import Button from "reactstrap/es/Button";
+import ImageUploader from 'react-images-upload';
+
 
 class Register extends Component {
     constructor(props) {
@@ -10,14 +12,22 @@ class Register extends Component {
         this.openParticipant = this.openParticipant.bind(this);
         this.openOrganizator = this.openOrganizator.bind(this);
         this.openButtons = this.openButtons.bind(this);
+        this.onDrop = this.onDrop.bind(this);
         this.state = {
             participant: false,
             organizator: false,
             buttons: true,
+            pictures: []
         };
     }
 
-    handleSubmit(values) {
+    onDrop(pictureFiles) {
+        this.setState({
+            pictures: this.state.pictures.concat(pictureFiles)
+        });
+    }
+
+    handleSubmit(values, pictures) {
         console.log(JSON.stringify(values));
     }
 
@@ -171,6 +181,21 @@ class Register extends Component {
                                     />
                                 </div>
                                 <div className="form-group mx-3">
+                                    <Label htmlFor="image" className="label">Profile Photo</Label>
+                                    <ImageUploader
+                                        withPreview={true}
+                                        withIcon={true}
+                                        label="Add your photo"
+                                        buttonText="Add your photo"
+                                        onChange={this.onDrop}
+                                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                                        maxFileSize={5242880}
+                                        fileSizeError=" file size is too big"
+                                        singleImage="true"
+                                    />
+                                </div>
+
+                                <div className="form-group mx-3">
 
                                     <Control.radio model=".gender" checked="checked" value="male" />
                                     <Label htmlFor="gender" className="label mx-3 ">Male</Label>
@@ -270,6 +295,20 @@ class Register extends Component {
                                         <option value="tunis">tunis</option>
                                         <option value="mahdia">mahdia</option>
                                     </Control.select>
+                                </div>
+                                <div className="form-group mx-3">
+                                    <Label htmlFor="image" className="label">Profile Photo</Label>
+                                    <ImageUploader
+                                        withPreview={true}
+                                        withIcon={true}
+                                        label="Add your photo"
+                                        buttonText="Add your photo"
+                                        onChange={this.onDrop}
+                                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                                        maxFileSize={5242880}
+                                        fileSizeError=" file size is too big"
+                                        singleImage="true"
+                                    />
                                 </div>
                                 <Button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
                                     Send
