@@ -29,9 +29,9 @@ const Main = props => {
             />
             <Switch>
                 <Route path='/about' component={About}/>
-                <Route path='/home' component={HomePage}/>
                 <Route path='/contact' component={Contact}/>
                 <Route path='/register' component={Register}/>
+                <Route path='/' component={HomePage}/>
                 <Route component={NotFound}/>
             </Switch>
             <Footer/>

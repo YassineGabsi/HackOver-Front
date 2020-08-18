@@ -52,7 +52,8 @@ class Navb extends Component {
                                         data-target="#myModal">
                                     Log In
                                 </button>
-                                <button className="button button-reg-log row mx-auto">
+                                <button className="button button-reg-log row mx-auto"
+                                        onClick={event =>  window.location.href='/register'}>
                                     Register
                                 </button>
                             </div>
