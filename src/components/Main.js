@@ -11,6 +11,7 @@ import About from "./about/About";
 import NotFound from "./notFound/NotFound";
 import Contact from "./contact/Contact";
 import Register from "./register/Register";
+import Hackathons from "./hackathons/Hackathons";
 
 const Main = props => {
     const HomePage = () => {
@@ -31,6 +32,7 @@ const Main = props => {
                 <Route path='/about' component={About}/>
                 <Route path='/contact' component={Contact}/>
                 <Route path='/register' component={Register}/>
+                <Route path='/hackathons' component={Hackathons}/>
                 <Route path='/' component={HomePage}/>
                 <Route component={NotFound}/>
             </Switch>

@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
 import "./register.sass";
-import {Control, LocalForm} from "react-redux-form";
+import {Control, Errors, LocalForm} from "react-redux-form";
 import Label from "reactstrap/es/Label";
 import Button from "reactstrap/es/Button";
 import ImageUploader from 'react-images-upload';
+
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+const isNumber = (val) => !isNaN(Number(val));
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 
 class Register extends Component {
@@ -118,6 +124,20 @@ class Register extends Component {
                                                   type="text"
                                                   className="form-control input"
                                                   placeholder="Full Name"
+                                                  validators={{
+                                                      required, minLength: minLength(2), maxLength: maxLength(18)
+                                                  }}
+
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".name"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                            minLength: 'Must be greater than 2 characters',
+                                            maxLength: 'Must be 18 characters or less'
+                                        }}
                                     />
                                 </div>
                                 <div className="form-group mx-3">
@@ -127,8 +147,23 @@ class Register extends Component {
                                                   name="email"
                                                   className="form-control input"
                                                   placeholder="Email"
+                                                  validators={{
+                                                      required, validEmail
+                                                  }}
                                     />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".email"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                            validEmail: 'Must be a valid Email address',
+                                        }}
+                                    />
+
                                 </div>
+
+
                                 <div className="form-group mx-3">
                                     <Label htmlFor="password" className="label">Password</Label>
                                     <Control.text model=".password"
@@ -137,6 +172,17 @@ class Register extends Component {
                                                   name="password"
                                                   className="form-control input"
                                                   placeholder="Password"
+                                                  validators={{
+                                                      required
+                                                  }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".password"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                        }}
                                     />
                                 </div>
 
@@ -148,6 +194,17 @@ class Register extends Component {
                                                   name="conf-password"
                                                   className="form-control input"
                                                   placeholder="Confirm Password"
+                                                  validators={{
+                                                      required
+                                                  }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".conf-password"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                        }}
                                     />
                                 </div>
                                 <div className="form-group mx-3">
@@ -158,6 +215,22 @@ class Register extends Component {
                                                   type="number"
                                                   className="form-control input"
                                                   placeholder="Phone Number"
+                                                  validators={{
+                                                      required,
+                                                      minLength: minLength(8),
+                                                      maxLength: maxLength(15),
+                                                      isNumber
+                                                  }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".num"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                            minLength: 'Must be a valid phone number format',
+                                            isNumber: 'Must be a number'
+                                        }}
                                     />
                                 </div>
                                 <div className="form-group mx-3">
@@ -167,9 +240,19 @@ class Register extends Component {
                                                   name="work"
                                                   className="form-control input"
                                                   placeholder="Work / Study field"
+                                                  validators={{
+                                                      required,
+                                                  }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".work"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                        }}
                                     />
                                 </div>
-
                                 <div className="form-group mx-3">
                                     <Label htmlFor="age" className="label">Age</Label>
                                     <Control.text model=".age"
@@ -178,6 +261,21 @@ class Register extends Component {
                                                   type="number"
                                                   className="form-control input"
                                                   placeholder="Age"
+                                                  validators={{
+                                                      required,
+                                                      maxLength: maxLength(3),
+                                                      isNumber
+                                                  }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".age"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                            maxLength: 'Must be less than 100 years',
+                                            isNumber: 'Must be a valid number'
+                                        }}
                                     />
                                 </div>
                                 <div className="form-group mx-3">
@@ -197,10 +295,10 @@ class Register extends Component {
 
                                 <div className="form-group mx-3">
 
-                                    <Control.radio model=".gender" checked="checked" value="male" />
+                                    <Control.radio model=".gender" checked="checked" value="male"/>
                                     <Label htmlFor="gender" className="label mx-3 ">Male</Label>
 
-                                    <Control.radio model=".gender" checked="checked" value="female" />
+                                    <Control.radio model=".gender" checked="checked" value="female"/>
                                     <Label htmlFor="gender" className="label mx-3">Female</Label>
                                 </div>
                                 <Button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
@@ -227,15 +325,30 @@ class Register extends Component {
                                 Sign up as an Organization
                             </p>
 
-                            <LocalForm onSubmit={this.handleSubmit} className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
+                            <LocalForm onSubmit={this.handleSubmit}
+                                       className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
                                 <div className="form-group mx-3 ">
-                                    <Label htmlFor="name" className="label">Organization Name</Label>
+                                    <Label htmlFor="name" className="label">Full Name</Label>
                                     <Control.text model=".name"
                                                   id="name"
                                                   name="name"
                                                   type="text"
                                                   className="form-control input"
-                                                  placeholder="Organization Name"
+                                                  placeholder="Full Name"
+                                                  validators={{
+                                                      required, minLength: minLength(2), maxLength: maxLength(18)
+                                                  }}
+
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".name"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                            minLength: 'Must be greater than 2 characters',
+                                            maxLength: 'Must be 18 characters or less'
+                                        }}
                                     />
                                 </div>
                                 <div className="form-group mx-3">
@@ -245,8 +358,23 @@ class Register extends Component {
                                                   name="email"
                                                   className="form-control input"
                                                   placeholder="Email"
+                                                  validators={{
+                                                      required, validEmail
+                                                  }}
                                     />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".email"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                            validEmail: 'Must be a valid Email address',
+                                        }}
+                                    />
+
                                 </div>
+
+
                                 <div className="form-group mx-3">
                                     <Label htmlFor="password" className="label">Password</Label>
                                     <Control.text model=".password"
@@ -255,6 +383,17 @@ class Register extends Component {
                                                   name="password"
                                                   className="form-control input"
                                                   placeholder="Password"
+                                                  validators={{
+                                                      required
+                                                  }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".password"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                        }}
                                     />
                                 </div>
 
@@ -266,6 +405,17 @@ class Register extends Component {
                                                   name="conf-password"
                                                   className="form-control input"
                                                   placeholder="Confirm Password"
+                                                  validators={{
+                                                      required
+                                                  }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".conf-password"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                        }}
                                     />
                                 </div>
                                 <div className="form-group mx-3">
@@ -276,6 +426,22 @@ class Register extends Component {
                                                   type="number"
                                                   className="form-control input"
                                                   placeholder="Phone Number"
+                                                  validators={{
+                                                      required,
+                                                      minLength: minLength(8),
+                                                      maxLength: maxLength(15),
+                                                      isNumber
+                                                  }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".num"
+                                        show="touched"
+                                        messages={{
+                                            required: 'Required -- ',
+                                            minLength: 'Must be a valid phone number format',
+                                            isNumber: 'Must be a number'
+                                        }}
                                     />
                                 </div>
                                 <div className="form-group mx-3">
@@ -304,7 +470,7 @@ class Register extends Component {
                                         label="Add your photo"
                                         buttonText="Add your photo"
                                         onChange={this.onDrop}
-                                        imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                                        imgExtension={['.jpg', '.png', 'jpeg']}
                                         maxFileSize={5242880}
                                         fileSizeError=" file size is too big"
                                         singleImage="true"

@@ -37,7 +37,7 @@ class Navb extends Component {
                                     <a className="nav-link vivify flipInX delay-150"  href="/home">Home </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a to className="nav-link vivify flipInX delay-150" href="#">Hackathons</a>
+                                    <a to className="nav-link vivify flipInX delay-150" href="/hackathons">Hackathons</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link vivify flipInX delay-150" href="/about">About us</a>
@@ -47,9 +47,8 @@ class Navb extends Component {
                                 </li>
                             </ul>
                             <div className=" desktop-only row">
-                                <button className="button button-reg-log row mx-3" data-toggle="modal"
-                                        onClick={this.props.loginModalOpen}
-                                        data-target="#myModal">
+                                <button className="button button-reg-log row mx-3"
+                                        onClick={this.props.loginModalOpen}>
                                     Log In
                                 </button>
                                 <button className="button button-reg-log row mx-auto"
@@ -66,12 +65,12 @@ class Navb extends Component {
                              alt=""/>
                         <a className="closebtn" onClick={this.toggleNav}>&times;</a>
                         <a href="#" onClick={this.props.loginModalOpen}>Login</a>
-                        <a href="#">Register</a>
+                        <a href="/register">Register</a>
                         <div className="line-squared"/>
-                        <a href="#">Home</a>
+                        <a href="/">Home</a>
                         <a href="#">Hackathons</a>
-                        <a href="#">About Us</a>
-                        <a href="#">Contact Us</a>
+                        <a href="/about">About Us</a>
+                        <a href="contact">Contact Us</a>
                     </div>
                 ) : null}
                 {this.props.isModalOpen ? (
