@@ -21,6 +21,15 @@ const Main = props => {
             />
         );
     };
+
+    const HackathonsPage = () => {
+        return (
+            <Hackathons
+                oneHack = {props.hackathons.hackathons.filter((hackathon) => hackathon.name ==="AI Hack Tunisia 5")[0]}
+                hackathons = {props.hackathons.hackathons}
+            />
+        );
+    };
     return(
         <div>
             <Header
@@ -32,7 +41,7 @@ const Main = props => {
                 <Route path='/about' component={About}/>
                 <Route path='/contact' component={Contact}/>
                 <Route path='/register' component={Register}/>
-                <Route path='/hackathons' component={Hackathons}/>
+                <Route path='/hackathons' component={HackathonsPage}/>
                 <Route path='/' component={HomePage}/>
                 <Route component={NotFound}/>
             </Switch>
@@ -46,6 +55,7 @@ const Main = props => {
 const mapStateToProps = state => {
     return {
         loginModal: state.loginModal,
+        hackathons: state.hackathons,
     };
 };
 
