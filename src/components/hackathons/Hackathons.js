@@ -6,13 +6,13 @@ function Hackathons(props) {
     return (
         <div className="container">
             <div className="row">
-            {props.hackathons.map((hackathon) => {
-                return (
-                            <CardHackathons
-                                oneHack={hackathon}
-                            />
-                );
-            })}
+                {props.hackathons.map((hackathon) => {
+                    return (
+                        <CardHackathons
+                            oneHack={hackathon}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

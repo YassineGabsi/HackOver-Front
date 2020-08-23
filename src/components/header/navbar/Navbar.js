@@ -37,7 +37,7 @@ class Navb extends Component {
                                     <a className="nav-link vivify flipInX delay-150"  href="/home">Home </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a to className="nav-link vivify flipInX delay-150" href="/hackathons">Hackathons</a>
+                                    <a className="nav-link vivify flipInX delay-150" href="/hackathons">Hackathons</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link vivify flipInX delay-150" href="/about">About us</a>
@@ -77,6 +77,9 @@ class Navb extends Component {
                     <Login
                         loginModalOpen = {this.props.loginModalOpen}
                         loginModalClose = {this.props.loginModalClose}
+                        auth={this.props.auth}
+                        loginUser={this.props.loginUser}
+                        logoutUser={this.props.logoutUser}
                     />
                 ) : null}
             </div>

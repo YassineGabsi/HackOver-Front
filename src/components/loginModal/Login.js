@@ -14,8 +14,13 @@ import Button from "reactstrap/es/Button";
 
 
 function Login(props) {
-    const handleSubmit = values => {
-        console.log(JSON.stringify(values));
+    // const handleSubmit = values => {
+    //     console.log(JSON.stringify(values));
+    // };
+
+    const handleSubmit = event => {
+        props.loginUser({username: this.username.value, password: this.password.value});
+        event.preventDefault();
     };
     return (
         <Modal isOpen="active" >

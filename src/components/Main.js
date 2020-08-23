@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import  {loginModalClose, loginModalOpen} from "../redux/ActionCreators";
+import {loginModalClose, loginModalOpen, loginUser, logoutUser} from "../redux/ActionCreators";
 
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
@@ -12,6 +12,24 @@ import NotFound from "./notFound/NotFound";
 import Contact from "./contact/Contact";
 import Register from "./register/Register";
 import Hackathons from "./hackathons/Hackathons";
+
+
+const mapDispatchToProps = dispatch => ({
+    loginModalClose: () => dispatch(loginModalClose()),
+    loginModalOpen: () => dispatch(loginModalOpen()),
+
+    loginUser: (creds) => dispatch(loginUser(creds)),
+    logoutUser: () => dispatch(logoutUser()),
+});
+
+const mapStateToProps = state => {
+    return {
+        loginModal: state.loginModal,
+        hackathons: state.hackathons,
+        auth: state.auth
+    };
+};
+
 
 const Main = props => {
     const HomePage = () => {
@@ -34,8 +52,11 @@ const Main = props => {
         <div>
             <Header
                 isModalOpen={props.loginModal.isModalOpen}
+                auth={props.auth}
                 loginModalClose={props.loginModalClose}
                 loginModalOpen={props.loginModalOpen}
+                loginUser={props.loginUser}
+                logoutUser={props.logoutUser}
             />
             <Switch>
                 <Route path='/about' component={About}/>
@@ -52,18 +73,6 @@ const Main = props => {
 };
 
 
-const mapStateToProps = state => {
-    return {
-        loginModal: state.loginModal,
-        hackathons: state.hackathons,
-    };
-};
-
-
-const mapDispatchToProps = dispatch => ({
-    loginModalClose: () => dispatch(loginModalClose()),
-    loginModalOpen: () => dispatch(loginModalOpen()),
-});
 
 export default withRouter(
     connect(
@@ -71,3 +80,4 @@ export default withRouter(
         mapDispatchToProps
     )(Main)
 );
+
