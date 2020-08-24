@@ -73,3 +73,98 @@
     right: 25px
     font-size: 36px
     margin-left: 50px
+
+
+.user-circle
+  margin-top: 5px
+  width: 40px
+  height: 40px
+  background: $red_styling_color
+  border-radius: 50%
+  border: solid #7fd4e8 1.5px
+
+.user-name
+  margin-top: 15px
+
+span
+  @extend %small-titles
+  font-weight: bold
+  color: $background_color
+
+.drop-toggle
+  background-color: transparent
+  border: none
+  margin-right: 20px
+  &:focus
+    box-shadow: none !important
+    color: transparent !important
+    border: none !important
+
+.drop-items
+  @extend %text-size
+  border: solid #7fd4e8 1.5px
+  background-color: $background_color
+  padding: 10px 20px 10px 20px
+  font-weight: bold
+  border-radius: 20px
+  box-shadow: 0px 0px 10px #000000
+  outline: none
+  .dropdown-item
+    color: white
+
+.dropdown-menu
+  background-color: transparent
+  outline: none
+  border: none
+
+
+.btn-secondary
+  &:focus, &:hover
+    color: transparent !important
+    background-color: transparent !important
+    border-color: transparent !important
+    box-shadow: none !important
+
+.arrow-up
+  overflow: hidden
+  position: relative
+  border-radius: 20%
+  transform: translateY(50%) rotate(30deg) skewY(30deg) scaleX(.866)
+  width: 30px
+  height: 30px
+  background-color: transparent
+  z-index: -1
+  right: 0
+  border-top:   solid #7fd4e8 1.5px
+  margin: -5px 81% 10px
+
+
+  &:before
+    width: 30px
+    height: 30px
+    border-radius: 20% 20% 20% 53%
+    transform: scaleX(1.155) skewY(-30deg) rotate(-30deg) translateY(-42.3%) skewX(30deg) scaleY(.866) translateX(-24%)
+    position: absolute
+    background: $background_color
+    pointer-events: auto
+    content: ''
+    border: solid #7fd4e8 1.5px
+
+  &:after
+    width: 30px
+    height: 30px
+    border-radius: 20% 20% 53% 20%
+    transform: scaleX(1.155) skewY(-30deg) rotate(-30deg) translateY(-42.3%) skewX(-30deg) scaleY(.866) translateX(24%)
+    position: absolute
+    background: $background_color
+    pointer-events: auto
+    content: ''
+    border: solid #7fd4e8 1.5px
+
+
+//  width: 0
+//  height: 0
+//  border-left: 20px solid transparent
+//  border-right: 20px solid $red_styling_color
+//  border-bottom: 25px solid $background_color
+////
