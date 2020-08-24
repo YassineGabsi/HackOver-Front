@@ -12,6 +12,7 @@ import NotFound from "./notFound/NotFound";
 import Contact from "./contact/Contact";
 import Register from "./register/Register";
 import Hackathons from "./hackathons/Hackathons";
+import OnePageHackathon from "./onePageHackathon/OnePageHackathon";
 
 
 const mapDispatchToProps = dispatch => ({
@@ -43,12 +44,21 @@ const Main = props => {
     const HackathonsPage = () => {
         return (
             <Hackathons
-                oneHack = {props.hackathons.hackathons.filter((hackathon) => hackathon.name ==="AI Hack Tunisia 5")[0]}
-                hackathons = {props.hackathons.hackathons}
+                oneHack={props.hackathons.hackathons.filter((hackathon) => hackathon.name === "AI Hack Tunisia 5")[0]}
+                hackathons={props.hackathons.hackathons}
             />
         );
     };
-    return(
+
+    const OneHackathonPage = ({match}) => {
+        return (
+            <OnePageHackathon
+                propId = {match.params.id}
+                oneHack = {props.hackathons.hackathons.filter ((hackathon) => hackathon.id === parseInt(match.params.id,10))[0]}
+            />
+        );
+    };
+    return (
         <div>
             <Header
                 isModalOpen={props.loginModal.isModalOpen}
@@ -59,10 +69,11 @@ const Main = props => {
                 logoutUser={props.logoutUser}
             />
             <Switch>
-                <Route path='/about' component={About}/>
-                <Route path='/contact' component={Contact}/>
+                <Route exact path='/about' component={About}/>
+                <Route exact path='/contact' component={Contact}/>
                 <Route path='/register' component={Register}/>
-                <Route path='/hackathons' component={HackathonsPage}/>
+                <Route exact path='/hackathons' component={HackathonsPage}/>
+                <Route path='/hackathons/:id' component={OneHackathonPage}/>
                 <Route path='/' component={HomePage}/>
                 <Route component={NotFound}/>
             </Switch>
@@ -71,7 +82,6 @@ const Main = props => {
     );
 
 };
-
 
 
 export default withRouter(

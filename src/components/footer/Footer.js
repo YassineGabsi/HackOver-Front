@@ -12,10 +12,10 @@ function Footer (props) {
             <div className="mid"/>
             <div className="right">
                 <div >
-                    <a className="fa fa-facebook ml-3 mr-1" aria-hidden="true"/>
-                    <a className="fa fa-instagram ml-3 mr-1" aria-hidden="true"/>
-                    <a className="fa fa-linkedin ml-3 mr-1" aria-hidden="true"/>
-                    <a className="fa fa-twitter ml-3 mr-1" aria-hidden="true"/>
+                    <a className="fa fa-facebook ml-3 mr-1 fa-lg" aria-hidden="true"/>
+                    <a className="fa fa-instagram ml-3 mr-1 fa-lg" aria-hidden="true"/>
+                    <a className="fa fa-linkedin ml-3 mr-1 fa-lg" aria-hidden="true"/>
+                    <a className="fa fa-twitter ml-3 mr-1 fa-lg" aria-hidden="true"/>
                 </div>
             </div>
         </footer>
