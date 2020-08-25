@@ -69,9 +69,9 @@ function Login(props) {
                     <Label className="label col-12">Forget Password? <a className="red-colored" href=""> Reset your password</a></Label>
                     <Label className="label col-12">Not registered yet? <a className="red-colored" href=""> Register</a></Label>
 
-                    <Button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
+                    <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
                         Login
-                    </Button>
+                    </button>
                 </LocalForm>
                 <div className="row d-flex justify-content-center mt-5">
                     <div className="white-line-squared my-2 mx-3 tablet-and-desktop-only"/>

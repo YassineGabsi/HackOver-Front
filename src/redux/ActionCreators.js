@@ -10,6 +10,8 @@ export const loginModalClose = () => ({
     type: ActionTypes.CLOSE_MODAL
 });
 
+//---------------------- Feedback actions------------------------
+
 
 //---------------------- Authentification actions------------------------
 

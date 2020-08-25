@@ -35,7 +35,7 @@ export const HACKATHONS = [
     {
         id: 1,
         name: "AI Hack Tunisia 2",
-        date: "2012-10-16T17:57:28.556094Z",
+        date: "2021-10-16T17:57:28.556094Z",
         author: "AI Tunisia",
         image: "hack.png",
         place: "Bekalta, Monastir",

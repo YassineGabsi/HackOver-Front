@@ -22,9 +22,9 @@ function Contact(props) {
                     <img className="img-fluid vivify pullUp " src={require("../../img/contact_us.png")} alt=""/>
                     <h1 className="text-center  vivify flipInX delay-250 big-titles my-3">
                         “There is no key to open the
-                        <span className="red-colored"> heart </span>
+                        <span className="red-colored big-titles"> heart </span>
                         of another - except
-                        <span className="red-colored"> curiosity </span>
+                        <span className="red-colored big-titles"> curiosity </span>
                         .”
                     </h1>
                 </div>
@@ -123,9 +123,9 @@ function Contact(props) {
                                 }}
                             />
                         </div>
-                        <Button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
+                        <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
                             Send
-                        </Button>
+                        </button>
                     </LocalForm>
                 </div>
             </div>

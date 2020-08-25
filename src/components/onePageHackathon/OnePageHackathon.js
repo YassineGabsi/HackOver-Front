@@ -27,7 +27,7 @@ function OnePageHackathon(props) {
                     <h1 className="brand big-titles vivify flipInX delay-150 mt-2">{props.oneHack.name} </h1>
                     <p className=" vivify flipInX delay-150 ">Organizator: <span className="red-colored">{props.oneHack.author}</span></p>
                     <div className="line-squared vivify fadeIn delay-200"/>
-                    <div className="row">
+                    <div className="row vivify fadeIn delay-200">
                         <i className="fa fa-calendar-o fa-5x ml-5 mr-1 mt-4" aria-hidden="true"/>
                         <h4 className="mt-5 ml-4">{new Intl.DateTimeFormat("en-US", {
                             year: "numeric",
@@ -35,15 +35,40 @@ function OnePageHackathon(props) {
                             day: "2-digit",
                         }).format(new Date(props.oneHack.date))}</h4>
                     </div>
-                    <div className="row">
+                    <div className="row vivify fadeIn delay-200">
                         <i className="fa fa-map-marker fa-5x ml-5 mr-1 mt-4" aria-hidden="true"/>
                         <h4 className="mt-5 ml-4">
                             {props.oneHack.place}
                         </h4>
                     </div>
-                    <button className="button button-reg-log row mx-3">
-                        Participate
-                    </button>
+
+                    {  new Date(props.oneHack.date).getTime() <= new Date().getTime()  ? (
+                        <>
+                            <button className="button button-reg-log row mx-3 vivify fadeIn delay-200">
+                                Winners
+                            </button>
+                            <h3 className="mt-4 font-weight-bold vivify fadeIn delay-200">This hackathon is over, You can Participate in other
+                                <a href="/hackathons" className="red-colored"> hackathons</a>
+                            </h3>
+                        </>
+                    ) : (
+                        <>
+                            { props.auth.isAuthenticated ? (
+                                <button className="button button-reg-log row mx-3 vivify fadeIn delay-200">
+                                    Participate
+                                </button>
+                            ) : (
+                                <h3 className="mt-4 font-weight-bold vivify fadeIn delay-200">
+                                    You should
+                                    <a className="red-colored" onClick={props.loginModalOpen}> Login </a>
+                                    to participate
+                                </h3>
+                            ) }
+                        </>
+
+                    ) }
+
+
                 </div>
             </div>
             <div className="col-12">
@@ -90,6 +115,13 @@ function OnePageHackathon(props) {
                 <ExternalLink href={props.oneHack.links.twitter} >
                     <a className="fa fa-twitter ml-3 mr-1 fa-2x" aria-hidden="true"/>
                 </ExternalLink>
+
+                <p className="brand small-titles vivify flipInX delay-150 mt-3">Feedbacks</p>
+                <div className="line-squared vivify fadeIn delay-200"/>
+                <div className=" row text-center mx-auto" style={{padding: "8px 8px 8px 32px"}}>
+                    <div className="user-circle "/>
+                    <p className="mt-4 ml-3" style={{color: "white"}}>Your Name</p>
+                </div>
             </div>
         </div>
 

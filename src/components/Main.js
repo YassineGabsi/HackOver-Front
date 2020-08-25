@@ -46,6 +46,7 @@ const Main = props => {
             <Hackathons
                 oneHack={props.hackathons.hackathons.filter((hackathon) => hackathon.name === "AI Hack Tunisia 5")[0]}
                 hackathons={props.hackathons.hackathons}
+                auth={props.auth}
             />
         );
     };
@@ -55,6 +56,8 @@ const Main = props => {
             <OnePageHackathon
                 propId = {match.params.id}
                 oneHack = {props.hackathons.hackathons.filter ((hackathon) => hackathon.id === parseInt(match.params.id,10))[0]}
+                auth={props.auth}
+                loginModalOpen={props.loginModalOpen}
             />
         );
     };
