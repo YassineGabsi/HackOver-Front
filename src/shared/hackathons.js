@@ -29,8 +29,12 @@ export const HACKATHONS = [
             insta: "www.instagram.com",
             linkedin: "www.linkedin.com",
             twitter: "www.twitter.com",
+        },
+        winners: {
+            first: "Yassine",
+            second: "Rayen",
+            third: "Aaaaa"
         }
-
     },
     {
         id: 1,
@@ -63,6 +67,7 @@ export const HACKATHONS = [
             linkedin: "www.linkedin.com",
             twitter: "www.twitter.com",
         },
+        winners: false
 
 
     },
@@ -97,6 +102,11 @@ export const HACKATHONS = [
             linkedin: "www.linkedin.com",
             twitter: "www.twitter.com",
         },
+        winners: {
+            first: "Yassine",
+            second: "Rayen",
+            third: "Aaaaa"
+        }
 
 
     },
@@ -131,6 +141,7 @@ export const HACKATHONS = [
             linkedin: "www.linkedin.com",
             twitter: "www.twitter.com",
         },
+        winners: false
 
 
     },
@@ -165,6 +176,11 @@ export const HACKATHONS = [
             linkedin: "https://www.linkedin.com/",
             twitter: "https://twitter.com/?lang=fr",
         },
+        winners: {
+            first: "Yassine",
+            second: "Rayen",
+            third: "Aaaaa"
+        }
 
     }
 ];

@@ -20,7 +20,6 @@ function CardHackathons(props) {
             </a>
             <div className="line-squared vivify fadeIn delay-200"/>
             <h5 className="brand vivify flipInX delay-150 mt-2">{props.oneHack.name} </h5>
-            <a className="brand vivify flipInX delay-150 mt-2" href={`/hackathons/${props.oneHack.id}`}>hh </a>
         </div>
     );
 }
