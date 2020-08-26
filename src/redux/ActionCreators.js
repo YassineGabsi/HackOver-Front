@@ -12,6 +12,8 @@ export const loginModalClose = () => ({
 
 //---------------------- Feedback actions------------------------
 
+//---------------------- Search actions------------------------
+
 
 //---------------------- Authentification actions------------------------
 
