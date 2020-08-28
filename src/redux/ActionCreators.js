@@ -41,8 +41,9 @@ export const loginError = (message) => {
 export const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds));
+    console.log(creds);
 
-    return fetch(baseUrl + 'users/login', {
+    return fetch(baseUrl + 'auth/login', {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
@@ -50,7 +51,8 @@ export const loginUser = (creds) => (dispatch) => {
         body: JSON.stringify(creds)
     })
         .then(response => {
-                if (response.ok) {
+            console.log(response.status);
+                if (response.status === 200) {
                     return response;
                 } else {
                     var error = new Error('Error ' + response.status + ': ' + response.statusText);
@@ -65,7 +67,7 @@ export const loginUser = (creds) => (dispatch) => {
         .then(response => {
             if (response.success) {
                 // If login was successful, set the token in local storage
-                localStorage.setItem('token', response.token);
+                localStorage.setItem('accessToken', response.accessToken);
                 localStorage.setItem('creds', JSON.stringify(creds));
                 // Dispatch the success action
                 dispatch(receiveLogin(response));
@@ -94,7 +96,8 @@ export const receiveLogout = () => {
 // Logs the user out
 export const logoutUser = () => (dispatch) => {
     dispatch(requestLogout());
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('creds');
-    dispatch(receiveLogout())
+    dispatch(receiveLogout());
+
 };

@@ -37,6 +37,7 @@ const Main = props => {
         return (
             <Home
                 loginModalOpen={props.loginModalOpen}
+                auth={props.auth}
             />
         );
     };

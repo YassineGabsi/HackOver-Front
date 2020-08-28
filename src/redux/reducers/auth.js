@@ -2,8 +2,8 @@ import * as ActionTypes from '../ActionTypes';
 
 export const Auth = (state = {
     isLoading: false,
-    isAuthenticated: localStorage.getItem('token') ? true : false,
-    token: localStorage.getItem('token'),
+    isAuthenticated: localStorage.getItem('accessToken') ? true : false,
+    accessToken: localStorage.getItem('accessToken'),
     user: localStorage.getItem('creds') ? JSON.parse(localStorage.getItem('creds')) : null,
     errMess: null
 }, action) => {

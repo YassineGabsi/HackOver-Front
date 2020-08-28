@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import "./login.sass";
 import Modal from "reactstrap/es/Modal";
 import ModalBody from "reactstrap/es/ModalBody";
@@ -13,82 +13,107 @@ import Row from "reactstrap/es/Row";
 import Button from "reactstrap/es/Button";
 
 
-function Login(props) {
+class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            submitted: false
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        // this.handleChange = this.handleChange(this);
+
+    }
+
     // const handleSubmit = values => {
     //     console.log(JSON.stringify(values));
     // };
-
-    const handleSubmit = event => {
-        props.loginUser({username: this.username.value, password: this.password.value});
-        event.preventDefault();
+    // handleChange(e) {
+    //     const { name, value } = e.target;
+    //     this.setState({ [name]: value });
+    // }
+    handleSubmit( values) {
+        this.setState({submitted: true});
+        const creds = {email: values.email, password: values.password};
+        console.log(creds);
+        if (values.email && values.password) {
+            this.props.loginUser(creds);
+        }
+        this.props.loginModalClose();
     };
-    return (
-        <Modal isOpen="active" >
-            <div className="align-items-center modal-header">
-                <img src={require("../../img/logo.png")} className="img-fluid " alt=""/>
-                <button type="button" className="close close-button float-right" data-dismiss="modal"
-                        onClick={props.loginModalClose}>&times;
-                </button>
 
-            </div>
-            <ModalBody className="align-items-center">
-                <h2 className="text-center vivify flipInX delay-150">Login to live the experience </h2>
-                <div className="row d-flex justify-content-center">
-                    <div className="line-squared my-3"/>
-                </div>
-                <LocalForm onSubmit={(values) => handleSubmit(values)}>
-                    <div className="form-group mx-3">
-                        <Label htmlFor="email" className="label">Email</Label>
-                        <Control.text  model=".email"
-                                      id="email"
-                                      name="email"
-                                      className="form-control input"
-                                      placeholder="Email"
-                        />
-                    </div>
-                    <div className="form-group mx-3">
-                        <Label htmlFor="password" className="label">Password</Label>
-                        <Control.text model=".password"
-                                      id="password"
-                                      name="password"
-                                      type="password"
-                                      className="form-control input"
-                                      placeholder="Password"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <Label htmlFor="signedin" className="label">
-                            <Control.checkbox  model=".signedin"
-                                               id="signedin"
-                                               name="signedin"
-                                               className="mx-4"
-                            />
-                              Stay signed in ?
-                        </Label>
-                    </div>
-                    <Label className="label col-12">Forget Password? <a className="red-colored" href=""> Reset your password</a></Label>
-                    <Label className="label col-12">Not registered yet? <a className="red-colored" href=""> Register</a></Label>
-
-                    <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
-                        Login
+    render() {
+        return (
+            <Modal isOpen="active">
+                <div className="align-items-center modal-header">
+                    <img src={require("../../img/logo.png")} className="img-fluid " alt=""/>
+                    <button type="button" className="close close-button float-right" data-dismiss="modal"
+                            onClick={this.props.loginModalClose}>&times;
                     </button>
-                </LocalForm>
-                <div className="row d-flex justify-content-center mt-5">
-                    <div className="white-line-squared my-2 mx-3 tablet-and-desktop-only"/>
-                    <h5>Or</h5>
-                    <div className="white-line-squared my-1 mx-3 tablet-and-desktop-only"/>
+
                 </div>
-                <div className="row mb-3">
-                    <div className="col-6">
-                        <img className=" sign-in-img" src={require("../../img/facebook.svg")} alt=""/>
+                <ModalBody className="align-items-center">
+                    <h2 className="text-center vivify flipInX delay-150">Login to live the experience </h2>
+                    <div className="row d-flex justify-content-center">
+                        <div className="line-squared my-3"/>
                     </div>
-                    <div className="col-6">
-                        <img className=" img-fuild sign-in-img" src={require("../../img/google-plus.svg")} alt=""/>
+                    <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                        <div className="form-group mx-3">
+                            <Label htmlFor="email" className="label">Email</Label>
+                            <Control.text model=".email" type="email"
+                                   id="email"
+                                   name="email"
+                                   className="form-control input"
+                                   placeholder="Email"
+                            />
+                        </div>
+                        <div className="form-group mx-3">
+                            <Label htmlFor="password" className="label">Password</Label>
+                            <Control.text model=".password"
+                                   id="password"
+                                   name="password"
+                                   type="password"
+                                   className="form-control input"
+                                   placeholder="Password"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <Label htmlFor="signedin" className="label">
+                                <Control.checkbox model=".signedin"
+                                                  id="signedin"
+                                                  name="signedin"
+                                                  className="mx-4"
+                                />
+                                Stay signed in ?
+                            </Label>
+                        </div>
+                        <Label className="label col-12">Forget Password? <a className="red-colored" href=""> Reset your
+                            password</a></Label>
+                        <Label className="label col-12">Not registered yet? <a className="red-colored"
+                                                                               href="/register"> Register</a></Label>
+
+                        <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
+                            Login
+                        </button>
+                    </LocalForm>
+                    <div className="row d-flex justify-content-center mt-5">
+                        <div className="white-line-squared my-2 mx-3 tablet-and-desktop-only"/>
+                        <h5>Or</h5>
+                        <div className="white-line-squared my-1 mx-3 tablet-and-desktop-only"/>
                     </div>
-                </div>
-            </ModalBody>
-        </Modal>
-    );
+                    <div className="row mb-3">
+                        <div className="col-6">
+                            <img className=" sign-in-img" src={require("../../img/facebook.svg")} alt=""/>
+                        </div>
+                        <div className="col-6">
+                            <img className=" img-fuild sign-in-img" src={require("../../img/google-plus.svg")} alt=""/>
+                        </div>
+                    </div>
+                </ModalBody>
+            </Modal>
+        );
+    }
 }
 
 export default Login;

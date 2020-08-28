@@ -37,9 +37,12 @@ class Navb extends Component {
                     <div className="mid col-12 row">
                         <NavbarToggler className="button-toggler" onClick={this.toggleNav}/>
                         <NavbarBrand className="left col-lg-2 col-md-3 col-sm-4 col-xs-5 mr-auto">
-                            <img src={require('../../../img/logo.png')} alt=""
-                                 className="col-lg-12 navbar-brand-image"
-                            />
+                            <a href="/">
+                                <img  src={require('../../../img/logo.png')} alt=""
+                                      className="col-lg-12 navbar-brand-image"
+                                />
+                            </a>
+
                         </NavbarBrand>
                         <div className="collapse navbar-collapse col-lg-10 ">
                             <ul className="navbar-nav mr-auto">
@@ -62,7 +65,7 @@ class Navb extends Component {
                             {this.props.auth.isAuthenticated ? (
                                 <Dropdown isOpen={this.state.isDropdownOpen} toggle={this.toggleDropdown}>
                                     <div className="desktop-only d-flex ">
-                                        <h3 className="mt-4 mr-3">Your Name</h3>
+                                        <h3 className="mt-4 mr-3">Your name</h3>
                                         <DropdownToggle className="drop-toggle">
                                             <div className="user-circle"/>
                                         </DropdownToggle>
@@ -73,7 +76,7 @@ class Navb extends Component {
                                             <DropdownItem>Hackathons Organized</DropdownItem>
                                             <DropdownItem>Profile Settings</DropdownItem>
                                             <DropdownItem>Add a hackathon</DropdownItem>
-                                            <DropdownItem>Logout</DropdownItem>
+                                            <DropdownItem onClick={this.props.logoutUser} href="">Logout</DropdownItem>
                                         </div>
                                     </DropdownMenu>
                                 </Dropdown>
@@ -93,7 +96,7 @@ class Navb extends Component {
                     </div>
                 </Navbar>
                 {this.state.isNavOpen ? (
-                    <div className="sidenav vivify popInLeft">
+                    <div className="sidenav vivify popInLeft tablet-and-mobile-only">
                         <img src={require('../../../img/logo-original.png')} className="mx-auto d-block "
                              alt=""/>
                         <a className="closebtn" onClick={this.toggleNav}>&times;</a>
@@ -108,7 +111,7 @@ class Navb extends Component {
                                 <a href="/">Hackathons Organized</a>
                                 <a href="#">Profile Settings</a>
                                 <a href="/about">Add a hackathon</a>
-                                <a href="/about">Logout</a>
+                                <a onClick={this.props.logoutUser} href="">Logout</a>
                             </>
                         ) : (
                             <>
