@@ -47,7 +47,7 @@ class Navb extends Component {
                         <div className="collapse navbar-collapse col-lg-10 ">
                             <ul className="navbar-nav mr-auto">
                                 <li className="nav-item active">
-                                    <a className="nav-link vivify flipInX delay-150" href="/home">Home </a>
+                                    <a className="nav-link vivify flipInX delay-150" href="/">Home </a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link vivify flipInX delay-150" href="/hackathons">Hackathons</a>
@@ -121,7 +121,7 @@ class Navb extends Component {
                         )}
                         <div className="line-squared"/>
                         <a href="/">Home</a>
-                        <a href="#">Hackathons</a>
+                        <a href="/hackathons">Hackathons</a>
                         <a href="/about">About Us</a>
                         <a href="contact">Contact Us</a>
                     </div>

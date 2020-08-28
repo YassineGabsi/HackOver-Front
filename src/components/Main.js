@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
@@ -31,7 +31,21 @@ const mapStateToProps = state => {
     };
 };
 
-
+const PrivateRoute = ({ component: Component, ...rest}) => (
+    <Route
+        {...rest}
+        render={ props => !localStorage.getItem("accessToken") ? (
+                <Component {...props} />
+            ) : (
+                <Redirect
+                    to={{
+                        pathname: "/404",
+                        state: {from: props.location}
+                    }}
+                />
+        )}
+    />
+);
 const Main = props => {
     const HomePage = () => {
         return (
@@ -75,10 +89,10 @@ const Main = props => {
             <Switch>
                 <Route exact path='/about' component={About}/>
                 <Route exact path='/contact' component={Contact}/>
-                <Route path='/register' component={Register}/>
+                <PrivateRoute exact path='/register' component={Register}/>
                 <Route exact path='/hackathons' component={HackathonsPage}/>
                 <Route path='/hackathons/:id' component={OneHackathonPage}/>
-                <Route path='/' component={HomePage}/>
+                <Route exact path='/' component={HomePage}/>
                 <Route component={NotFound}/>
             </Switch>
             <Footer/>
