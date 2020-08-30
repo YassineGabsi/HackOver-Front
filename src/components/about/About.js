@@ -31,7 +31,7 @@ function About(props) {
                     <img className="img-fluid vivify pullUp delay-150 mx-auto d-block" src={require("../../img/what-hackathons.png")} alt=""/>
                 </div>
                 <div className="col-lg-8 mt-3">
-                    <h2 className="brand vivify popIn mt-3">What are <a className="red-colored small-titles" href="/hackathons"> hackathons</a> ?</h2>
+                    <h2 className="small-titles brand vivify popIn mt-3">What are <a className="red-colored " href="/hackathons"> hackathons</a> ?</h2>
                     <p className="fadeIn vivify">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyLorem ipsum dolor sit
                         amet,
                         consetetur sadipscing elitr, sed diam nonumyLorem ipsum dolor sit amet, consetetur sadipscing

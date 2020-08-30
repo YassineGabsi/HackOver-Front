@@ -99,5 +99,10 @@ export const logoutUser = () => (dispatch) => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('creds');
     dispatch(receiveLogout());
-
+    return fetch(baseUrl + 'auth/logout', {
+        method: 'GET',
+        headers: {
+            'Content-Type':'application/json'
+        },
+    })
 };

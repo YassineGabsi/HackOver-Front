@@ -4,6 +4,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import AliceCarousel from 'react-alice-carousel';
 import { ExternalLink } from 'react-external-link';
 import Winners from "./winnersModal/Winners";
+import Feedbacks from "./feedbacks/Feedbacks";
 
 
 class OnePageHackathon extends Component {
@@ -145,13 +146,7 @@ class OnePageHackathon extends Component {
                     <ExternalLink href={this.props.oneHack.links.twitter}>
                         <a className="fa fa-twitter ml-3 mr-1 fa-2x" aria-hidden="true"/>
                     </ExternalLink>
-
-                    <p className="brand small-titles vivify flipInX delay-150 mt-3">Feedbacks</p>
-                    <div className="line-squared vivify fadeIn delay-200"/>
-                    <div className=" row text-center mx-auto" style={{padding: "8px 8px 8px 32px"}}>
-                        <div className="user-circle "/>
-                        <p className="mt-4 ml-3" style={{color: "white"}}>Your Name</p>
-                    </div>
+                    <Feedbacks/>
                 </div>
             </div>
 

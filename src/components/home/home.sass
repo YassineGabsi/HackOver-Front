@@ -10,12 +10,15 @@
   font-weight: bold
   cursor: pointer
   transition: 0.3s
-
   &:active, &:focus
     -moz-outline-style: none
   &:hover
     color: $blue_styling_color
     text-decoration: none
+  @media screen and (max-width: 1024px)
+    font-size: var(--big-titles-tablet)
+  @media screen and (max-width: 768px)
+    font-size: var(--big-titles-mobile)
 
 .first-title
   font-size: 4.5rem
