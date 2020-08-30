@@ -6,6 +6,7 @@ import {LoginModal} from "./reducers/loginModal";
 import {Hackathons} from "./reducers/hackathons";
 import {Auth} from "./reducers/auth";
 import {Feedbacks} from "./reducers/feedbacks";
+import {Registration} from "./reducers/registration";
 
 
 export const ConfigureStore = () => {
@@ -14,7 +15,8 @@ export const ConfigureStore = () => {
             loginModal: LoginModal,
             hackathons: Hackathons,
             feedbacks: Feedbacks,
-            auth: Auth
+            auth: Auth,
+            registration: Registration
         }),
         applyMiddleware(thunk, logger)
     );

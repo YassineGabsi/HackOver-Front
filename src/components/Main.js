@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {loginModalClose, loginModalOpen, loginUser, logoutUser} from "../redux/ActionCreators";
+import {loginModalClose, loginModalOpen, loginUser, logoutUser, registerUser} from "../redux/ActionCreators";
 
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
@@ -18,6 +18,8 @@ import OnePageHackathon from "./onePageHackathon/OnePageHackathon";
 const mapDispatchToProps = dispatch => ({
     loginModalClose: () => dispatch(loginModalClose()),
     loginModalOpen: () => dispatch(loginModalOpen()),
+
+    registerUser: (data) => dispatch(registerUser(data)),
 
     loginUser: (creds) => dispatch(loginUser(creds)),
     logoutUser: () => dispatch(logoutUser()),
@@ -76,6 +78,15 @@ const Main = props => {
             />
         );
     };
+
+    const RegisterPage = () => {
+        return (
+            <Register
+                registerUser = {props.registerUser}
+            />
+        );
+    };
+
     return (
         <div>
             <Header
@@ -89,7 +100,7 @@ const Main = props => {
             <Switch>
                 <Route exact path='/about' component={About}/>
                 <Route exact path='/contact' component={Contact}/>
-                <PrivateRoute exact path='/register' component={Register}/>
+                <PrivateRoute exact path='/register' component={RegisterPage}/>
                 <Route exact path='/hackathons' component={HackathonsPage}/>
                 <Route path='/hackathons/:id' component={OneHackathonPage}/>
                 <Route exact path='/' component={HomePage}/>

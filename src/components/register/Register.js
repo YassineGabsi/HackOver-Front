@@ -33,8 +33,24 @@ class Register extends Component {
         });
     }
 
-    handleSubmit(values, pictures) {
+    handleSubmit(values) {
         console.log(JSON.stringify(values));
+        console.log(this.state.pictures);
+
+        const data = {
+            fullName: values.name,
+            email: values.email,
+            password: values.password,
+            confirmPassword: values.conf_password,
+            num: values.num,
+            age: values.age,
+            work: values.work,
+            sex: values.gender,
+            photo: this.state.pictures[0].name,
+            role: "Participant"
+        };
+        console.log(data);
+        this.props.registerUser(data);
     }
 
     openOrganizator() {
@@ -115,7 +131,7 @@ class Register extends Component {
                                 Sign up as a Participant
                             </p>
 
-                            <LocalForm onSubmit={this.handleSubmit} className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
+                            <LocalForm onSubmit={(values) => this.handleSubmit(values)} className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
                                 <div className="form-group mx-3 ">
                                     <Label htmlFor="name" className="label">Full Name</Label>
                                     <Control.text model=".name"
@@ -187,11 +203,11 @@ class Register extends Component {
                                 </div>
 
                                 <div className="form-group mx-3">
-                                    <Label htmlFor="conf-password" className="label">Confirm Password</Label>
-                                    <Control.text model=".conf-password"
-                                                  id="conf-password"
+                                    <Label htmlFor="conf_password" className="label">Confirm Password</Label>
+                                    <Control.text model=".conf_password"
+                                                  id="conf_password"
                                                   type="password"
-                                                  name="conf-password"
+                                                  name="conf_password"
                                                   className="form-control input"
                                                   placeholder="Confirm Password"
                                                   validators={{
@@ -200,7 +216,7 @@ class Register extends Component {
                                     />
                                     <Errors
                                         className="text-danger"
-                                        model=".conf-password"
+                                        model=".conf_password"
                                         show="touched"
                                         messages={{
                                             required: 'Required -- ',
@@ -295,15 +311,15 @@ class Register extends Component {
 
                                 <div className="form-group mx-3">
 
-                                    <Control.radio model=".gender" checked="checked" value="male"/>
+                                    <Control.radio model=".gender" checked="checked" value="Male"/>
                                     <Label htmlFor="gender" className="label mx-3 ">Male</Label>
 
-                                    <Control.radio model=".gender" checked="checked" value="female"/>
+                                    <Control.radio model=".gender" checked="checked" value="Female"/>
                                     <Label htmlFor="gender" className="label mx-3">Female</Label>
                                 </div>
-                                <Button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
+                                <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
                                     Send
-                                </Button>
+                                </button>
                             </LocalForm>
 
 
@@ -325,7 +341,7 @@ class Register extends Component {
                                 Sign up as an Organization
                             </p>
 
-                            <LocalForm onSubmit={this.handleSubmit}
+                            <LocalForm onSubmit={(values) => this.handleSubmit(values)}
                                        className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
                                 <div className="form-group mx-3 ">
                                     <Label htmlFor="name" className="label">Full Name</Label>
@@ -398,11 +414,11 @@ class Register extends Component {
                                 </div>
 
                                 <div className="form-group mx-3">
-                                    <Label htmlFor="conf-password" className="label">Confirm Password</Label>
-                                    <Control.text model=".conf-password"
-                                                  id="conf-password"
+                                    <Label htmlFor="conf_password" className="label">Confirm Password</Label>
+                                    <Control.text model=".conf_password"
+                                                  id="conf_password"
                                                   type="password"
-                                                  name="conf-password"
+                                                  name="conf_password"
                                                   className="form-control input"
                                                   placeholder="Confirm Password"
                                                   validators={{
@@ -411,7 +427,7 @@ class Register extends Component {
                                     />
                                     <Errors
                                         className="text-danger"
-                                        model=".conf-password"
+                                        model=".conf_password"
                                         show="touched"
                                         messages={{
                                             required: 'Required -- ',
@@ -472,13 +488,13 @@ class Register extends Component {
                                         onChange={this.onDrop}
                                         imgExtension={['.jpg', '.png', 'jpeg']}
                                         maxFileSize={5242880}
-                                        fileSizeError=" file size is too big"
+                                        fileSizeError="Photo size is too big"
                                         singleImage="true"
                                     />
                                 </div>
-                                <Button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
+                                <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
                                     Send
-                                </Button>
+                                </button>
                             </LocalForm>
 
 

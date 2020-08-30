@@ -15,6 +15,71 @@ export const loginModalClose = () => ({
 //---------------------- Search actions------------------------
 
 
+//---------------------- Registration actions------------------------
+export const requestRegister = (user) => {
+    return {
+        type: ActionTypes.REGISTER_REQUEST,
+        user
+    }
+};
+
+export const receiveRegister = () => {
+    return {
+        type: ActionTypes.REGISTER_SUCCESS,
+    }
+};
+
+export const registerError = (message) => {
+    return {
+        type: ActionTypes.REGISTER_FAILURE,
+        message
+    }
+};
+
+export const registerSendEmail =() => {
+    return {
+        type: ActionTypes.REGISTER_EMAIL
+    }
+};
+
+export const registerUser = (creds) => (dispatch) => {
+    dispatch(requestRegister(creds));
+    console.log(creds);
+    return fetch(baseUrl + 'auth/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify(creds)
+    })
+        .then(response => {
+                console.log(response.status);
+                if (response.status === 200 || 201) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => response.json())
+        .then(response => {
+            if (response.success) {
+                // Dispatch the success action
+                dispatch(receiveRegister(response));
+            }
+            else {
+                var error = new Error('Error ' + response.status);
+                error.response = response;
+                throw error;
+            }
+        })
+        .catch(error => dispatch(registerError(error.message)))
+};
+
 //---------------------- Authentification actions------------------------
 
 export const requestLogin = (creds) => {
@@ -42,7 +107,6 @@ export const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds));
     console.log(creds);
-
     return fetch(baseUrl + 'auth/login', {
         method: 'POST',
         headers: {

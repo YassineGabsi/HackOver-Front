@@ -42,4 +42,4 @@ export const Auth = (state = {
         default:
             return state
     }
-}
+};
