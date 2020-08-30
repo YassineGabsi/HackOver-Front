@@ -11,10 +11,16 @@ class Navb extends Component {
         super(props);
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.logout = this.logout.bind(this);
         this.state = {
             isNavOpen: false,
             isDropdownOpen: false,
         };
+    }
+
+    logout() {
+        this.props.logoutUser();
+        this.props.loginModalClose()
     }
 
     toggleNav() {
@@ -76,7 +82,7 @@ class Navb extends Component {
                                             <DropdownItem>Hackathons Organized</DropdownItem>
                                             <DropdownItem>Profile Settings</DropdownItem>
                                             <DropdownItem>Add a hackathon</DropdownItem>
-                                            <DropdownItem onClick={this.props.logoutUser} href="">Logout</DropdownItem>
+                                            <DropdownItem onClick={this.logout} href="">Logout</DropdownItem>
                                         </div>
                                     </DropdownMenu>
                                 </Dropdown>

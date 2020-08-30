@@ -1,5 +1,5 @@
 import * as ActionTypes from './ActionTypes';
-import { baseUrl } from '../shared/baseUrl';
+import {baseUrl} from '../shared/baseUrl';
 
 
 export const loginModalOpen = () => ({
@@ -36,7 +36,7 @@ export const registerError = (message) => {
     }
 };
 
-export const registerSendEmail =() => {
+export const registerSendEmail = () => {
     return {
         type: ActionTypes.REGISTER_EMAIL
     }
@@ -48,7 +48,7 @@ export const registerUser = (creds) => (dispatch) => {
     return fetch(baseUrl + 'auth/register', {
         method: 'POST',
         headers: {
-            'Content-Type':'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(creds)
     })
@@ -70,8 +70,7 @@ export const registerUser = (creds) => (dispatch) => {
             if (response.success) {
                 // Dispatch the success action
                 dispatch(receiveRegister(response));
-            }
-            else {
+            } else {
                 var error = new Error('Error ' + response.status);
                 error.response = response;
                 throw error;
@@ -103,19 +102,19 @@ export const loginError = (message) => {
     }
 };
 
-export const loginUser = (creds) => (dispatch) => {
+export  const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds));
     console.log(creds);
     return fetch(baseUrl + 'auth/login', {
         method: 'POST',
         headers: {
-            'Content-Type':'application/json'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(creds)
     })
         .then(response => {
-            console.log(response.status);
+                console.log(response.status);
                 if (response.status === 200) {
                     return response;
                 } else {
@@ -135,14 +134,14 @@ export const loginUser = (creds) => (dispatch) => {
                 localStorage.setItem('creds', JSON.stringify(creds));
                 // Dispatch the success action
                 dispatch(receiveLogin(response));
-            }
-            else {
+            } else {
                 var error = new Error('Error ' + response.status);
                 error.response = response;
                 throw error;
             }
         })
         .catch(error => dispatch(loginError(error.message)))
+
 };
 
 export const requestLogout = () => {
@@ -166,7 +165,7 @@ export const logoutUser = () => (dispatch) => {
     return fetch(baseUrl + 'auth/logout', {
         method: 'GET',
         headers: {
-            'Content-Type':'application/json'
+            'Content-Type': 'application/json'
         },
     })
 };

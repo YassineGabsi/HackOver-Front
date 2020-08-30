@@ -1,6 +1,6 @@
 import * as ActionTypes from '../ActionTypes';
 
-export const Auth = (state = {
+export  const  Auth = (state = {
     isLoading: false,
     isAuthenticated: localStorage.getItem('accessToken') ? true : false,
     accessToken: localStorage.getItem('accessToken'),
@@ -18,7 +18,7 @@ export const Auth = (state = {
             return {...state,
                 isLoading: false,
                 isAuthenticated: true,
-                errMess: '',
+                errMess: null,
                 token: action.token
             };
         case ActionTypes.LOGIN_FAILURE:

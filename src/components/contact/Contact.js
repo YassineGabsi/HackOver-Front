@@ -32,7 +32,7 @@ function Contact(props) {
                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 vivify fadeIn ">
                     <h2 className=" vivify flipInX delay-250 small-titles">
                         We are happy to hear from
-                        <span className="red-colored"> you</span>
+                        <span className="red-colored h2-like"> you</span>
                     </h2>
                     <LocalForm onSubmit={(values) => handleSubmit(values)}>
                         <div className="form-group mx-3">

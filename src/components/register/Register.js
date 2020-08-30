@@ -121,9 +121,9 @@ class Register extends Component {
                             <button className="  button  row mx-auto" onClick={this.openButtons}>
                                 Change
                             </button>
-                            <h2 className=" col-12 text-center mx-auto vivify flipInX delay-150 mt-3">
+                            <h2 className=" col-12 text-center mx-auto vivify flipInX delay-150 mt-3  ">
                                 We are happy to have
-                                <span className="red-colored"> you </span>
+                                <span className="red-colored h2-like"> you </span>
                                 with us
                             </h2>
 
@@ -334,7 +334,7 @@ class Register extends Component {
                             </button>
                             <h2 className=" col-12 text-center mx-auto vivify flipInX delay-150 mt-3">
                                 We are happy to have
-                                <span className="red-colored"> you </span>
+                                <span className="red-colored h2-like"> you </span>
                                 with us
                             </h2>
                             <p className=" col-12 small-titles text-center mx-auto vivify flipInX delay-150 ">
