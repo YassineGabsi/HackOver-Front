@@ -93,7 +93,7 @@ class Register extends Component {
     render() {
         return (
             <>
-                {this.props.registration.isRegistered ? (
+                {!this.props.registration.isRegistered ? (
                     <div>
                         {this.state.buttons ? (
                             <div className="container vivify pullUp middle-content vertical-center">

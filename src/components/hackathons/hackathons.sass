@@ -1,0 +1,33 @@
+@import "../../stylesheets/variables"
+
+
+.adv-search
+  transition: 0.5s
+  &:hover
+    color: $red_styling_color
+
+
+.input-search, .select-search
+  width: 100%
+  font-weight: bold
+  display: block
+  border: 3px solid $blue_styling_color
+  padding: 15px 20px
+  border-radius: 25px
+  background: transparent
+  option
+    color: white
+    font-weight: bold
+    background-color: $background_color
+    border-radius: 25px
+    outline: none
+
+
+.form-control
+  transition: 0.5s
+  &:focus
+    color: white
+    background-color: transparent
+    border-color: $red_styling_color
+    box-shadow: none
+
