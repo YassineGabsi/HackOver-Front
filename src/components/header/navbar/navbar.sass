@@ -36,6 +36,7 @@
   transition: 0.5s
   &:hover
     color: $red_styling_color !important
+    font-weight: bold
   @media screen and (max-width: 1025px)
     margin-top: auto
 
@@ -107,8 +108,15 @@ span
   border-radius: 20px
   box-shadow: 0px 0px 10px #000000
   outline: none
+  &:focus
+    background-color: transparent
   .dropdown-item
     color: white
+    transition: 0.3s
+    &:hover
+      background-color: transparent
+      color: $red_styling_color
+      font-weight: bold
 
 .dropdown-menu
   background-color: transparent

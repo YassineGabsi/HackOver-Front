@@ -23,6 +23,7 @@ class Register extends Component {
             participant: false,
             organizator: false,
             buttons: true,
+            isValid: true,
             pictures: []
         };
     }
@@ -33,24 +34,31 @@ class Register extends Component {
         });
     }
 
-    handleSubmit(values) {
-        console.log(JSON.stringify(values));
-        console.log(this.state.pictures);
 
-        const data = {
-            fullName: values.name,
-            email: values.email,
-            password: values.password,
-            confirmPassword: values.conf_password,
-            num: values.num,
-            age: values.age,
-            work: values.work,
-            sex: values.gender,
-            photo: this.state.pictures[0].name,
-            role: "Participant"
-        };
-        console.log(data);
-        this.props.registerUser(data);
+    handleSubmit(values) {
+        if (values.password === values.conf_password) {
+            this.setState({
+               isValid: true
+            });
+            const data = {
+                fullName: values.name,
+                email: values.email,
+                password: values.password,
+                confirmPassword: values.conf_password,
+                num: values.num,
+                age: this.state.participant ? values.age : "22",
+                work: values.work,
+                sex: this.state.participant ? values.gender : "Male",
+                photo: this.state.pictures[0].name,
+                role: this.state.participant ? "Participant" : "Organizator"
+            };
+            console.log(data);
+            this.props.registerUser(data);
+        } else {
+            this.setState( {
+                isValid: false,
+            })
+        }
     }
 
     openOrganizator() {
@@ -72,7 +80,8 @@ class Register extends Component {
         this.setState({
             participant: false,
             organizator: false,
-            buttons: true
+            buttons: true,
+            isValid: true,
         });
     }
 
@@ -130,7 +139,10 @@ class Register extends Component {
                             <p className=" col-12 small-titles text-center mx-auto vivify flipInX delay-150 ">
                                 Sign up as a Participant
                             </p>
+                            {!this.state.isValid ? (
+                                <h3 className="text-center red-colored col-12 mx-auto text-size">Password and Confirm password fields don't match</h3>
 
+                            ) : null}
                             <LocalForm onSubmit={(values) => this.handleSubmit(values)} className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
                                 <div className="form-group mx-3 ">
                                     <Label htmlFor="name" className="label">Full Name</Label>
@@ -340,7 +352,10 @@ class Register extends Component {
                             <p className=" col-12 small-titles text-center mx-auto vivify flipInX delay-150 ">
                                 Sign up as an Organization
                             </p>
+                            {!this.state.isValid ? (
+                                <h3 className="text-center red-colored col-12 mx-auto text-size">Password and Confirm password fields don't match</h3>
 
+                            ) : null}
                             <LocalForm onSubmit={(values) => this.handleSubmit(values)}
                                        className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
                                 <div className="form-group mx-3 ">
