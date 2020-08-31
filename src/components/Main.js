@@ -29,7 +29,8 @@ const mapStateToProps = state => {
     return {
         loginModal: state.loginModal,
         hackathons: state.hackathons,
-        auth: state.auth
+        auth: state.auth,
+        registration : state.registration
     };
 };
 
@@ -83,6 +84,7 @@ const Main = props => {
         return (
             <Register
                 registerUser = {props.registerUser}
+                registration = {props.registration}
             />
         );
     };
