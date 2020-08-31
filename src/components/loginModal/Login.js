@@ -62,7 +62,7 @@ class Login extends Component {
                 {!this.props.auth.isAuthenticated ? (
                     <Modal isOpen="active">
                         <div className="align-items-center modal-header">
-                            <img src={require("../../img/logo.png")} className="img-fluid " alt=""/>
+                            <img src={require("../../img/logo.png")} className="mx-auto col-7 top-logo" alt=""/>
                             <button type="button" className="close close-button float-right" data-dismiss="modal"
                                     onClick={this.props.loginModalClose}>&times;
                             </button>
@@ -108,7 +108,7 @@ class Login extends Component {
                             </ModalBody>
                         ) : (
                             <ModalBody className="align-items-center">
-                                <h2 className="text-center vivify flipInX delay-150">Login to live the experience </h2>
+                                <h2 className="text-center vivify flipInX delay-150 small-titles">Login to live the experience </h2>
                                 <div className="row d-flex justify-content-center">
                                     <div className="line-squared my-3"/>
                                 </div>
@@ -159,7 +159,7 @@ class Login extends Component {
                                 <div className="row d-flex justify-content-center mt-5">
                                     <div className="white-line-squared my-2 mx-3 tablet-and-desktop-only"/>
                                     <h5>Or</h5>
-                                    <div className="white-line-squared my-1 mx-3 tablet-and-desktop-only"/>
+                                    <div className="white-line-squared my-2 mx-3 tablet-and-desktop-only"/>
                                 </div>
                                 <div className="row mb-3">
                                     <div className="col-6">
