@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import "./hackathons.sass";
 import CardHackathons from "./cardHackathons/CardHackathons";
-import AdvancedSearchModal from "./advancedSearchModal/AdvancedSearchModal";
 import Modal from "reactstrap/es/Modal";
 import ModalBody from "reactstrap/es/ModalBody";
-import {Control, LocalForm} from "react-redux-form";
 import Label from "reactstrap/es/Label";
+import Datepicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+
 
 class Hackathons extends Component {
     constructor(props) {
@@ -13,19 +15,50 @@ class Hackathons extends Component {
         this.filterList = this.filterList.bind(this);
         this.toggleAdv = this.toggleAdv.bind(this);
         this.handleAdvSearch = this.handleAdvSearch.bind(this);
+        this.setHackathons = this.setHackathons.bind(this);
         this.country = React.createRef();
-        this.dateFrom = React.createRef();
-        this.dateTo = React.createRef();
         this.organizer = React.createRef();
 
         this.state = {
             renderedHackathons: this.props.hackathons,
             isAdvOpen: false,
+            dateFrom: new Date(),
+            dateTo: new Date(),
         }
     }
 
+
     handleAdvSearch() {
-        console.log(this.country.current.value);
+        let updateList = this.props.hackathons;
+        if(this.country.current.value !== "All") {
+            updateList = updateList.filter(item => {
+                return item.place.toLowerCase().search(
+                    this.country.current.value.toLowerCase()
+                ) !==-1;
+            });
+        }
+
+        if(new Date(this.state.dateFrom).getTime() !== new Date(this.state.dateTo).getTime()) {
+            updateList = updateList.filter(item =>
+                (new Date(item.date) - new Date(this.state.dateFrom) >=0 )
+                &&
+                (new Date(this.state.dateTo) - new Date(item.date) >=0 )
+            );
+        }
+        if (this.organizer.current.value !=='') {
+            updateList = updateList.filter(item => {
+                return item.author.toLowerCase().search(
+                    this.organizer.current.value.toLowerCase()
+                ) !==-1;
+            });
+        }
+
+        console.log(updateList.length);
+
+        this.setState({
+            renderedHackathons: updateList
+        });
+        this.toggleAdv();
     }
 
     toggleAdv() {
@@ -46,6 +79,11 @@ class Hackathons extends Component {
         });
     }
 
+    setHackathons() {
+        this.setState ({
+            renderedHackathons: this.props.hackathons
+        })
+    }
     render() {
         return (
             <div className="container">
@@ -55,6 +93,17 @@ class Hackathons extends Component {
                     <i className="fa fa-search fa-2x mt-4 mr-4 vivify fadeIn" aria-hidden="true"/>
                     <a className="brand small-titles vivify fadeIn mt-3 mb-5 text-center adv-search"
                        onClick={this.toggleAdv}>Advanced search</a>
+                    { !this.state.renderedHackathons.length ? (
+                        <div className="row d-flex justify-content-center text-center vertical-center">
+                            <div className="small-titles  font-weight-bold col-12">Sorry, We couldn't find any hackathons with these specifications, you can choose other <span className="red-colored small-titles font-weight-bold"> Hackathons</span></div>
+                            <button className="button row mx-5 "
+                                    data-toggle="modal"
+                                    onClick={this.setHackathons}>
+                                Back
+                            </button>
+                        </div>
+
+                    ) : null}
                     {this.state.isAdvOpen ? (
                         <Modal isOpen="active">
                             <div className="align-items-center modal-header">
@@ -77,7 +126,7 @@ class Hackathons extends Component {
                                     className=" form-control select-search"
                                     ref={this.country}
                                 >
-                                    <option selected>All</option>
+                                    <option defaultValue>All</option>
                                     <option>Ariana</option>
                                     <option>Beja</option>
                                     <option>Ben Arous</option>
@@ -103,22 +152,35 @@ class Hackathons extends Component {
                                     <option>Zaghouan</option>
                                 </select>
 
+
+
                                 <div className="row ">
-                                    <div className="col-12 col-lg-6 mt-5">
-                                        <Label className="label">Date from</Label>
-                                        <input type="text"
-                                               className=" form-control input-search"
-                                               placeholder="From"
-                                               ref={this.dateFrom}
+                                    <div className="col-12 col-lg-6 mt-5 mx-auto ">
+                                        <Label className="label col-12">Date from</Label>
+                                        <Datepicker
+                                            className="input-search form-group date-picker"
+                                            selected={this.state.dateFrom}
+                                            onChange={date => this.setState({
+                                                dateFrom: date
+                                            })}
+                                            selectsStart
+                                            startDate={this.state.dateFrom}
+                                            endDate={this.state.dateTo}
                                         />
                                     </div>
 
-                                    <div className="col-12 col-lg-6 mt-5">
-                                        <Label className="label">Date to</Label>
-                                        <input type="text"
-                                               className=" form-control input-search"
-                                               placeholder="To"
-                                               ref={this.dateTo}
+                                    <div className="col-12 col-lg-6 mt-5 mx-auto">
+                                        <Label className="label col-12">Date to</Label>
+                                        <Datepicker
+                                            className="input-search form-group date-picker "
+                                            selected={this.state.dateTo}
+                                            onChange={date => this.setState({
+                                                dateTo: date
+                                            })}
+                                            selectsEnd
+                                            startDate={this.state.dateFrom}
+                                            endDate={this.state.dateTo}
+                                            minDate={this.state.dateFrom}
                                         />
                                     </div>
                                 </div>
