@@ -94,8 +94,8 @@ class Hackathons extends Component {
                     <a className="brand small-titles vivify fadeIn mt-3 mb-5 text-center adv-search"
                        onClick={this.toggleAdv}>Advanced search</a>
                     { !this.state.renderedHackathons.length ? (
-                        <div className="row d-flex justify-content-center text-center vertical-center">
-                            <div className="small-titles  font-weight-bold col-12">Sorry, We couldn't find any hackathons with these specifications, you can choose other <span className="red-colored small-titles font-weight-bold"> Hackathons</span></div>
+                        <div className="row d-flex justify-content-center text-center vertical-center vivify popIn delay-250">
+                            <div className="small-titles  font-weight-bold col-12 ">Sorry, We couldn't find any hackathons with these specifications, you can choose other <span className="red-colored small-titles font-weight-bold"> Hackathons</span></div>
                             <button className="button row mx-5 "
                                     data-toggle="modal"
                                     onClick={this.setHackathons}>
@@ -123,7 +123,7 @@ class Hackathons extends Component {
 
                                 <Label className="label mt-5">Country</Label>
                                 <select
-                                    className=" form-control select-search"
+                                    className=" form-control-search select-search"
                                     ref={this.country}
                                 >
                                     <option defaultValue>All</option>
@@ -187,7 +187,7 @@ class Hackathons extends Component {
 
                                 <Label className="label mt-5">Organizer</Label>
                                 <input type="text"
-                                       className=" form-control input-search"
+                                       className=" form-control-search input-search"
                                        placeholder="Organizer"
                                        ref={this.organizer}
                                 />

@@ -29,6 +29,7 @@ const mapStateToProps = state => {
     return {
         loginModal: state.loginModal,
         hackathons: state.hackathons,
+        feedbacks: state.feedbacks,
         auth: state.auth,
         registration : state.registration
     };
@@ -75,6 +76,7 @@ const Main = props => {
                 propId = {match.params.id}
                 oneHack = {props.hackathons.hackathons.filter ((hackathon) => hackathon.id === parseInt(match.params.id,10))[0]}
                 auth={props.auth}
+                feedbacks={props.feedbacks.feedbacks}
                 loginModalOpen={props.loginModalOpen}
             />
         );

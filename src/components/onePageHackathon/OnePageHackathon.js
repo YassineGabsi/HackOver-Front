@@ -12,8 +12,23 @@ class OnePageHackathon extends Component {
         super(props);
         this.toggleWinnersModal = this.toggleWinnersModal.bind(this);
         this.state = {
-            isWinnersModalOpen: false
+            isWinnersModalOpen: false,
+            feedbacks: this.props.feedbacks
         }
+    }
+
+    dd () {
+
+    }
+
+    componentDidMount() {
+        let specificFeeds = this.props.feedbacks;
+        specificFeeds = specificFeeds.filter(item =>
+            item.hackId === this.props.oneHack.id
+        );
+        this.setState({
+            feedbacks: specificFeeds
+        });
     }
 
     toggleWinnersModal() {
@@ -121,7 +136,7 @@ class OnePageHackathon extends Component {
 
                     <p className="brand small-titles vivify flipInX delay-150 mt-2">Photos</p>
                     <div className="line-squared vivify fadeIn delay-200"/>
-                    <AliceCarousel autoPlay autoPlayInterval="3000" buttonsDisabled>
+                    <AliceCarousel autoPlay autoPlayInterval="3000" buttonsDisabled className="img-fluid">
                         <img src={require(`../../img/${this.props.oneHack.photos.ph1}`)} className="sliderimg d-flex "
                              alt=""/>
                         <img src={require(`../../img/${this.props.oneHack.photos.ph2}`)} className="sliderimg d-flex"
@@ -146,7 +161,17 @@ class OnePageHackathon extends Component {
                     <ExternalLink href={this.props.oneHack.links.twitter}>
                         <a className="fa fa-twitter ml-3 mr-1 fa-2x" aria-hidden="true"/>
                     </ExternalLink>
-                    <Feedbacks/>
+
+                    <p className="brand small-titles vivify flipInX delay-150 mt-3">Feedbacks</p>
+                    <div className="line-squared vivify fadeIn delay-200"/>
+                    {this.state.feedbacks.map((feedback) => {
+                        return(
+                            <Feedbacks
+                                feedback={feedback}
+                            />
+                        )
+                    })}
+
                 </div>
             </div>
 

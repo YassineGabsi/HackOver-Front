@@ -1,7 +1,14 @@
 import React from 'react';
 import "./home.sass";
+import { useHistory } from "react-router-dom";
 
 function Home (props) {
+    const history = useHistory();
+    const routeChange = () =>{
+        let path = `/register`;
+        history.push(path);
+    };
+
     return(
         <div className="container middle-content">
             <div className="row  d-flex justify-content-center text-center">
@@ -17,7 +24,9 @@ function Home (props) {
                                 onClick={props.loginModalOpen}>
                             Log In
                         </button>
-                        <button className="button  row mx-5">
+                        <button className="button  row mx-5"
+                                onClick={routeChange}
+                        >
                             Register
                         </button>
                     </div>
