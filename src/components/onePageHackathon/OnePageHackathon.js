@@ -11,14 +11,11 @@ class OnePageHackathon extends Component {
     constructor(props) {
         super(props);
         this.toggleWinnersModal = this.toggleWinnersModal.bind(this);
+        this.bg = require(`../../img/${this.props.oneHack.image}`);
         this.state = {
             isWinnersModalOpen: false,
             feedbacks: this.props.feedbacks
         }
-    }
-
-    dd () {
-
     }
 
     componentDidMount() {
@@ -36,14 +33,14 @@ class OnePageHackathon extends Component {
             isWinnersModalOpen: !this.state.isWinnersModalOpen
         });
     }
-
     render() {
         return (
             <div className="container middle-content">
                 <div className="row d-flex justify-content-center">
                     <div className="col-lg-6 col-md-6 mb-4">
                         <div className="card  box-shadow mb-3 vivify popIn "
-                             style={{backgroundImage: `url(${this.props.oneHack.image})`}}>
+                             style={{backgroundImage: "url("+this.bg+") "}}
+                        >
                             <div className="card-container">
                                 <h5 className="card-date">
                                     {new Intl.DateTimeFormat("en-US", {

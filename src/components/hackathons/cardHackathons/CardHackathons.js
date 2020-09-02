@@ -2,11 +2,13 @@ import React from 'react';
 import "./card.sass";
 
 function CardHackathons(props) {
+    var bg = require(`../../../img/${props.oneHack.image}`);
     return (
         <div className="col-lg-4 col-md-6 mb-4">
             <a href={`/hackathons/${props.oneHack.id}`}>
                 <div className="card  box-shadow mb-3 vivify popIn "
-                     style={{backgroundImage: `url(${props.oneHack.image})`}}>
+                     style={{backgroundImage: "url("+bg+") "}}
+                >
                     <div className="card-container">
                         <h5 className="card-date">
                             {new Intl.DateTimeFormat("en-US", {
