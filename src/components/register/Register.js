@@ -3,7 +3,8 @@ import "./register.sass";
 import {Control, Errors, LocalForm} from "react-redux-form";
 import Label from "reactstrap/es/Label";
 import ImageUploader from 'react-images-upload';
-import Input from "reactstrap/es/Input";
+import Loader from "../loader/Loader";
+
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -157,200 +158,208 @@ class Register extends Component {
                                             Confirm password fields don't match</h3>
 
                                     ) : null}
-                                    <LocalForm onSubmit={(values) => this.handleSubmit(values)}
-                                               className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
-                                        <div className="form-group mx-3 ">
-                                            <Label htmlFor="name" className="label">Full Name</Label>
-                                            <Control.text model=".name"
-                                                          id="name"
-                                                          name="name"
-                                                          type="text"
-                                                          className="form-control input"
-                                                          placeholder="Full Name"
-                                                          validators={{
-                                                              required,
-                                                              minLength: minLength(2),
-                                                              maxLength: maxLength(18)
-                                                          }}
-
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".name"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                    minLength: 'Must be greater than 2 characters',
-                                                    maxLength: 'Must be 18 characters or less'
-                                                }}
-                                            />
+                                    {this.props.registration.isLoading ? (
+                                        <div className="mx-auto my-5">
+                                            <Loader/>
                                         </div>
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="email" className="label">Email</Label>
-                                            <Control.text model=".email"
-                                                          id="email"
-                                                          name="email"
-                                                          className="form-control input"
-                                                          placeholder="Email"
-                                                          validators={{
-                                                              required, validEmail
-                                                          }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".email"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                    validEmail: 'Must be a valid Email address',
-                                                }}
-                                            />
+                                    ) : (
+                                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}
+                                                   className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
+                                            <div className="form-group mx-3 ">
+                                                <Label htmlFor="name" className="label">Full Name</Label>
+                                                <Control.text model=".name"
+                                                              id="name"
+                                                              name="name"
+                                                              type="text"
+                                                              className="form-control input"
+                                                              placeholder="Full Name"
+                                                              validators={{
+                                                                  required,
+                                                                  minLength: minLength(2),
+                                                                  maxLength: maxLength(18)
+                                                              }}
 
-                                        </div>
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".name"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                        minLength: 'Must be greater than 2 characters',
+                                                        maxLength: 'Must be 18 characters or less'
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="email" className="label">Email</Label>
+                                                <Control.text model=".email"
+                                                              id="email"
+                                                              name="email"
+                                                              className="form-control input"
+                                                              placeholder="Email"
+                                                              validators={{
+                                                                  required, validEmail
+                                                              }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".email"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                        validEmail: 'Must be a valid Email address',
+                                                    }}
+                                                />
+
+                                            </div>
 
 
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="password" className="label">Password</Label>
-                                            <Control.text model=".password"
-                                                          id="password"
-                                                          type="password"
-                                                          name="password"
-                                                          className="form-control input"
-                                                          placeholder="Password"
-                                                          validators={{
-                                                              required
-                                                          }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".password"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                }}
-                                            />
-                                        </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="password" className="label">Password</Label>
+                                                <Control.text model=".password"
+                                                              id="password"
+                                                              type="password"
+                                                              name="password"
+                                                              className="form-control input"
+                                                              placeholder="Password"
+                                                              validators={{
+                                                                  required
+                                                              }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".password"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                    }}
+                                                />
+                                            </div>
 
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="conf_password" className="label">Confirm Password</Label>
-                                            <Control.text model=".conf_password"
-                                                          id="conf_password"
-                                                          type="password"
-                                                          name="conf_password"
-                                                          className="form-control input"
-                                                          placeholder="Confirm Password"
-                                                          validators={{
-                                                              required
-                                                          }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".conf_password"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="num" className="label">Phone Number</Label>
-                                            <Control.text model=".num"
-                                                          id="num"
-                                                          name="num"
-                                                          type="number"
-                                                          className="form-control input"
-                                                          placeholder="Phone Number"
-                                                          validators={{
-                                                              required,
-                                                              minLength: minLength(8),
-                                                              maxLength: maxLength(15),
-                                                              isNumber
-                                                          }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".num"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                    minLength: 'Must be a valid phone number format',
-                                                    isNumber: 'Must be a number'
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="work" className="label">Work / Study field</Label>
-                                            <Control.text model=".work"
-                                                          id="work"
-                                                          name="work"
-                                                          className="form-control input"
-                                                          placeholder="Work / Study field"
-                                                          validators={{
-                                                              required,
-                                                          }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".work"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="age" className="label">Age</Label>
-                                            <Control.text model=".age"
-                                                          id="age"
-                                                          name="age"
-                                                          type="number"
-                                                          className="form-control input"
-                                                          placeholder="Age"
-                                                          validators={{
-                                                              required,
-                                                              maxLength: maxLength(3),
-                                                              isNumber
-                                                          }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".age"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                    maxLength: 'Must be less than 100 years',
-                                                    isNumber: 'Must be a valid number'
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="image" className="label">Profile Photo</Label>
-                                            <ImageUploader
-                                                withPreview={true}
-                                                withIcon={true}
-                                                label="Add your photo"
-                                                buttonText="Add your photo"
-                                                onChange={this.onDrop}
-                                                imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                                                maxFileSize={5242880}
-                                                fileSizeError=" file size is too big"
-                                                singleImage="true"
-                                            />
-                                        </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="conf_password" className="label">Confirm
+                                                    Password</Label>
+                                                <Control.text model=".conf_password"
+                                                              id="conf_password"
+                                                              type="password"
+                                                              name="conf_password"
+                                                              className="form-control input"
+                                                              placeholder="Confirm Password"
+                                                              validators={{
+                                                                  required
+                                                              }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".conf_password"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="num" className="label">Phone Number</Label>
+                                                <Control.text model=".num"
+                                                              id="num"
+                                                              name="num"
+                                                              type="number"
+                                                              className="form-control input"
+                                                              placeholder="Phone Number"
+                                                              validators={{
+                                                                  required,
+                                                                  minLength: minLength(8),
+                                                                  maxLength: maxLength(15),
+                                                                  isNumber
+                                                              }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".num"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                        minLength: 'Must be a valid phone number format',
+                                                        isNumber: 'Must be a number'
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="work" className="label">Work / Study field</Label>
+                                                <Control.text model=".work"
+                                                              id="work"
+                                                              name="work"
+                                                              className="form-control input"
+                                                              placeholder="Work / Study field"
+                                                              validators={{
+                                                                  required,
+                                                              }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".work"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="age" className="label">Age</Label>
+                                                <Control.text model=".age"
+                                                              id="age"
+                                                              name="age"
+                                                              type="number"
+                                                              className="form-control input"
+                                                              placeholder="Age"
+                                                              validators={{
+                                                                  required,
+                                                                  maxLength: maxLength(3),
+                                                                  isNumber
+                                                              }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".age"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                        maxLength: 'Must be less than 100 years',
+                                                        isNumber: 'Must be a valid number'
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="image" className="label">Profile Photo</Label>
+                                                <ImageUploader
+                                                    withPreview={true}
+                                                    withIcon={true}
+                                                    label="Add your photo"
+                                                    buttonText="Add your photo"
+                                                    onChange={this.onDrop}
+                                                    imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                                                    maxFileSize={5242880}
+                                                    fileSizeError=" file size is too big"
+                                                    singleImage="true"
+                                                />
+                                            </div>
 
-                                        <div className="form-group mx-3">
+                                            <div className="form-group mx-3">
 
-                                            <Control.radio model=".gender" checked="checked" value="Male"/>
-                                            <Label htmlFor="gender" className="label mx-3 ">Male</Label>
+                                                <Control.radio model=".gender" checked="checked" value="Male"/>
+                                                <Label htmlFor="gender" className="label mx-3 ">Male</Label>
 
-                                            <Control.radio model=".gender" checked="checked" value="Female"/>
-                                            <Label htmlFor="gender" className="label mx-3">Female</Label>
-                                        </div>
-                                        <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
-                                            Send
-                                        </button>
-                                    </LocalForm>
+                                                <Control.radio model=".gender" checked="checked" value="Female"/>
+                                                <Label htmlFor="gender" className="label mx-3">Female</Label>
+                                            </div>
+                                            <button type="submit"
+                                                    className="button button-reg-log row mx-auto d-flex mb-3">
+                                                Send
+                                            </button>
+                                        </LocalForm>
 
+                                    )}
 
                                 </div>
                             </div>
@@ -374,163 +383,172 @@ class Register extends Component {
                                             Confirm password fields don't match</h3>
 
                                     ) : null}
-                                    <LocalForm onSubmit={(values) => this.handleSubmit(values)}
-                                               className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
-                                        <div className="form-group mx-3 ">
-                                            <Label htmlFor="name" className="label">Full Name</Label>
-                                            <Control.text model=".name"
-                                                          id="name"
-                                                          name="name"
-                                                          type="text"
-                                                          className="form-control input"
-                                                          placeholder="Full Name"
-                                                          validators={{
-                                                              required,
-                                                              minLength: minLength(2),
-                                                              maxLength: maxLength(18)
-                                                          }}
+                                    {this.props.registration.isLoading ? (
+                                        <div className="mt-5">
+                                            <Loader/>
+                                        </div>
+                                    ) : (
+                                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}
+                                                   className="col-lg-7 col-md-9 col-sm-12 col-xs-12">
+                                            <div className="form-group mx-3 ">
+                                                <Label htmlFor="name" className="label">Full Name</Label>
+                                                <Control.text model=".name"
+                                                              id="name"
+                                                              name="name"
+                                                              type="text"
+                                                              className="form-control input"
+                                                              placeholder="Full Name"
+                                                              validators={{
+                                                                  required,
+                                                                  minLength: minLength(2),
+                                                                  maxLength: maxLength(18)
+                                                              }}
 
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".name"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                    minLength: 'Must be greater than 2 characters',
-                                                    maxLength: 'Must be 18 characters or less'
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="email" className="label">Email</Label>
-                                            <Control.text model=".email"
-                                                          id="email"
-                                                          name="email"
-                                                          className="form-control input"
-                                                          placeholder="Email"
-                                                          validators={{
-                                                              required, validEmail
-                                                          }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".email"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                    validEmail: 'Must be a valid Email address',
-                                                }}
-                                            />
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".name"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                        minLength: 'Must be greater than 2 characters',
+                                                        maxLength: 'Must be 18 characters or less'
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="email" className="label">Email</Label>
+                                                <Control.text model=".email"
+                                                              id="email"
+                                                              name="email"
+                                                              className="form-control input"
+                                                              placeholder="Email"
+                                                              validators={{
+                                                                  required, validEmail
+                                                              }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".email"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                        validEmail: 'Must be a valid Email address',
+                                                    }}
+                                                />
 
-                                        </div>
+                                            </div>
 
 
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="password" className="label">Password</Label>
-                                            <Control.text model=".password"
-                                                          id="password"
-                                                          type="password"
-                                                          name="password"
-                                                          className="form-control input"
-                                                          placeholder="Password"
-                                                          validators={{
-                                                              required
-                                                          }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".password"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                }}
-                                            />
-                                        </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="password" className="label">Password</Label>
+                                                <Control.text model=".password"
+                                                              id="password"
+                                                              type="password"
+                                                              name="password"
+                                                              className="form-control input"
+                                                              placeholder="Password"
+                                                              validators={{
+                                                                  required
+                                                              }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".password"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                    }}
+                                                />
+                                            </div>
 
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="conf_password" className="label">Confirm Password</Label>
-                                            <Control.text model=".conf_password"
-                                                          id="conf_password"
-                                                          type="password"
-                                                          name="conf_password"
-                                                          className="form-control input"
-                                                          placeholder="Confirm Password"
-                                                          validators={{
-                                                              required
-                                                          }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".conf_password"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="num" className="label">Phone Number</Label>
-                                            <Control.text model=".num"
-                                                          id="num"
-                                                          name="num"
-                                                          type="number"
-                                                          className="form-control input"
-                                                          placeholder="Phone Number"
-                                                          validators={{
-                                                              required,
-                                                              minLength: minLength(8),
-                                                              maxLength: maxLength(15),
-                                                              isNumber
-                                                          }}
-                                            />
-                                            <Errors
-                                                className="text-danger"
-                                                model=".num"
-                                                show="touched"
-                                                messages={{
-                                                    required: 'Required -- ',
-                                                    minLength: 'Must be a valid phone number format',
-                                                    isNumber: 'Must be a number'
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="work" className="label">Domain</Label>
-                                            <Control.text model=".work"
-                                                          id="work"
-                                                          name="work"
-                                                          className="form-control input"
-                                                          placeholder="Domain"
-                                            />
-                                        </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="conf_password" className="label">Confirm
+                                                    Password</Label>
+                                                <Control.text model=".conf_password"
+                                                              id="conf_password"
+                                                              type="password"
+                                                              name="conf_password"
+                                                              className="form-control input"
+                                                              placeholder="Confirm Password"
+                                                              validators={{
+                                                                  required
+                                                              }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".conf_password"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="num" className="label">Phone Number</Label>
+                                                <Control.text model=".num"
+                                                              id="num"
+                                                              name="num"
+                                                              type="number"
+                                                              className="form-control input"
+                                                              placeholder="Phone Number"
+                                                              validators={{
+                                                                  required,
+                                                                  minLength: minLength(8),
+                                                                  maxLength: maxLength(15),
+                                                                  isNumber
+                                                              }}
+                                                />
+                                                <Errors
+                                                    className="text-danger"
+                                                    model=".num"
+                                                    show="touched"
+                                                    messages={{
+                                                        required: 'Required -- ',
+                                                        minLength: 'Must be a valid phone number format',
+                                                        isNumber: 'Must be a number'
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="work" className="label">Domain</Label>
+                                                <Control.text model=".work"
+                                                              id="work"
+                                                              name="work"
+                                                              className="form-control input"
+                                                              placeholder="Domain"
+                                                />
+                                            </div>
 
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="city" className="label">City</Label>
-                                            <Control.select model="city" className="input">
-                                                <option value="monastir">monastir</option>
-                                                <option value="tunis">tunis</option>
-                                                <option value="mahdia">mahdia</option>
-                                            </Control.select>
-                                        </div>
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="image" className="label">Profile Photo</Label>
-                                            <ImageUploader
-                                                withPreview={true}
-                                                withIcon={true}
-                                                label="Add your photo"
-                                                buttonText="Add your photo"
-                                                onChange={this.onDrop}
-                                                imgExtension={['.jpg', '.png', 'jpeg']}
-                                                maxFileSize={5242880}
-                                                fileSizeError="Photo size is too big"
-                                                singleImage="true"
-                                            />
-                                        </div>
-                                        <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
-                                            Send
-                                        </button>
-                                    </LocalForm>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="city" className="label">City</Label>
+                                                <Control.select model="city" className="input">
+                                                    <option value="monastir">monastir</option>
+                                                    <option value="tunis">tunis</option>
+                                                    <option value="mahdia">mahdia</option>
+                                                </Control.select>
+                                            </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="image" className="label">Profile Photo</Label>
+                                                <ImageUploader
+                                                    withPreview={true}
+                                                    withIcon={true}
+                                                    label="Add your photo"
+                                                    buttonText="Add your photo"
+                                                    onChange={this.onDrop}
+                                                    imgExtension={['.jpg', '.png', 'jpeg']}
+                                                    maxFileSize={5242880}
+                                                    fileSizeError="Photo size is too big"
+                                                    singleImage="true"
+                                                />
+                                            </div>
+                                            <button type="submit"
+                                                    className="button button-reg-log row mx-auto d-flex mb-3">
+                                                Send
+                                            </button>
+                                        </LocalForm>
+
+                                    )}
 
 
                                 </div>
@@ -554,9 +572,9 @@ class Register extends Component {
                                    placeholder="Code"
                                    ref={this.input}
                             />
-                            <Label className="label col-12 mt-3">Email not sent ?  <a className="red-colored"
-                                                                                onClick={console.log("Resend email")}>
-                                Resend.    </a>
+                            <Label className="label col-12 mt-3">Email not sent ? <a className="red-colored"
+                                                                                     onClick={console.log("Resend email")}>
+                                Resend. </a>
                             </Label>
                         </div>
 

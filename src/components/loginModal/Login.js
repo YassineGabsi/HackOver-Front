@@ -11,6 +11,7 @@ import Input from "reactstrap/es/Input";
 import {Control, LocalForm, Errors, Field} from 'react-redux-form';
 import Row from "reactstrap/es/Row";
 import Button from "reactstrap/es/Button";
+import Loader from "../loader/Loader";
 
 
 class Login extends Component {
@@ -115,61 +116,70 @@ class Login extends Component {
                                 {this.props.auth.errMess ? (
                                     <span className="text-center red-colored text-size d-flex  ">Password or Email is incorrect! Please check your account informations.</span>
                                 ) : null}
-                                <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
-                                    <div className="form-group mx-3">
-                                        <Label htmlFor="email" className="label">Email</Label>
-                                        <Control.text model=".email" type="email"
-                                                      id="email"
-                                                      name="email"
-                                                      className="form-control input"
-                                                      placeholder="Email"
-                                        />
+                                {this.props.auth.isLoading ? (
+                                    <div className="my-5 vertical-center">
+                                        <Loader/>
                                     </div>
-                                    <div className="form-group mx-3">
-                                        <Label htmlFor="password" className="label">Password</Label>
-                                        <Control.text model=".password"
-                                                      id="password"
-                                                      name="password"
-                                                      type="password"
-                                                      className="form-control input"
-                                                      placeholder="Password"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <Label htmlFor="signedin" className="label">
-                                            <Control.checkbox model=".signedin"
-                                                              id="signedin"
-                                                              name="signedin"
-                                                              className="mx-4"
-                                            />
-                                            Stay signed in ?
-                                        </Label>
-                                    </div>
-                                    <Label className="label col-12">Forget Password? <a className="red-colored"
-                                                                                        onClick={this.toggleResetPass}> Reset
-                                        your
-                                        password</a></Label>
-                                    <Label className="label col-12">Not registered yet? <a className="red-colored"
-                                                                                           href="/register"> Register</a></Label>
+                                ) : (
+                                    <>
+                                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="email" className="label">Email</Label>
+                                                <Control.text model=".email" type="email"
+                                                              id="email"
+                                                              name="email"
+                                                              className="form-control input"
+                                                              placeholder="Email"
+                                                />
+                                            </div>
+                                            <div className="form-group mx-3">
+                                                <Label htmlFor="password" className="label">Password</Label>
+                                                <Control.text model=".password"
+                                                              id="password"
+                                                              name="password"
+                                                              type="password"
+                                                              className="form-control input"
+                                                              placeholder="Password"
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <Label htmlFor="signedin" className="label">
+                                                    <Control.checkbox model=".signedin"
+                                                                      id="signedin"
+                                                                      name="signedin"
+                                                                      className="mx-4"
+                                                    />
+                                                    Stay signed in ?
+                                                </Label>
+                                            </div>
+                                            <Label className="label col-12">Forget Password? <a className="red-colored"
+                                                                                                onClick={this.toggleResetPass}> Reset
+                                                your
+                                                password</a></Label>
+                                            <Label className="label col-12">Not registered yet? <a className="red-colored"
+                                                                                                   href="/register"> Register</a></Label>
 
-                                    <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
-                                        Login
-                                    </button>
-                                </LocalForm>
-                                <div className="row d-flex justify-content-center mt-5">
-                                    <div className="white-line-squared my-2 mx-3 tablet-and-desktop-only"/>
-                                    <h5>Or</h5>
-                                    <div className="white-line-squared my-2 mx-3 tablet-and-desktop-only"/>
-                                </div>
-                                <div className="row mb-3">
-                                    <div className="col-6">
-                                        <img className=" sign-in-img" src={require("../../img/facebook.svg")} alt=""/>
-                                    </div>
-                                    <div className="col-6">
-                                        <img className=" img-fuild sign-in-img" src={require("../../img/google-plus.svg")}
-                                             alt=""/>
-                                    </div>
-                                </div>
+                                            <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
+                                                Login
+                                            </button>
+                                        </LocalForm>
+                                        <div className="row d-flex justify-content-center mt-5">
+                                            <div className="white-line-squared my-2 mx-3 tablet-and-desktop-only"/>
+                                            <h5>Or</h5>
+                                            <div className="white-line-squared my-2 mx-3 tablet-and-desktop-only"/>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <div className="col-6">
+                                                <img className=" sign-in-img" src={require("../../img/facebook.svg")} alt=""/>
+                                            </div>
+                                            <div className="col-6">
+                                                <img className=" img-fuild sign-in-img" src={require("../../img/google-plus.svg")}
+                                                     alt=""/>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+
                             </ModalBody>
                         )}
                     </Modal>

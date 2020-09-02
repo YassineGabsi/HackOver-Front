@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
@@ -13,6 +13,8 @@ import Contact from "./contact/Contact";
 import Register from "./register/Register";
 import Hackathons from "./hackathons/Hackathons";
 import OnePageHackathon from "./onePageHackathon/OnePageHackathon";
+import Loader from "./loader/Loader";
+import GeneralLoader from "./loader/GeneralLoader";
 
 
 const mapDispatchToProps = dispatch => ({
@@ -31,26 +33,33 @@ const mapStateToProps = state => {
         hackathons: state.hackathons,
         feedbacks: state.feedbacks,
         auth: state.auth,
-        registration : state.registration
+        registration: state.registration
     };
 };
 
-const PrivateRoute = ({ component: Component, ...rest}) => (
+const PrivateRoute = ({component: Component, ...rest}) => (
     <Route
         {...rest}
-        render={ props => !localStorage.getItem("accessToken") ? (
-                <Component {...props} />
-            ) : (
-                <Redirect
-                    to={{
-                        pathname: "/404",
-                        state: {from: props.location}
-                    }}
-                />
+        render={props => !localStorage.getItem("accessToken") ? (
+            <Component {...props} />
+        ) : (
+            <Redirect
+                to={{
+                    pathname: "/404",
+                    state: {from: props.location}
+                }}
+            />
         )}
     />
 );
 const Main = props => {
+    const [DOMLoading, setDOMLoading] = useState(true);
+
+    useEffect(() => {
+            setDOMLoading(false);
+        }
+    );
+
     const HomePage = () => {
         return (
             <Home
@@ -65,6 +74,7 @@ const Main = props => {
             <Hackathons
                 oneHack={props.hackathons.hackathons.filter((hackathon) => hackathon.name === "AI Hack Tunisia 5")[0]}
                 hackathons={props.hackathons.hackathons}
+                isLoading={props.hackathons.isLoading}
                 auth={props.auth}
             />
         );
@@ -73,8 +83,8 @@ const Main = props => {
     const OneHackathonPage = ({match}) => {
         return (
             <OnePageHackathon
-                propId = {match.params.id}
-                oneHack = {props.hackathons.hackathons.filter ((hackathon) => hackathon.id === parseInt(match.params.id,10))[0]}
+                propId={match.params.id}
+                oneHack={props.hackathons.hackathons.filter((hackathon) => hackathon.id === parseInt(match.params.id, 10))[0]}
                 auth={props.auth}
                 feedbacks={props.feedbacks.feedbacks}
                 loginModalOpen={props.loginModalOpen}
@@ -85,33 +95,40 @@ const Main = props => {
     const RegisterPage = () => {
         return (
             <Register
-                registerUser = {props.registerUser}
-                registration = {props.registration}
+                registerUser={props.registerUser}
+                registration={props.registration}
             />
         );
     };
 
     return (
-        <div>
-            <Header
-                isModalOpen={props.loginModal.isModalOpen}
-                auth={props.auth}
-                loginModalClose={props.loginModalClose}
-                loginModalOpen={props.loginModalOpen}
-                loginUser={props.loginUser}
-                logoutUser={props.logoutUser}
-            />
-            <Switch>
-                <Route exact path='/about' component={About}/>
-                <Route exact path='/contact' component={Contact}/>
-                <PrivateRoute exact path='/register' component={RegisterPage}/>
-                <Route exact path='/hackathons' component={HackathonsPage}/>
-                <Route path='/hackathons/:id' component={OneHackathonPage}/>
-                <Route exact path='/' component={HomePage}/>
-                <Route component={NotFound}/>
-            </Switch>
-            <Footer/>
-        </div>
+        !DOMLoading ? (
+            <div>
+                <Header
+                    isModalOpen={props.loginModal.isModalOpen}
+                    auth={props.auth}
+                    loginModalClose={props.loginModalClose}
+                    loginModalOpen={props.loginModalOpen}
+                    loginUser={props.loginUser}
+                    logoutUser={props.logoutUser}
+                />
+                <Switch>
+                    <Route exact path='/about' component={About}/>
+                    <Route exact path='/loader' component={Loader}/>
+                    <Route exact path='/contact' component={Contact}/>
+                    <PrivateRoute exact path='/register' component={RegisterPage}/>
+                    <Route exact path='/hackathons' component={HackathonsPage}/>
+                    <Route path='/hackathons/:id' component={OneHackathonPage}/>
+                    <Route exact path='/' component={HomePage}/>
+                    <Route component={NotFound}/>
+                </Switch>
+                <Footer/>
+            </div>) : (
+            <div>
+                <GeneralLoader />
+            </div>
+        )
+
     );
 
 };
