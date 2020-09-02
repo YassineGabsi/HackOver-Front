@@ -52,7 +52,7 @@ class Login extends Component {
         const creds = {email: values.email, password: values.password};
         if (values.email && values.password)
             this.props.loginUser(creds);
-        console.log(this.props.auth.errMess);
+            console.log(this.props.auth.errMess);
 
     };
 

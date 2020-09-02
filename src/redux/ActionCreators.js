@@ -1,5 +1,6 @@
 import * as ActionTypes from './ActionTypes';
 import {baseUrl} from '../shared/baseUrl';
+import axios from 'axios'
 
 
 export const loginModalOpen = () => ({
@@ -45,13 +46,7 @@ export const registerSendEmail = () => {
 export const registerUser = (creds) => (dispatch) => {
     dispatch(requestRegister(creds));
     console.log(creds);
-    return fetch(baseUrl + 'auth/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(creds)
-    })
+    return axios.post(baseUrl + 'auth/register', creds)
         .then(response => {
                 console.log(response.status);
                 if (response.status === 200 || 201) {
@@ -65,9 +60,8 @@ export const registerUser = (creds) => (dispatch) => {
             error => {
                 throw error;
             })
-        .then(response => response.json())
         .then(response => {
-            if (response.success) {
+            if (response.data.success) {
                 // Dispatch the success action
                 dispatch(receiveRegister(response));
             } else {
@@ -91,7 +85,7 @@ export const requestLogin = (creds) => {
 export const receiveLogin = (response) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
-        token: response.token
+        accessToken: response.accessToken
     }
 };
 
@@ -106,13 +100,7 @@ export  const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds));
     console.log(creds);
-    return fetch(baseUrl + 'auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(creds)
-    })
+    return axios.post(baseUrl + 'auth/login', creds)
         .then(response => {
                 console.log(response.status);
                 if (response.status === 200) {
@@ -126,15 +114,17 @@ export  const loginUser = (creds) => (dispatch) => {
             error => {
                 throw error;
             })
-        .then(response => response.json())
         .then(response => {
-            if (response.success) {
+            console.log(response);
+            if (response.data.success) {
+                console.log(response.data.accessToken);
                 // If login was successful, set the token in local storage
-                localStorage.setItem('accessToken', response.accessToken);
+                localStorage.setItem('accessToken', response.data.accessToken);
                 localStorage.setItem('creds', JSON.stringify(creds));
                 // Dispatch the success action
                 dispatch(receiveLogin(response));
             } else {
+
                 var error = new Error('Error ' + response.status);
                 error.response = response;
                 throw error;
