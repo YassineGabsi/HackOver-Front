@@ -13,6 +13,8 @@ class Navb extends Component {
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
         this.logout = this.logout.bind(this);
+        if (this.props.auth.isAuthenticated && !this.props.auth.isLoading)
+            this.bg = require(`../../../img/${this.props.auth.user.picture}`);
         this.state = {
             isNavOpen: false,
             isDropdownOpen: false,
@@ -74,7 +76,7 @@ class Navb extends Component {
                                     <div className="desktop-only d-flex ">
                                         <h3 className="mt-4 mr-3">{this.props.auth.user.fullName}</h3>
                                         <DropdownToggle className="drop-toggle">
-                                            <div className="user-circle"/>
+                                            <div className="user-circle" style={{backgroundImage: "url("+this.bg+") "}}/>
                                         </DropdownToggle>
                                     </div>
                                     <DropdownMenu right>
@@ -112,7 +114,7 @@ class Navb extends Component {
                         {this.props.auth.isAuthenticated ? (
                             <>
                                 <div className=" row text-center mx-auto" style={{padding: "8px 8px 8px 32px"}}>
-                                    <div className="user-circle "/>
+                                    <div className="user-circle " style={{backgroundImage: "url("+this.bg+") "}}/>
                                     <span className="mt-3 ml-3 user-name small-titles font-weight-bold">{this.props.auth.user.fullName}</span>
                                 </div>
                                 <a href="/">Hackathons Organized</a>

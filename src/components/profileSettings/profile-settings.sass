@@ -1,0 +1,34 @@
+@import "../../stylesheets/variables"
+
+.profile-rectangle
+  border-bottom: 2px solid $blue_styling_color
+  border-left: 2px solid $blue_styling_color
+  border-right: 2px solid $blue_styling_color
+  border-top: 5px solid $red_styling_color
+  padding: 50px 25px 50px 25px
+  box-shadow: 0 0 20px #000000
+  background-color: $background_color
+
+
+.profile-user-circle
+  margin-top: 5px
+  width: 200px
+  height: 200px
+  z-index: -1
+  margin-bottom: -50px
+  background: $red_styling_color no-repeat center
+  border-radius: 50%
+  border: solid #7fd4e8 2px
+  background-size: cover
+  @media screen and (max-width: 1024px)
+    width: 150px
+    height: 150px
+    margin-top: 10px
+    margin-bottom: -30px
+
+  @media screen and (max-width: 768px)
+    width: 100px
+    height: 100px
+    margin-top: 10px
+    margin-bottom: -15px
+

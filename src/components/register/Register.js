@@ -51,11 +51,12 @@ class Register extends Component {
                 email: values.email,
                 password: values.password,
                 confirmPassword: values.conf_password,
-                num: values.num,
+                phone: values.num,
                 age: this.state.participant ? values.age : "22",
-                work: values.work,
+                domain: values.work,
+                city: values.city,
                 sex: this.state.participant ? values.gender : "Male",
-                photo: this.state.pictures[0] ? this.state.pictures[0].name : '',
+                picture: this.state.pictures[0] ? this.state.pictures[0].name : '',
                 role: this.state.participant ? "Participant" : "Organizator"
             };
             console.log(data);
@@ -522,7 +523,10 @@ class Register extends Component {
 
                                             <div className="form-group mx-3">
                                                 <Label htmlFor="city" className="label">City</Label>
-                                                <Control.select model="city" className="input">
+                                                <Control.select model=".city"
+                                                                className="input"
+                                                                id="city"
+                                                                >
                                                     <option value="monastir">monastir</option>
                                                     <option value="tunis">tunis</option>
                                                     <option value="mahdia">mahdia</option>

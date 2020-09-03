@@ -119,6 +119,14 @@ const Main = props => {
         );
     };
 
+    const ProfileSettingsPage = () => {
+        return (
+            <ProfileSettings
+                user = {props.auth.user}
+            />
+        );
+    };
+
     return (
         !DOMLoading ? (
             <div>
@@ -135,7 +143,7 @@ const Main = props => {
                     <Route exact path='/loader' component={Loader}/>
                     <Route exact path='/contact' component={Contact}/>
                     <LoggedOutRoute exact path='/register' component={RegisterPage}/>
-                    <LoggedInRoute exact path='/profile' component={ProfileSettings}/>
+                    <LoggedInRoute exact path='/profile' component={ProfileSettingsPage}/>
                     <Route exact path='/hackathons' component={HackathonsPage}/>
                     <Route path='/hackathons/:id' component={OneHackathonPage}/>
                     <Route exact path='/' component={HomePage}/>
