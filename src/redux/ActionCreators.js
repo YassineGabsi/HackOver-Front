@@ -85,7 +85,8 @@ export const requestLogin = (creds) => {
 export const receiveLogin = (response) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
-        accessToken: response.accessToken
+        accessToken: response.data.accessToken,
+        user: response.data.user,
     }
 };
 
@@ -102,7 +103,7 @@ export  const loginUser = (creds) => (dispatch) => {
     console.log(creds);
     return axios.post(baseUrl + 'auth/login', creds)
         .then(response => {
-                console.log(response.status);
+                console.log(response);
                 if (response.status === 200) {
                     return response;
                 } else {
@@ -120,7 +121,7 @@ export  const loginUser = (creds) => (dispatch) => {
                 console.log(response.data.accessToken);
                 // If login was successful, set the token in local storage
                 localStorage.setItem('accessToken', response.data.accessToken);
-                localStorage.setItem('creds', JSON.stringify(creds));
+                localStorage.setItem('creds', JSON.stringify(response.data.user));
                 // Dispatch the success action
                 dispatch(receiveLogin(response));
             } else {

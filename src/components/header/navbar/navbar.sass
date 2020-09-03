@@ -92,8 +92,7 @@
     height: 20px
     margin-top: 10px
 
-.user-name
-  margin-top: 15px
+
 
 span
   @extend %text-size
@@ -125,6 +124,12 @@ span
       background-color: transparent
       color: $red_styling_color
       font-weight: bold
+    &:focus
+      background-color: transparent
+      color: $red_styling_color
+    &:active
+      background-color: transparent
+      color: $red_styling_color
 
 .dropdown-menu
   background-color: transparent
@@ -175,10 +180,6 @@ span
     content: ''
     border: solid #7fd4e8 1.5px
 
-
-//  width: 0
-//  height: 0
-//  border-left: 20px solid transparent
-//  border-right: 20px solid $red_styling_color
-//  border-bottom: 25px solid $background_color
-////
+.user-name
+  color: $background_color
+  margin-bottom: 5px

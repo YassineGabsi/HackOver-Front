@@ -18,6 +18,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            empty: false,
             resetPass: false,
             resetSent: false,
             errMess: null
@@ -49,12 +50,16 @@ class Login extends Component {
     }
 
     handleSubmit(values) {
-        this.setState({submitted: true});
-        const creds = {email: values.email, password: values.password};
-        if (values.email && values.password)
-            this.props.loginUser(creds);
+        if (!values.email || !values.password)
+            this.setState({empty: true, errMess: null});
+        else {
+            this.setState({submitted: true , empty: false});
+            const creds = {email: values.email, password: values.password};
+            if (values.email && values.password){
+                this.props.loginUser(creds);
+            }
             console.log(this.props.auth.errMess);
-
+        }
     };
 
     render() {
@@ -113,8 +118,11 @@ class Login extends Component {
                                 <div className="row d-flex justify-content-center">
                                     <div className="line-squared my-3"/>
                                 </div>
-                                {this.props.auth.errMess ? (
+                                {this.props.auth.errMess && !this.state.empty ? (
                                     <span className="text-center red-colored text-size d-flex  ">Password or Email is incorrect! Please check your account informations.</span>
+                                ) : null}
+                                {this.state.empty  ? (
+                                    <span className="text-center red-colored text-size  d-flex  ">Please fill out the missing fields.</span>
                                 ) : null}
                                 {this.props.auth.isLoading ? (
                                     <div className="my-5 vertical-center">

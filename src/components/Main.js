@@ -15,6 +15,7 @@ import Hackathons from "./hackathons/Hackathons";
 import OnePageHackathon from "./onePageHackathon/OnePageHackathon";
 import Loader from "./loader/Loader";
 import GeneralLoader from "./loader/GeneralLoader";
+import ProfileSettings from "./profileSettings/ProfileSettings";
 
 
 const mapDispatchToProps = dispatch => ({
@@ -37,7 +38,7 @@ const mapStateToProps = state => {
     };
 };
 
-const PrivateRoute = ({component: Component, ...rest}) => (
+const LoggedOutRoute = ({component: Component, ...rest}) => (
     <Route
         {...rest}
         render={props => !localStorage.getItem("accessToken") ? (
@@ -52,6 +53,23 @@ const PrivateRoute = ({component: Component, ...rest}) => (
         )}
     />
 );
+
+const LoggedInRoute = ({component: Component, ...rest}) => (
+    <Route
+        {...rest}
+        render={props => localStorage.getItem("accessToken") ? (
+            <Component {...props} />
+        ) : (
+            <Redirect
+                to={{
+                    pathname: "/404",
+                    state: {from: props.location}
+                }}
+            />
+        )}
+    />
+);
+
 const Main = props => {
     const [DOMLoading, setDOMLoading] = useState(true);
 
@@ -116,7 +134,8 @@ const Main = props => {
                     <Route exact path='/about' component={About}/>
                     <Route exact path='/loader' component={Loader}/>
                     <Route exact path='/contact' component={Contact}/>
-                    <PrivateRoute exact path='/register' component={RegisterPage}/>
+                    <LoggedOutRoute exact path='/register' component={RegisterPage}/>
+                    <LoggedInRoute exact path='/profile' component={ProfileSettings}/>
                     <Route exact path='/hackathons' component={HackathonsPage}/>
                     <Route path='/hackathons/:id' component={OneHackathonPage}/>
                     <Route exact path='/' component={HomePage}/>

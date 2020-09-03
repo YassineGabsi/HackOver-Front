@@ -4,6 +4,7 @@ import {Navbar, NavbarBrand} from 'reactstrap';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import NavbarToggler from "reactstrap/es/NavbarToggler";
 import Login from "../../loginModal/Login";
+import { useHistory } from "react-router-dom";
 
 
 class Navb extends Component {
@@ -71,7 +72,7 @@ class Navb extends Component {
                             {this.props.auth.isAuthenticated ? (
                                 <Dropdown isOpen={this.state.isDropdownOpen} toggle={this.toggleDropdown}>
                                     <div className="desktop-only d-flex ">
-                                        <h3 className="mt-4 mr-3">Your name</h3>
+                                        <h3 className="mt-4 mr-3">{this.props.auth.user.fullName}</h3>
                                         <DropdownToggle className="drop-toggle">
                                             <div className="user-circle"/>
                                         </DropdownToggle>
@@ -80,7 +81,7 @@ class Navb extends Component {
                                         <div className="arrow-up "/>
                                         <div className="drop-items">
                                             <DropdownItem>Hackathons Organized</DropdownItem>
-                                            <DropdownItem>Profile Settings</DropdownItem>
+                                            <DropdownItem href="/profile" style={{marginTop: "0"}}>Profile Settings</DropdownItem>
                                             <DropdownItem>Add a hackathon</DropdownItem>
                                             <DropdownItem onClick={this.logout} href="">Logout</DropdownItem>
                                         </div>
@@ -112,7 +113,7 @@ class Navb extends Component {
                             <>
                                 <div className=" row text-center mx-auto" style={{padding: "8px 8px 8px 32px"}}>
                                     <div className="user-circle "/>
-                                    <span className="mt-4 ml-3 ">Your Name</span>
+                                    <span className="mt-3 ml-3 user-name small-titles font-weight-bold">{this.props.auth.user.fullName}</span>
                                 </div>
                                 <a href="/">Hackathons Organized</a>
                                 <a href="#">Profile Settings</a>

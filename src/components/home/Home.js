@@ -31,7 +31,7 @@ function Home (props) {
                         </button>
                     </div>
                 ) : (
-                    <h2 className="col-12 vivify flipInX delay-250 mt-4">Welcome, <span className="red-colored">{props.auth.user.email}</span></h2>
+                    <h2 className="col-12 vivify flipInX delay-250 mt-4">Welcome, <span className="red-colored h2-like">{props.auth.user.fullName}</span></h2>
                 ) }
 
 
