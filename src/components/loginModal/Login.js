@@ -18,6 +18,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isRevealPassword: false,
             empty: false,
             resetPass: false,
             resetSent: false,
@@ -26,12 +27,14 @@ class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleResetSubmit = this.handleResetSubmit.bind(this);
         this.toggleResetPass = this.toggleResetPass.bind(this);
-        this.logoutCloseModal = this.logoutCloseModal.bind(this);
+        this.togglePassword = this.togglePassword.bind(this);
 
     }
 
-    logoutCloseModal () {
-
+    togglePassword () {
+        this.setState({
+            isRevealPassword: !this.state.isRevealPassword
+        })
     }
 
 
@@ -142,13 +145,19 @@ class Login extends Component {
                                             </div>
                                             <div className="form-group mx-3">
                                                 <Label htmlFor="password" className="label">Password</Label>
+                                                {this.state.isRevealPassword ? (
+                                                    <span className="fa fa-eye-slash reveal-pass-icon ml-3 mb-1 fa-lg" onClick={this.togglePassword}/>
+                                                ) : (
+                                                    <span className="fa fa-eye reveal-pass-icon ml-3 mb-1 fa-lg" onClick={this.togglePassword}/>
+                                                )}
                                                 <Control.text model=".password"
                                                               id="password"
                                                               name="password"
-                                                              type="password"
+                                                              type= {this.state.isRevealPassword ? "text" : "password"}
                                                               className="form-control input"
                                                               placeholder="Password"
-                                                />
+                                                >
+                                                </Control.text>
                                             </div>
                                             <div className="form-group">
                                                 <Label htmlFor="signedin" className="label">
