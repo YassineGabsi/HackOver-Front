@@ -16,6 +16,7 @@ import OnePageHackathon from "./onePageHackathon/OnePageHackathon";
 import Loader from "./loader/Loader";
 import GeneralLoader from "./loader/GeneralLoader";
 import ProfileSettings from "./profileSettings/ProfileSettings";
+import AddHackathon from "./addHackathon/AddHackathon";
 
 
 const mapDispatchToProps = dispatch => ({
@@ -110,6 +111,19 @@ const Main = props => {
         );
     };
 
+    const AddHackathonPage =() => {
+      if (props.auth.user.role === "Organizator")
+          return (
+              <AddHackathon
+                user ={ props.auth.user}
+              />
+          );
+      else
+          return(
+            <NotFound/>
+          );
+    };
+
     const RegisterPage = () => {
         return (
             <Register
@@ -144,6 +158,7 @@ const Main = props => {
                     <Route exact path='/contact' component={Contact}/>
                     <LoggedOutRoute exact path='/register' component={RegisterPage}/>
                     <LoggedInRoute exact path='/profile' component={ProfileSettingsPage}/>
+                    <LoggedInRoute exact path='/add-hackathon' component={AddHackathonPage}/>
                     <Route exact path='/hackathons' component={HackathonsPage}/>
                     <Route path='/hackathons/:id' component={OneHackathonPage}/>
                     <Route exact path='/' component={HomePage}/>

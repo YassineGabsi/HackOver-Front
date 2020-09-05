@@ -33,7 +33,7 @@ class Register extends Component {
 
     onDrop(pictureFiles) {
         this.setState({
-            pictures: this.state.pictures.concat(pictureFiles)
+            pictures: pictureFiles
         });
     }
 

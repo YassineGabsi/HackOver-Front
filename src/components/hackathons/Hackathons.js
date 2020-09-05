@@ -28,7 +28,6 @@ class Hackathons extends Component {
         }
     }
 
-
     handleAdvSearch() {
         let updateList = this.props.hackathons;
         if (this.country.current.value !== "All") {
