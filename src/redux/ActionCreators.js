@@ -15,6 +15,73 @@ export const loginModalClose = () => ({
 
 //---------------------- Search actions------------------------
 
+//---------------------- Hackathons actions------------------------
+export const requestHackathons = () => {
+    return {
+        type: ActionTypes.HACKATHON_LOADING
+    }
+};
+
+export const listHackathons = (hackathons) => {
+    return {
+        type: ActionTypes.LIST_HACKATHONS,
+        hackathons
+    }
+};
+
+export const hackathonsError = (message) => {
+    return {
+        type: ActionTypes.HACKATHON_FAILED,
+        message
+    }
+};
+
+export const getHackathons = () => (dispatch) => {
+    console.log("hi");
+    dispatch(requestHackathons());
+    return axios.get(baseUrl + 'hackathon')
+        .then(response => {
+            console.log(response.status);
+            if (response.status === 200 || 201) {
+                return response;
+            } else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            throw error;
+        })
+        .then(response => {
+            dispatch(listHackathons(response));
+        })
+        .catch(error => dispatch(hackathonsError(error.message)))
+};
+
+export const addHackathon = (data) => (dispatch) => {
+    dispatch(requestHackathons());
+    console.log(data);
+    return axios.post(baseUrl + 'hackathon', data)
+        .then(response => {
+                console.log(response.status);
+                if (response.status === 200 || 201) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            dispatch(listHackathons(response));
+        })
+        .catch(error => dispatch(hackathonsError(error.message)))
+};
+
 
 //---------------------- Registration actions------------------------
 export const requestRegister = (user) => {
@@ -97,7 +164,7 @@ export const loginError = (message) => {
     }
 };
 
-export  const loginUser = (creds) => (dispatch) => {
+export const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds));
     console.log(creds);

@@ -2,10 +2,11 @@ import React from 'react';
 import "./card.sass";
 
 function CardHackathons(props) {
+    // var bg = require(`../../../img/${props.oneHack.photos}`);
     var bg = require(`../../../img/${props.oneHack.image}`);
     return (
         <div className="col-lg-4 col-md-6 mb-4">
-            <a href={`/hackathons/${props.oneHack.id}`}>
+            <a href={`/hackathons/${props.oneHack._id}`}>
                 <div className="card  box-shadow mb-3 vivify popIn "
                      style={{backgroundImage: "url("+bg+") "}}
                 >
@@ -15,7 +16,7 @@ function CardHackathons(props) {
                                 year: "numeric",
                                 month: "long",
                                 day: "2-digit",
-                            }).format(new Date(props.oneHack.date))}
+                            }).format(new Date(props.oneHack.dateDebut))}
                         </h5>
                     </div>
                 </div>

@@ -2,7 +2,15 @@ import React, {Component, useEffect, useState} from 'react';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import {loginModalClose, loginModalOpen, loginUser, logoutUser, registerUser} from "../redux/ActionCreators";
+import {
+    loginModalClose,
+    loginModalOpen,
+    loginUser,
+    logoutUser,
+    registerUser,
+    getHackathons,
+    addHackathon
+} from "../redux/ActionCreators";
 
 import Header from "./header/Header";
 import Footer from "./footer/Footer";
@@ -27,6 +35,9 @@ const mapDispatchToProps = dispatch => ({
 
     loginUser: (creds) => dispatch(loginUser(creds)),
     logoutUser: () => dispatch(logoutUser()),
+
+    getHackathons: () => dispatch(getHackathons()),
+    addHackathon: (data) => dispatch(addHackathon(data)),
 });
 
 const mapStateToProps = state => {
@@ -38,6 +49,7 @@ const mapStateToProps = state => {
         registration: state.registration
     };
 };
+
 
 const LoggedOutRoute = ({component: Component, ...rest}) => (
     <Route
@@ -76,7 +88,9 @@ const Main = props => {
 
     useEffect(() => {
             setDOMLoading(false);
-        }
+        if (props.hackathons.hackathons.length ===0 )
+            props.getHackathons()
+        }, []
     );
 
     const HomePage = () => {
@@ -95,6 +109,7 @@ const Main = props => {
                 hackathons={props.hackathons.hackathons}
                 isLoading={props.hackathons.isLoading}
                 auth={props.auth}
+                getHackathons={props.getHackathons}
             />
         );
     };
@@ -103,7 +118,7 @@ const Main = props => {
         return (
             <OnePageHackathon
                 propId={match.params.id}
-                oneHack={props.hackathons.hackathons.filter((hackathon) => hackathon.id === parseInt(match.params.id, 10))[0]}
+                oneHack={props.hackathons.hackathons.filter((hackathon) => hackathon._id === match.params.id, 10)[0]}
                 auth={props.auth}
                 feedbacks={props.feedbacks.feedbacks}
                 loginModalOpen={props.loginModalOpen}
@@ -111,17 +126,18 @@ const Main = props => {
         );
     };
 
-    const AddHackathonPage =() => {
-      if (props.auth.user.role === "Organizator")
-          return (
-              <AddHackathon
-                user ={ props.auth.user}
-              />
-          );
-      else
-          return(
-            <NotFound/>
-          );
+    const AddHackathonPage = () => {
+        if (props.auth.user.role === "Organizator")
+            return (
+                <AddHackathon
+                    user={props.auth.user}
+                    addHackathon={props.addHackathon}
+                />
+            );
+        else
+            return (
+                <NotFound/>
+            );
     };
 
     const RegisterPage = () => {
@@ -136,13 +152,13 @@ const Main = props => {
     const ProfileSettingsPage = () => {
         return (
             <ProfileSettings
-                user = {props.auth.user}
+                user={props.auth.user}
             />
         );
     };
 
     return (
-        !DOMLoading ? (
+        !DOMLoading && !props.hackathons.isLoading ? (
             <div>
                 <Header
                     isModalOpen={props.loginModal.isModalOpen}
@@ -167,7 +183,7 @@ const Main = props => {
                 <Footer/>
             </div>) : (
             <div>
-                <GeneralLoader />
+                <GeneralLoader/>
             </div>
         )
 

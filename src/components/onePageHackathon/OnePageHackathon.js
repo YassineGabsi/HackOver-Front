@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import "./one-hackathon.sass";
 import "react-alice-carousel/lib/alice-carousel.css";
 import AliceCarousel from 'react-alice-carousel';
-import { ExternalLink } from 'react-external-link';
+import {ExternalLink} from 'react-external-link';
 import Winners from "./winnersModal/Winners";
 import Feedbacks from "./feedbacks/Feedbacks";
 
@@ -11,7 +11,9 @@ class OnePageHackathon extends Component {
     constructor(props) {
         super(props);
         this.toggleWinnersModal = this.toggleWinnersModal.bind(this);
+        // this.bg = require(`../../img/${this.props.oneHack.image}`);
         this.bg = require(`../../img/${this.props.oneHack.image}`);
+
         this.state = {
             isWinnersModalOpen: false,
             feedbacks: this.props.feedbacks
@@ -33,13 +35,14 @@ class OnePageHackathon extends Component {
             isWinnersModalOpen: !this.state.isWinnersModalOpen
         });
     }
+
     render() {
         return (
             <div className="container middle-content">
                 <div className="row d-flex justify-content-center">
                     <div className="col-lg-6 col-md-6 mb-4">
                         <div className="card  box-shadow mb-3 vivify popIn "
-                             style={{backgroundImage: "url("+this.bg+") "}}
+                             style={{backgroundImage: "url(" + this.bg + ") "}}
                         >
                             <div className="card-container">
                                 <h5 className="card-date">
@@ -47,7 +50,7 @@ class OnePageHackathon extends Component {
                                         year: "numeric",
                                         month: "long",
                                         day: "2-digit",
-                                    }).format(new Date(this.props.oneHack.date))}
+                                    }).format(new Date(this.props.oneHack.dateDebut))}
                                 </h5>
                             </div>
                         </div>
@@ -58,30 +61,40 @@ class OnePageHackathon extends Component {
                         <div className="line-squared vivify fadeIn delay-200"/>
                         <div className="row vivify fadeIn delay-200">
                             <i className="fa fa-calendar-o fa-5x ml-5 mr-1 mt-4" aria-hidden="true"/>
-                            <h4 className="mt-5 ml-4">{new Intl.DateTimeFormat("en-US", {
-                                year: "numeric",
-                                month: "long",
-                                day: "2-digit",
-                            }).format(new Date(this.props.oneHack.date))}</h4>
+                            <h4 className="mt-5 ml-4 ">
+                                {new Intl.DateTimeFormat("en-US", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "2-digit",
+                                }).format(new Date(this.props.oneHack.dateDebut))}
+                            </h4>
+                            <h4 className=" ml-4">
+                                {new Intl.DateTimeFormat("en-US", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "2-digit",
+                                }).format(new Date(this.props.oneHack.dateFin))}
+                            </h4>
                         </div>
                         <div className="row vivify fadeIn delay-200">
                             <i className="fa fa-map-marker fa-5x ml-5 mr-1 mt-4" aria-hidden="true"/>
                             <h4 className="mt-5 ml-4">
-                                {this.props.oneHack.place}
+                                {this.props.oneHack.emplacement}
                             </h4>
                         </div>
 
-                        {new Date(this.props.oneHack.date).getTime() <= new Date().getTime() ? (
+                        {new Date(this.props.oneHack.dateFin).getTime() <= new Date().getTime() ? (
                             <>
-                                <button className="button button-reg-log row mx-3 vivify fadeIn delay-200" onClick={this.toggleWinnersModal}>
+                                <button className="button button-reg-log row mx-3 vivify fadeIn delay-200"
+                                        onClick={this.toggleWinnersModal}>
                                     Winners
                                 </button>
-                                { this.state.isWinnersModalOpen ? (
+                                {this.state.isWinnersModalOpen ? (
                                     <Winners
-                                        toggleWinnersModal = {this.toggleWinnersModal}
-                                        oneHack = {this.props.oneHack}
+                                        toggleWinnersModal={this.toggleWinnersModal}
+                                        oneHack={this.props.oneHack}
                                     />
-                                ) : null }
+                                ) : null}
                                 <h3 className="mt-4 font-weight-bold vivify fadeIn delay-200">This hackathon is over,
                                     You can Participate in other
                                     <a href="/hackathons" className="red-colored"> hackathons</a>
@@ -114,55 +127,55 @@ class OnePageHackathon extends Component {
 
                     <p className="brand small-titles vivify flipInX delay-150 mt-2">Who can attend ?</p>
                     <div className="line-squared vivify fadeIn delay-200"/>
-                    <p className="mt-3">{this.props.oneHack.attend}</p>
+                    <p className="mt-3">{this.props.oneHack.cible}</p>
 
                     <p className="brand small-titles vivify flipInX delay-150 mt-2">Prizes</p>
                     <div className="line-squared vivify fadeIn delay-200"/>
                     {this.props.oneHack.prizes ? (
                         <div>
                             <p className="mt-3 ">First Place : <span
-                                className="red-colored">{this.props.oneHack.prizescontent.firstplace}</span></p>
+                                className="red-colored">{this.props.oneHack.prizescontent[0].firstPlace}</span></p>
                             <p className="mt-3 ">Second Place : <span
-                                className="red-colored">{this.props.oneHack.prizescontent.secondplace}</span></p>
+                                className="red-colored">{this.props.oneHack.prizescontent[0].secondPlace}</span></p>
                             <p className="mt-3 ">Third Place : <span
-                                className="red-colored">{this.props.oneHack.prizescontent.thirdplace}</span></p>
+                                className="red-colored">{this.props.oneHack.prizescontent[0].thirdPlace}</span></p>
                         </div>
                     ) : (
                         <p className="mt-3 ">The prizes will be announced as soon as possible</p>
                     )}
 
-                    <p className="brand small-titles vivify flipInX delay-150 mt-2">Photos</p>
-                    <div className="line-squared vivify fadeIn delay-200"/>
-                    <AliceCarousel autoPlay autoPlayInterval="3000" buttonsDisabled className="img-fluid">
-                        <img src={require(`../../img/${this.props.oneHack.photos.ph1}`)} className="sliderimg d-flex "
-                             alt=""/>
-                        <img src={require(`../../img/${this.props.oneHack.photos.ph2}`)} className="sliderimg d-flex"
-                             alt=""/>
-                        <img src={require(`../../img/${this.props.oneHack.photos.ph3}`)} className="sliderimg d-flex"
-                             alt=""/>
-                        <img src={require(`../../img/${this.props.oneHack.photos.ph4}`)} className="sliderimg d-flex"
-                             alt=""/>
-                    </AliceCarousel>
+                    {/*<p className="brand small-titles vivify flipInX delay-150 mt-2">Photos</p>*/}
+                    {/*<div className="line-squared vivify fadeIn delay-200"/>*/}
+                    {/*<AliceCarousel autoPlay autoPlayInterval="3000" buttonsDisabled className="img-fluid">*/}
+                    {/*    <img src={require(`../../img/${this.props.oneHack.photos.ph1}`)} className="sliderimg d-flex "*/}
+                    {/*         alt=""/>*/}
+                    {/*    <img src={require(`../../img/${this.props.oneHack.photos.ph2}`)} className="sliderimg d-flex"*/}
+                    {/*         alt=""/>*/}
+                    {/*    <img src={require(`../../img/${this.props.oneHack.photos.ph3}`)} className="sliderimg d-flex"*/}
+                    {/*         alt=""/>*/}
+                    {/*    <img src={require(`../../img/${this.props.oneHack.photos.ph4}`)} className="sliderimg d-flex"*/}
+                    {/*         alt=""/>*/}
+                    {/*</AliceCarousel>*/}
 
                     <p className="brand small-titles vivify flipInX delay-150 mt-2">Links</p>
                     <div className="line-squared vivify fadeIn delay-200"/>
-                    <ExternalLink href={this.props.oneHack.links.fb}>
+                    <ExternalLink href={this.props.oneHack.linkFB}>
                         <a className="fa fa-facebook ml-3 mr-1 fa-2x" aria-hidden="true"/>
                     </ExternalLink>
-                    <ExternalLink href={this.props.oneHack.links.insta}>
+                    <ExternalLink href={this.props.oneHack.linkIN}>
                         <a className="fa fa-instagram ml-3 mr-1 fa-2x" aria-hidden="true"/>
                     </ExternalLink>
-                    <ExternalLink href={this.props.oneHack.links.linkedin}>
+                    <ExternalLink href={this.props.oneHack.linkLN}>
                         <a className="fa fa-linkedin ml-3 mr-1 fa-2x" aria-hidden="true"/>
                     </ExternalLink>
-                    <ExternalLink href={this.props.oneHack.links.twitter}>
+                    <ExternalLink href={this.props.oneHack.linkTW}>
                         <a className="fa fa-twitter ml-3 mr-1 fa-2x" aria-hidden="true"/>
                     </ExternalLink>
 
                     <p className="brand small-titles vivify flipInX delay-150 mt-3">Feedbacks</p>
                     <div className="line-squared vivify fadeIn delay-200"/>
                     {this.state.feedbacks.map((feedback) => {
-                        return(
+                        return (
                             <Feedbacks
                                 feedback={feedback}
                             />

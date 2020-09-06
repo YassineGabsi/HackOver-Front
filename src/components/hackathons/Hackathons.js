@@ -17,6 +17,7 @@ class Hackathons extends Component {
         this.toggleAdv = this.toggleAdv.bind(this);
         this.handleAdvSearch = this.handleAdvSearch.bind(this);
         this.setHackathons = this.setHackathons.bind(this);
+        this.hackathons=null;
         this.country = React.createRef();
         this.organizer = React.createRef();
 
@@ -26,6 +27,12 @@ class Hackathons extends Component {
             dateFrom: new Date(),
             dateTo: new Date(),
         }
+    }
+
+
+    componentDidMount() {
+        console.log(this.props.isLoading);
+
     }
 
     handleAdvSearch() {
@@ -207,7 +214,7 @@ class Hackathons extends Component {
                     ) : null}
                 </div>
                 <div className="row">
-                    {this.props.isLoading ? (this.state.renderedHackathons.map((hackathon) => {
+                    {!this.props.isLoading ? (this.state.renderedHackathons.map((hackathon) => {
                         return (
                             <CardHackathons
                                 oneHack={hackathon}

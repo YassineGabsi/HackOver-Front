@@ -26,8 +26,32 @@ class AddHackathon extends Component{
         }
     }
 
-     handleSubmit (values)   {
-        console.log(JSON.stringify(values));
+
+
+    handleSubmit (values)   {
+        const data = {
+            name : values.name,
+            emplacement: values.emplacement,
+            description: values.description,
+            cible: values.cible,
+            prizes: !!(values.firstPlace || values.secondPlace || values.thirdPlace),
+            prizescontent: [
+                {firstPlace: values.firstPlace},
+                {secondPlace: values.secondPlace},
+                {thirdPlace: values.thirdPlace},
+            ],
+            linkFB : values.linkFB,
+            linkIN : values.linkIN,
+            linkTW : values.linkTW,
+            linkLN : values.linkLN,
+            photos: this.state.pictures[0].name,
+            author: this.props.user.fullName,
+            dateDebut: this.state.dateDebut,
+            dateFin: this.state.dateFin,
+            image: "hack.png",
+        };
+        console.log(data);
+        this.props.addHackathon(data);
     };
 
     onDrop(pictureFiles) {
@@ -102,6 +126,7 @@ class AddHackathon extends Component{
                         <div className="col-12 col-lg-6 mx-auto px-5 ">
                             <Label className="label col-12">Date from</Label>
                             <Datepicker
+                                dateFormat="yyyy/MM/dd"
                                 className="input form-control "
                                 selected={this.state.dateDebut}
                                 onChange={date => this.setState({
@@ -116,6 +141,7 @@ class AddHackathon extends Component{
                         <div className="col-12 col-lg-6  mx-auto px-5 mb-3">
                             <Label className="label col-12">Date to</Label>
                             <Datepicker
+                                dateFormat="yyyy/MM/dd"
                                 className="input form-control  "
                                 selected={this.state.dateFin}
                                 onChange={date => this.setState({
