@@ -22,7 +22,18 @@ function CardHackathons(props) {
                 </div>
             </a>
             <div className="line-squared vivify fadeIn delay-200"/>
-            <h5 className="brand vivify flipInX delay-150 mt-2">{props.oneHack.name} </h5>
+            <h5 className="brand vivify flipInX delay-150 mt-2 text-size">{props.oneHack.name} </h5>
+            {props.organized ? (
+                <>
+                    <h5 className="red-colored vivify flipInX delay-150 mt-2 text-size">xx Participants </h5>
+                    <a className="vivify flipInX delay-150 mt-2 text-size">
+                        <span className="fa fa-pencil  mr-3 mt-3 " aria-hidden="true"/>
+                        Edit
+                    </a>
+                </>
+            ) : null}
+
+
         </div>
     );
 }

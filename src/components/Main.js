@@ -25,6 +25,7 @@ import Loader from "./loader/Loader";
 import GeneralLoader from "./loader/GeneralLoader";
 import ProfileSettings from "./profileSettings/ProfileSettings";
 import AddHackathon from "./addHackathon/AddHackathon";
+import CardHackOrg from "./cardHackathonsOrganizator/CardHackOrg";
 
 
 const mapDispatchToProps = dispatch => ({
@@ -132,6 +133,9 @@ const Main = props => {
                 <AddHackathon
                     user={props.auth.user}
                     addHackathon={props.addHackathon}
+                    isLoading={props.hackathons.isLoading}
+                    isLoaded={props.hackathons.isLoaded}
+                    isAdded={props.hackathons.isAdded}
                 />
             );
         else
@@ -157,6 +161,17 @@ const Main = props => {
         );
     };
 
+    const HackathonsOrganized = () => {
+        return (
+            <CardHackOrg
+                user={props.auth.user}
+                hackathons={props.hackathons.hackathons}
+                isLoading={props.hackathons.isLoading}
+                isLoaded={props.hackathons.isLoaded}
+            />
+        );
+    };
+
     return (
         !DOMLoading && !props.hackathons.isLoading ? (
             <div>
@@ -175,6 +190,7 @@ const Main = props => {
                     <LoggedOutRoute exact path='/register' component={RegisterPage}/>
                     <LoggedInRoute exact path='/profile' component={ProfileSettingsPage}/>
                     <LoggedInRoute exact path='/add-hackathon' component={AddHackathonPage}/>
+                    <LoggedInRoute exact path='/hackathons-organized' component={HackathonsOrganized}/>
                     <Route exact path='/hackathons' component={HackathonsPage}/>
                     <Route path='/hackathons/:id' component={OneHackathonPage}/>
                     <Route exact path='/' component={HomePage}/>

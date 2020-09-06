@@ -29,6 +29,13 @@ export const listHackathons = (hackathons) => {
     }
 };
 
+export const hackathonAdded = () => {
+    return {
+        type: ActionTypes.HACKATHON_ADDED,
+
+    }
+};
+
 export const hackathonsError = (message) => {
     return {
         type: ActionTypes.HACKATHON_FAILED,
@@ -78,6 +85,7 @@ export const addHackathon = (data) => (dispatch) => {
         .then(response => {
             console.log(response);
             dispatch(listHackathons(response));
+            dispatch(hackathonAdded());
         })
         .catch(error => dispatch(hackathonsError(error.message)))
 };

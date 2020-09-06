@@ -91,7 +91,7 @@ class Navb extends Component {
                                         <div className="drop-items">
                                             { this.props.auth.user.role === "Organizator" ? (
                                                 <>
-                                                    <DropdownItem>Hackathons Organized</DropdownItem>
+                                                    <DropdownItem href="/hackathons-organized" style={{marginTop: "0"}}>Hackathons Organized</DropdownItem>
                                                     <DropdownItem href="/add-hackathon" style={{marginTop: "0"}}>Add a hackathon</DropdownItem>
                                                 </>
                                             ) : (
@@ -130,7 +130,7 @@ class Navb extends Component {
                                     <div className="user-circle " style={{backgroundImage: "url("+this.state.bg+") "}}/>
                                     <span className="mt-3 ml-3 user-name small-titles font-weight-bold">{this.props.auth.user.fullName}</span>
                                 </div>
-                                <a href="/">Hackathons Organized</a>
+                                <a href="hackathons-organized">Hackathons Organized</a>
                                 <a href="/profile">Profile Settings</a>
                                 <a href="/add-hackathon">Add a hackathon</a>
                                 <a onClick={this.props.logoutUser} href="">Logout</a>

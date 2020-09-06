@@ -29,7 +29,6 @@ class Hackathons extends Component {
         }
     }
 
-
     componentDidMount() {
         console.log(this.props.isLoading);
 
@@ -218,6 +217,7 @@ class Hackathons extends Component {
                         return (
                             <CardHackathons
                                 oneHack={hackathon}
+                                organized={false}
                             />
                         );
                     })) : (
