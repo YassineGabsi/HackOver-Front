@@ -162,13 +162,17 @@ const Main = props => {
     };
 
     const HackathonsOrganized = () => {
-        return (
+        if (props.auth.user.role === "Organizator")
+            return (
             <CardHackOrg
                 user={props.auth.user}
                 hackathons={props.hackathons.hackathons}
                 isLoading={props.hackathons.isLoading}
                 isLoaded={props.hackathons.isLoaded}
             />
+        );
+        return (
+            <NotFound/>
         );
     };
 

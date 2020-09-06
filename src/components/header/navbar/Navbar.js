@@ -4,6 +4,8 @@ import {Navbar, NavbarBrand} from 'reactstrap';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import NavbarToggler from "reactstrap/es/NavbarToggler";
 import Login from "../../loginModal/Login";
+import Redirect from "react-router-dom/es/Redirect";
+import withRouter from "react-router-dom/es/withRouter";
 
 
 class Navb extends Component {
@@ -24,13 +26,14 @@ class Navb extends Component {
             this.setState({
                 bg: require(`../../../img/${this.props.auth.user.picture}`)
             });
-        console.log("hi");
 
     }
 
     logout() {
         this.props.logoutUser();
-        this.props.loginModalClose()
+        this.props.loginModalClose();
+        this.props.history.push("/") //doing redirect here.
+
     }
 
     toggleNav() {
@@ -133,7 +136,7 @@ class Navb extends Component {
                                 <a href="hackathons-organized">Hackathons Organized</a>
                                 <a href="/profile">Profile Settings</a>
                                 <a href="/add-hackathon">Add a hackathon</a>
-                                <a onClick={this.props.logoutUser} href="">Logout</a>
+                                <a onClick={this.logout} href="">Logout</a>
                             </>
                         ) : (
                             <>
@@ -162,4 +165,4 @@ class Navb extends Component {
     }
 }
 
-export default Navb;
+export default withRouter(Navb);
