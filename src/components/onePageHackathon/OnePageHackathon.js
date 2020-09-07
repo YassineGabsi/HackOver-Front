@@ -56,29 +56,33 @@ class OnePageHackathon extends Component {
                         </div>
 
                         <h1 className="brand big-titles vivify flipInX delay-150 mt-2">{this.props.oneHack.name} </h1>
-                        <p className=" vivify flipInX delay-150 ">Organizator: <span
-                            className="red-colored">{this.props.oneHack.author}</span></p>
+                        <p className=" vivify flipInX delay-150 small-titles">Organizator: <span
+                            className="red-colored font-weight-bold small-titles ">{this.props.oneHack.author}</span></p>
                         <div className="line-squared vivify fadeIn delay-200"/>
                         <div className="row vivify fadeIn delay-200">
                             <i className="fa fa-calendar-o fa-5x ml-5 mr-1 mt-4" aria-hidden="true"/>
-                            <h4 className="mt-5 ml-4 ">
-                                {new Intl.DateTimeFormat("en-US", {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "2-digit",
-                                }).format(new Date(this.props.oneHack.dateDebut))}
-                            </h4>
-                            <h4 className=" ml-4">
-                                {new Intl.DateTimeFormat("en-US", {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "2-digit",
-                                }).format(new Date(this.props.oneHack.dateFin))}
-                            </h4>
+                           <div>
+                               <h4 className="ml-4 text-size" style={{marginTop: "20px"}}>
+                                   <span className="red-colored font-weight-bold">From: </span>
+                                   {new Intl.DateTimeFormat("en-US", {
+                                       year: "numeric",
+                                       month: "long",
+                                       day: "2-digit",
+                                   }).format(new Date(this.props.oneHack.dateDebut))}
+                               </h4>
+                               <h4 className=" ml-4 text-size">
+                                   <span className="red-colored font-weight-bold">To: </span>
+                                   {new Intl.DateTimeFormat("en-US", {
+                                       year: "numeric",
+                                       month: "long",
+                                       day: "2-digit",
+                                   }).format(new Date(this.props.oneHack.dateFin))}
+                               </h4>
+                           </div>
                         </div>
                         <div className="row vivify fadeIn delay-200">
                             <i className="fa fa-map-marker fa-5x ml-5 mr-1 mt-4" aria-hidden="true"/>
-                            <h4 className="mt-5 ml-4">
+                            <h4 className="mt-5 ml-4 text-size font-weight-bold">
                                 {this.props.oneHack.emplacement}
                             </h4>
                         </div>
