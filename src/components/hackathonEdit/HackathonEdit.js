@@ -5,6 +5,7 @@ import Label from "reactstrap/es/Label";
 import Datepicker from "react-datepicker";
 import ImageUploader from "react-images-upload";
 import Loader from "../loader/Loader";
+import withRouter from "react-router-dom/es/withRouter";
 
 class HackathonEdit extends Component {
     constructor(props) {
@@ -60,8 +61,6 @@ class HackathonEdit extends Component {
         this.props.updateHackathon(data, this.props.oneHack._id);
         window.location.reload(false);
 
-        // console.log(this.props.oneHack._id);
-        // console.log(this.props.oneHack.dateFin);
     }
 
     render() {
@@ -300,4 +299,4 @@ class HackathonEdit extends Component {
     }
 }
 
-export default HackathonEdit;
+export default withRouter(HackathonEdit);

@@ -11,7 +11,7 @@ export const Hackathons = (state = {
 }, action) => {
     switch(action.type) {
         case ActionTypes.LIST_HACKATHONS:
-            return {...state, isLoading: false, isLoaded: true, errMess: null, hackathons: action.hackathons.data };
+            return {...state, isLoading: false, isLoaded: false, errMess: null, hackathons: action.hackathons.data };
 
         case ActionTypes.HACKATHONS_LOADED:
             return {...state, isLoading: false, isLoaded: true, errMess: null};

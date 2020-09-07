@@ -58,6 +58,12 @@ export const hackathonsError = (message) => {
     }
 };
 
+export const hackathonsRemoved =() => {
+    return {
+        type: ActionTypes.HACKATHON_REMOVED
+    }
+};
+
 export const getHackathons = () => (dispatch) => {
     console.log("hi");
     dispatch(requestHackathons());
@@ -80,6 +86,31 @@ export const getHackathons = () => (dispatch) => {
         })
         .then(response => {
             dispatch(hackathonsLoaded());
+        })
+        .catch(error => dispatch(hackathonsError(error.message)))
+};
+
+export const removeHackathon = (data, id) => (dispatch) => {
+    dispatch(requestHackathons());
+    console.log(data);
+    return axios.delete(baseUrl + `hackathon/${id}`)
+        .then(response => {
+                console.log(response.status);
+                if (response.status === 200 || 201) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            dispatch(getHackathons());
+            dispatch(hackathonsRemoved());
         })
         .catch(error => dispatch(hackathonsError(error.message)))
 };

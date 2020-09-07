@@ -6,6 +6,7 @@ import {ExternalLink} from 'react-external-link';
 import Winners from "./winnersModal/Winners";
 import Feedbacks from "./feedbacks/Feedbacks";
 import HackathonEdit from "../hackathonEdit/HackathonEdit";
+import withRouter from "react-router-dom/es/withRouter";
 
 
 class OnePageHackathon extends Component {
@@ -13,6 +14,7 @@ class OnePageHackathon extends Component {
         super(props);
         this.toggleWinnersModal = this.toggleWinnersModal.bind(this);
         this.toggleEdit = this.toggleEdit.bind(this);
+        this.removeHack = this.removeHack.bind(this);
         // this.bg = require(`../../img/${this.props.oneHack.image}`);
         this.bg = require(`../../img/${this.props.oneHack.image}`);
 
@@ -37,6 +39,11 @@ class OnePageHackathon extends Component {
         this.setState({
             edit: !this.state.edit
         });
+    }
+
+    removeHack () {
+        this.props.removeHackathon(this.props.oneHack, this.props.oneHack._id);
+        this.props.history.push("/hackathons-organized");
     }
 
     toggleWinnersModal() {
@@ -135,10 +142,16 @@ class OnePageHackathon extends Component {
                                                         </button>
                                                     ) : (
                                                         <> {this.props.oneHack.author === this.props.auth.user.fullName ? (
-                                                            <button
-                                                                className="button button-reg-log row mx-3 vivify fadeIn delay-200" onClick={this.toggleEdit}>
-                                                                Edit
-                                                            </button>
+                                                            <div className="row">
+                                                                <button
+                                                                    className="button button-reg-log row mx-3 vivify fadeIn delay-200" onClick={this.toggleEdit}>
+                                                                    Edit
+                                                                </button>
+                                                                <button
+                                                                    className="button button-reg-log row mx-3 vivify fadeIn delay-200" onClick={this.removeHack}>
+                                                                    Remove
+                                                                </button>
+                                                                </div>
                                                         ) : (
                                                             <h3 className="mt-4 font-weight-bold vivify fadeIn delay-200">
                                                                 You can't participate because you are an organizator
@@ -236,4 +249,4 @@ class OnePageHackathon extends Component {
     }
 }
 
-export default OnePageHackathon;
+export default withRouter(OnePageHackathon);

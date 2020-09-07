@@ -10,7 +10,8 @@ import {
     registerUser,
     getHackathons,
     addHackathon,
-    updateHackathon
+    updateHackathon,
+    removeHackathon
 } from "../redux/ActionCreators";
 
 import Header from "./header/Header";
@@ -41,6 +42,8 @@ const mapDispatchToProps = dispatch => ({
     getHackathons: () => dispatch(getHackathons()),
     addHackathon: (data) => dispatch(addHackathon(data)),
     updateHackathon: (data, id) => dispatch(updateHackathon(data, id)),
+    removeHackathon: (data, id) => dispatch(removeHackathon(data, id)),
+
 });
 
 const mapStateToProps = state => {
@@ -125,6 +128,7 @@ const Main = props => {
                 auth={props.auth}
                 feedbacks={props.feedbacks.feedbacks}
                 updateHackathon={props.updateHackathon}
+                removeHackathon={props.removeHackathon}
             />
         );
     };
