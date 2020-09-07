@@ -36,6 +36,21 @@ export const hackathonAdded = () => {
     }
 };
 
+export const hackathonUpdated = () => {
+    return {
+        type: ActionTypes.HACKATHON_UPDATED,
+
+    }
+};
+
+export const hackathonsLoaded = () => {
+    return {
+        type: ActionTypes.HACKATHONS_LOADED,
+
+    }
+};
+
+
 export const hackathonsError = (message) => {
     return {
         type: ActionTypes.HACKATHON_FAILED,
@@ -61,7 +76,38 @@ export const getHackathons = () => (dispatch) => {
         })
         .then(response => {
             dispatch(listHackathons(response));
+
         })
+        .then(response => {
+            dispatch(hackathonsLoaded());
+        })
+        .catch(error => dispatch(hackathonsError(error.message)))
+};
+
+export const updateHackathon = (data, id) => (dispatch) => {
+    dispatch(requestHackathons());
+    console.log(data);
+    return axios.put(baseUrl + `hackathon/${id}`, data)
+        .then(response => {
+                console.log(response.status);
+                if (response.status === 200 || 201) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            dispatch(listHackathons(response));
+            dispatch(hackathonsLoaded());
+            dispatch(hackathonUpdated());
+        })
+
         .catch(error => dispatch(hackathonsError(error.message)))
 };
 
@@ -85,6 +131,9 @@ export const addHackathon = (data) => (dispatch) => {
         .then(response => {
             console.log(response);
             dispatch(listHackathons(response));
+        })
+        .then(response => {
+            dispatch(hackathonsLoaded());
             dispatch(hackathonAdded());
         })
         .catch(error => dispatch(hackathonsError(error.message)))

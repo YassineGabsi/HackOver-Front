@@ -9,7 +9,8 @@ import {
     logoutUser,
     registerUser,
     getHackathons,
-    addHackathon
+    addHackathon,
+    updateHackathon
 } from "../redux/ActionCreators";
 
 import Header from "./header/Header";
@@ -39,6 +40,7 @@ const mapDispatchToProps = dispatch => ({
 
     getHackathons: () => dispatch(getHackathons()),
     addHackathon: (data) => dispatch(addHackathon(data)),
+    updateHackathon: (data, id) => dispatch(updateHackathon(data, id)),
 });
 
 const mapStateToProps = state => {
@@ -122,7 +124,7 @@ const Main = props => {
                 oneHack={props.hackathons.hackathons.filter((hackathon) => hackathon._id === match.params.id, 10)[0]}
                 auth={props.auth}
                 feedbacks={props.feedbacks.feedbacks}
-                loginModalOpen={props.loginModalOpen}
+                updateHackathon={props.updateHackathon}
             />
         );
     };
@@ -177,7 +179,7 @@ const Main = props => {
     };
 
     return (
-        !DOMLoading && !props.hackathons.isLoading ? (
+        !DOMLoading && !props.hackathons.isLoading && props.hackathons.isLoaded ?(
             <div>
                 <Header
                     isModalOpen={props.loginModal.isModalOpen}
