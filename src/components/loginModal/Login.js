@@ -96,6 +96,11 @@ class Login extends Component {
                                             </div>
                                         ) : (
                                             <LocalForm onSubmit={(values) => this.handleResetSubmit(values)}>
+                                                {this.props.reset.isEmailWrong ? (
+                                                    <Label className="label col-12 text-center red-colored">
+                                                        This email doesn't exist, please make sure that you entered the right email.
+                                                    </Label>
+                                                ) : null}
                                                 <div className="form-group mx-3">
                                                     <Label htmlFor="email" className="label">Put your Email</Label>
                                                     <Control.text model=".emailReset" type="email"

@@ -4,6 +4,7 @@ export  const  Reset = (state = {
     isLoading: false,
     isEmailGet: false,
     isPassReset: false,
+    isEmailWrong: false,
     errMess: null
 }, action) => {
     switch (action.type) {
@@ -18,6 +19,7 @@ export  const  Reset = (state = {
             return {...state,
                 isLoading: false,
                 isEmailGet: true,
+                isEmailWrong: false,
                 isPassReset: false
             };
         case ActionTypes.RESET_SUCCESS:
@@ -32,6 +34,7 @@ export  const  Reset = (state = {
                 isLoading: false,
                 isEmailGet: false,
                 isPassReset: false,
+                isEmailWrong: true,
                 errMess: action.message
             };
         default:
