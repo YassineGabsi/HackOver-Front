@@ -4,8 +4,8 @@ import {Navbar, NavbarBrand} from 'reactstrap';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import NavbarToggler from "reactstrap/es/NavbarToggler";
 import Login from "../../loginModal/Login";
-import Redirect from "react-router-dom/es/Redirect";
 import withRouter from "react-router-dom/es/withRouter";
+import Header from "../Header";
 
 
 class Navb extends Component {
@@ -156,8 +156,10 @@ class Navb extends Component {
                         loginModalOpen={this.props.loginModalOpen}
                         loginModalClose={this.props.loginModalClose}
                         auth={this.props.auth}
+                        reset={this.props.reset}
                         loginUser={this.props.loginUser}
                         logoutUser={this.props.logoutUser}
+                        verifEmail={this.props.verifEmail}
                     />
                 ) : null}
             </div>

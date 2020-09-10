@@ -40,6 +40,7 @@ export  const  Auth = (state = {
                 acessToken: '',
                 user: null
             };
+
         default:
             return state
     }

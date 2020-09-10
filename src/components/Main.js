@@ -11,7 +11,9 @@ import {
     getHackathons,
     addHackathon,
     updateHackathon,
-    removeHackathon
+    removeHackathon,
+    verifEmail,
+    resetPassword
 } from "../redux/ActionCreators";
 
 import Header from "./header/Header";
@@ -28,6 +30,7 @@ import GeneralLoader from "./loader/GeneralLoader";
 import ProfileSettings from "./profileSettings/ProfileSettings";
 import AddHackathon from "./addHackathon/AddHackathon";
 import CardHackOrg from "./cardHackathonsOrganizator/CardHackOrg";
+import ResetPassword from "./resetPassword/ResetPassword";
 
 
 const mapDispatchToProps = dispatch => ({
@@ -38,6 +41,10 @@ const mapDispatchToProps = dispatch => ({
 
     loginUser: (creds) => dispatch(loginUser(creds)),
     logoutUser: () => dispatch(logoutUser()),
+
+    verifEmail: (creds) => dispatch(verifEmail(creds)),
+    resetPassword: (creds , token) => dispatch(resetPassword(creds , token)),
+
 
     getHackathons: () => dispatch(getHackathons()),
     addHackathon: (data) => dispatch(addHackathon(data)),
@@ -52,6 +59,7 @@ const mapStateToProps = state => {
         hackathons: state.hackathons,
         feedbacks: state.feedbacks,
         auth: state.auth,
+        reset: state.reset,
         registration: state.registration
     };
 };
@@ -167,6 +175,16 @@ const Main = props => {
         );
     };
 
+    const ResetPasswordPage = () => {
+        return (
+            <ResetPassword
+                user={props.auth.user}
+                resetPassword={props.resetPassword}
+                reset = {props.reset}
+            />
+        );
+    };
+
     const HackathonsOrganized = () => {
         if (props.auth.user.role === "Organizator")
             return (
@@ -188,16 +206,19 @@ const Main = props => {
                 <Header
                     isModalOpen={props.loginModal.isModalOpen}
                     auth={props.auth}
+                    reset={props.reset}
                     loginModalClose={props.loginModalClose}
                     loginModalOpen={props.loginModalOpen}
                     loginUser={props.loginUser}
                     logoutUser={props.logoutUser}
+                    verifEmail={props.verifEmail}
                 />
                 <Switch>
                     <Route exact path='/about' component={About}/>
                     <Route exact path='/loader' component={Loader}/>
                     <Route exact path='/contact' component={Contact}/>
                     <LoggedOutRoute exact path='/register' component={RegisterPage}/>
+                    <LoggedOutRoute exact path='/reset-password/:token' component={ResetPasswordPage}/>
                     <LoggedInRoute exact path='/profile' component={ProfileSettingsPage}/>
                     <LoggedInRoute exact path='/add-hackathon' component={AddHackathonPage}/>
                     <LoggedInRoute exact path='/hackathons-organized' component={HackathonsOrganized}/>

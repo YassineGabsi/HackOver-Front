@@ -11,9 +11,10 @@ function Header(props) {
                 loginModalClose={props.loginModalClose}
                 loginModalOpen={props.loginModalOpen}
                 auth={props.auth}
+                reset={props.reset}
                 loginUser={props.loginUser}
                 logoutUser={props.logoutUser}
-
+                verifEmail={props.verifEmail}
             />
         </header>
     );

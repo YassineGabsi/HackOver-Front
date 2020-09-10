@@ -7,6 +7,7 @@ import {Hackathons} from "./reducers/hackathons";
 import {Auth} from "./reducers/auth";
 import {Feedbacks} from "./reducers/feedbacks";
 import {Registration} from "./reducers/registration";
+import {Reset} from "./reducers/resetPassword";
 
 
 export const ConfigureStore = () => {
@@ -16,6 +17,7 @@ export const ConfigureStore = () => {
             hackathons: Hackathons,
             feedbacks: Feedbacks,
             auth: Auth,
+            reset: Reset,
             registration: Registration
         }),
         applyMiddleware(thunk, logger)

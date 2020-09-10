@@ -315,3 +315,94 @@ export const logoutUser = () => (dispatch) => {
         },
     })
 };
+
+//---------------------- Reset Password actions------------------------
+
+export const requestEmail = () => {
+    return {
+        type: ActionTypes.REQUEST_EMAIL
+    }
+};
+
+export const emailError = (message) => {
+    return {
+        type: ActionTypes.EMAIL_FAILURE,
+        message
+    }
+};
+
+export const emailSuccess = () => {
+    return {
+        type: ActionTypes.EMAIL_SUCCESS,
+    }
+};
+
+
+export const resetSuccess = () => {
+    return {
+        type: ActionTypes.RESET_SUCCESS,
+    }
+};
+
+
+export const resetPassword = (creds , token) => (dispatch) => {
+    dispatch(requestEmail());
+    console.log(creds);
+
+    return axios.put(baseUrl + `auth/resetPassword/${token}`, creds)
+        .then(response => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            if (response.data.message) {
+                dispatch(resetSuccess())
+            } else {
+                var error = new Error('Error ' + response.status);
+                error.response = response;
+                throw error;
+            }
+        })
+        .catch(error => dispatch(emailError(error.message)))
+};
+
+export const verifEmail = (email) => (dispatch) => {
+    dispatch(requestEmail());
+    console.log(email);
+    var data = {
+        email : email
+    };
+    return axios.post(baseUrl + 'auth/recover', data)
+        .then(response => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            if (response.data.message) {
+                dispatch(emailSuccess())
+            } else {
+                var error = new Error('Error ' + response.status);
+                error.response = response;
+                throw error;
+            }
+        })
+        .catch(error => dispatch(emailError(error.message)))
+};

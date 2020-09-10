@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import "./profile-settings.sass";
+import {LocalForm} from "react-redux-form";
 
 class ProfileSettings extends Component {
     constructor(props) {
@@ -310,6 +311,9 @@ class ProfileSettings extends Component {
 
                     </div>
                 </div>
+                <button type="submit" className="button button-reg-log row mx-auto d-flex my-4">
+                    Save Changes
+                </button>
             </div>
         );
     }

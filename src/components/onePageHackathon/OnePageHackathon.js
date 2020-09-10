@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import "./one-hackathon.sass";
 import "react-alice-carousel/lib/alice-carousel.css";
-import AliceCarousel from 'react-alice-carousel';
 import {ExternalLink} from 'react-external-link';
 import Winners from "./winnersModal/Winners";
 import Feedbacks from "./feedbacks/Feedbacks";
@@ -21,11 +20,12 @@ class OnePageHackathon extends Component {
         this.state = {
             isWinnersModalOpen: false,
             feedbacks: this.props.feedbacks,
-            edit: false,
+            edit: this.props.location.state.edit
         }
     }
 
     componentDidMount() {
+        console.log(this.props.location.state.edit);
         let specificFeeds = this.props.feedbacks;
         specificFeeds = specificFeeds.filter(item =>
             item.hackId === this.props.oneHack.id

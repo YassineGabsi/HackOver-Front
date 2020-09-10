@@ -46,10 +46,11 @@ class Login extends Component {
     }
 
     handleResetSubmit(values) {
+
+        this.props.verifEmail(values.emailReset);
         this.setState({
             resetSent: true
         });
-        console.log(values.emailReset);
     }
 
     handleSubmit(values) {
@@ -83,36 +84,44 @@ class Login extends Component {
                                     <div className="line-squared my-3"/>
                                 </div>
 
-                                {this.state.resetSent ? (
+                                {this.props.reset.isEmailGet ? (
                                     <Label className="label col-12 text-center mt-5">
                                         We sent you an email confirmation, please check your email box to set your new password
                                     </Label>
                                 ) : (
-                                    <LocalForm onSubmit={(values) => this.handleResetSubmit(values)}>
-                                        <div className="form-group mx-3">
-                                            <Label htmlFor="email" className="label">Put your Email</Label>
-                                            <Control.text model=".emailReset" type="email"
-                                                          id="emailReset"
-                                                          name="emailReset"
-                                                          className="form-control input"
-                                                          placeholder="Email"
-                                            />
-                                        </div>
-                                        <Label className="label col-12">Not registered yet?
-                                            <a className="red-colored"
-                                               href="/register"> Register
-                                            </a>
-                                        </Label>
+                                    <>
+                                        {this.props.reset.isLoading ? (
+                                            <div className="my-5 vertical-center">
+                                                <Loader/>
+                                            </div>
+                                        ) : (
+                                            <LocalForm onSubmit={(values) => this.handleResetSubmit(values)}>
+                                                <div className="form-group mx-3">
+                                                    <Label htmlFor="email" className="label">Put your Email</Label>
+                                                    <Control.text model=".emailReset" type="email"
+                                                                  id="emailReset"
+                                                                  name="emailReset"
+                                                                  className="form-control input"
+                                                                  placeholder="Email"
+                                                    />
+                                                </div>
+                                                <Label className="label col-12">Not registered yet?
+                                                    <a className="red-colored"
+                                                       href="/register"> Register
+                                                    </a>
+                                                </Label>
 
-                                        <Label className="label col-12">Remember Password?
-                                            <a className="red-colored"
-                                               onClick={this.toggleResetPass}> Login
-                                            </a>
-                                        </Label>
-                                        <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
-                                            Send
-                                        </button>
-                                    </LocalForm>
+                                                <Label className="label col-12">Remember Password?
+                                                    <a className="red-colored"
+                                                       onClick={this.toggleResetPass}> Login
+                                                    </a>
+                                                </Label>
+                                                <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
+                                                    Send
+                                                </button>
+                                            </LocalForm>
+                                        ) }
+                                    </>
                                 )}
                             </ModalBody>
                         ) : (
