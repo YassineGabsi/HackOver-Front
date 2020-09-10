@@ -406,3 +406,54 @@ export const verifEmail = (email) => (dispatch) => {
         })
         .catch(error => dispatch(emailError(error.message)))
 };
+
+
+//---------------------- Update Profile actions------------------------
+
+export const updateError = (message) => {
+    return {
+        type: ActionTypes.UPDATE_FAILURE,
+        message
+    }
+};
+
+export const updateSuccess = () => {
+    return {
+        type: ActionTypes.UPDATE_SUCCESS,
+    }
+};
+
+export const updateRequest = () => {
+    return {
+        type: ActionTypes.UPDATE_REQUEST,
+    }
+};
+
+export const updateProfile = (data, id) => (dispatch) => {
+    dispatch(updateRequest());
+    console.log(data);
+    return axios.put(baseUrl + `auth/updateProfile/${id}`, data)
+        .then(response => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            if (response.data.message) {
+                dispatch(updateSuccess())
+            } else {
+                var error = new Error('Error ' + response.status);
+                error.response = response;
+                throw error;
+            }
+        })
+        .catch(error => dispatch(updateError(error.message)))
+};

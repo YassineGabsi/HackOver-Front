@@ -7,6 +7,8 @@ class ProfileSettings extends Component {
         super(props);
         this.bg = require(`../../img/${props.user.picture}`);
         this.uploadPhoto = this.uploadPhoto.bind(this);
+        this.saveChanges = this.saveChanges.bind(this);
+
         this.changeEmail = this.changeEmail.bind(this);
         this.changePass = this.changePass.bind(this);
         this.changePhone = this.changePhone.bind(this);
@@ -49,6 +51,18 @@ class ProfileSettings extends Component {
 
 
         }
+    }
+
+    saveChanges() {
+        var data = {
+            fullName : this.state.name,
+            phone: this.state.phone,
+            city: this.state.city,
+            domain: this.state.domain,
+            age: this.state.age,
+        };
+        this.props.updateProfile(data, this.props.user._id);
+
     }
     changeEmail() {
         this.setState({
@@ -311,7 +325,7 @@ class ProfileSettings extends Component {
 
                     </div>
                 </div>
-                <button type="submit" className="button button-reg-log row mx-auto d-flex my-4">
+                <button type="submit" className="button button-reg-log row mx-auto d-flex my-4" onClick={this.saveChanges}>
                     Save Changes
                 </button>
             </div>

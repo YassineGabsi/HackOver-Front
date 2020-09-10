@@ -13,7 +13,8 @@ import {
     updateHackathon,
     removeHackathon,
     verifEmail,
-    resetPassword
+    resetPassword,
+    updateProfile
 } from "../redux/ActionCreators";
 
 import Header from "./header/Header";
@@ -45,6 +46,8 @@ const mapDispatchToProps = dispatch => ({
     verifEmail: (creds) => dispatch(verifEmail(creds)),
     resetPassword: (creds , token) => dispatch(resetPassword(creds , token)),
 
+    updateProfile: (data , id) => dispatch(updateProfile(data , id)),
+
 
     getHackathons: () => dispatch(getHackathons()),
     addHackathon: (data) => dispatch(addHackathon(data)),
@@ -60,6 +63,7 @@ const mapStateToProps = state => {
         feedbacks: state.feedbacks,
         auth: state.auth,
         reset: state.reset,
+        profileUpdate: state.profileUpdate,
         registration: state.registration
     };
 };
@@ -171,6 +175,7 @@ const Main = props => {
         return (
             <ProfileSettings
                 user={props.auth.user}
+                updateProfile={props.updateProfile}
             />
         );
     };
