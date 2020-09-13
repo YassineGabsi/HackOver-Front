@@ -98,7 +98,7 @@ class Navb extends Component {
                                                     <DropdownItem href="/add-hackathon" style={{marginTop: "0"}}>Add a hackathon</DropdownItem>
                                                 </>
                                             ) : (
-                                                <DropdownItem>Hackathons Participated in</DropdownItem>
+                                                <DropdownItem href="/hackathons-participated" style={{marginTop: "0"}}>Hackathons Participated in</DropdownItem>
                                             )}
                                             <DropdownItem href="/profile" style={{marginTop: "0"}}>Profile Settings</DropdownItem>
                                             <DropdownItem onClick={this.logout} href="">Logout</DropdownItem>
@@ -133,9 +133,15 @@ class Navb extends Component {
                                     <div className="user-circle " style={{backgroundImage: "url("+this.state.bg+") "}}/>
                                     <span className="mt-3 ml-3 user-name small-titles font-weight-bold">{this.props.auth.user.fullName}</span>
                                 </div>
-                                <a href="hackathons-organized">Hackathons Organized</a>
+                                {this.props.auth.user.role === "Organizator" ? (
+                                    <>
+                                        <a href="hackathons-organized">Hackathons Organized</a>
+                                        <a href="/add-hackathon">Add a hackathon</a>
+                                    </>
+                                ) : (
+                                    <a href="hackathons-participated">Hackathons Participated in</a>
+                                )}
                                 <a href="/profile">Profile Settings</a>
-                                <a href="/add-hackathon">Add a hackathon</a>
                                 <a onClick={this.logout} href="">Logout</a>
                             </>
                         ) : (

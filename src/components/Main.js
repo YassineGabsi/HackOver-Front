@@ -34,6 +34,7 @@ import ProfileSettings from "./profileSettings/ProfileSettings";
 import AddHackathon from "./addHackathon/AddHackathon";
 import CardHackOrg from "./cardHackathonsOrganizator/CardHackOrg";
 import ResetPassword from "./resetPassword/ResetPassword";
+import CardHackPart from "./cardHackathonsParticipants/CardHackPart";
 
 
 const mapDispatchToProps = dispatch => ({
@@ -215,6 +216,23 @@ const Main = props => {
         );
     };
 
+    const HackathonsParticipated = () => {
+        if (props.auth.user.role === "Participant")
+            return (
+                <CardHackPart
+                    user={props.auth.user}
+                    hackathons={props.hackathons.hackathons}
+                    isLoading={props.hackathons.isLoading}
+                    isLoaded={props.hackathons.isLoaded}
+                    participation={props.participation}
+                    getParticipations={props.getParticipations}
+                />
+            );
+        return (
+            <NotFound/>
+        );
+    };
+
     return (
         !DOMLoading && !props.hackathons.isLoading && props.hackathons.isLoaded ?(
             <div>
@@ -237,6 +255,7 @@ const Main = props => {
                     <LoggedInRoute exact path='/profile' component={ProfileSettingsPage}/>
                     <LoggedInRoute exact path='/add-hackathon' component={AddHackathonPage}/>
                     <LoggedInRoute exact path='/hackathons-organized' component={HackathonsOrganized}/>
+                    <LoggedInRoute exact path='/hackathons-participated' component={HackathonsParticipated}/>
                     <Route exact path='/hackathons' component={HackathonsPage}/>
                     <Route path='/hackathons/:id' component={OneHackathonPage}/>
                     <Route exact path='/' component={HomePage}/>
