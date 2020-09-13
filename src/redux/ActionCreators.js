@@ -58,7 +58,7 @@ export const hackathonsError = (message) => {
     }
 };
 
-export const hackathonsRemoved =() => {
+export const hackathonsRemoved = () => {
     return {
         type: ActionTypes.HACKATHON_REMOVED
     }
@@ -93,7 +93,7 @@ export const getHackathons = () => (dispatch) => {
 export const removeHackathon = (data, id) => (dispatch) => {
     dispatch(requestHackathons());
     console.log(data);
-    return axios.delete(baseUrl + `hackathon/${id}`)
+    return axios.delete(baseUrl + `hackathon/${id}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('accessToken')}`}})
         .then(response => {
                 console.log(response.status);
                 if (response.status === 200 || 201) {
@@ -118,7 +118,7 @@ export const removeHackathon = (data, id) => (dispatch) => {
 export const updateHackathon = (data, id) => (dispatch) => {
     dispatch(requestHackathons());
     console.log(data);
-    return axios.put(baseUrl + `hackathon/${id}`, data)
+    return axios.put(baseUrl + `hackathon/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('accessToken')}`}})
         .then(response => {
                 console.log(response.status);
                 if (response.status === 200 || 201) {
@@ -134,7 +134,7 @@ export const updateHackathon = (data, id) => (dispatch) => {
             })
         .then(response => {
             console.log(response);
-            dispatch(listHackathons(response));
+            dispatch(getHackathons());
             dispatch(hackathonsLoaded());
             dispatch(hackathonUpdated());
         })
@@ -145,7 +145,8 @@ export const updateHackathon = (data, id) => (dispatch) => {
 export const addHackathon = (data) => (dispatch) => {
     dispatch(requestHackathons());
     console.log(data);
-    return axios.post(baseUrl + 'hackathon', data)
+    console.log(localStorage.getItem('accessToken'));
+    return axios.post(baseUrl + 'hackathon', data, {headers: {'Authorization': `Bearer ${localStorage.getItem('accessToken')}`}})
         .then(response => {
                 console.log(response.status);
                 if (response.status === 200 || 201) {
@@ -161,7 +162,7 @@ export const addHackathon = (data) => (dispatch) => {
             })
         .then(response => {
             console.log(response);
-            dispatch(listHackathons(response));
+            dispatch(getHackathons());
         })
         .then(response => {
             dispatch(hackathonsLoaded());
@@ -345,11 +346,11 @@ export const resetSuccess = () => {
 };
 
 
-export const resetPassword = (creds , token) => (dispatch) => {
+export const resetPassword = (creds, token) => (dispatch) => {
     dispatch(requestEmail());
     console.log(creds);
 
-    return axios.put(baseUrl + `auth/resetPassword/${token}`, creds)
+    return axios.put(baseUrl + `auth/resetPassword/${token}`, creds,)
         .then(response => {
                 if (response.status === 200) {
                     return response;
@@ -379,7 +380,7 @@ export const verifEmail = (email) => (dispatch) => {
     dispatch(requestEmail());
     console.log(email);
     var data = {
-        email : email
+        email: email
     };
     return axios.post(baseUrl + 'auth/recover', data)
         .then(response => {
@@ -432,7 +433,7 @@ export const updateRequest = () => {
 export const updateProfile = (data, id) => (dispatch) => {
     dispatch(updateRequest());
     console.log(data);
-    return axios.put(baseUrl + `auth/updateProfile/${id}`, data)
+    return axios.put(baseUrl + `auth/updateProfile/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('accessToken')}`}})
         .then(response => {
                 if (response.status === 200) {
                     return response;
@@ -456,4 +457,88 @@ export const updateProfile = (data, id) => (dispatch) => {
             }
         })
         .catch(error => dispatch(updateError(error.message)))
+};
+
+//---------------------- Participate in hackathons actions------------------------
+
+export const participateError = (message) => {
+    return {
+        type: ActionTypes.PARTICIPATION_FAILURE,
+        message
+    }
+};
+
+export const participateSuccess = () => {
+    return {
+        type: ActionTypes.PARTICIPATION_SUCCESS,
+    }
+};
+
+export const participateRequest = () => {
+    return {
+        type: ActionTypes.REQUEST_PARTICIPATION,
+    }
+};
+
+export const listParticipations = (data) => {
+    return {
+        type: ActionTypes.LIST_PARTICIPATIONS,
+        data
+    }
+};
+
+export const getParticipations = () => (dispatch) => {
+    dispatch(participateRequest());
+    return axios.get(baseUrl + `user/MyParticipations`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        }
+    )
+        .then(response => {
+                if (response.status === 200) {
+                    console.log(response.data);
+                    dispatch(listParticipations(response.data));
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+
+            },
+            error => {
+                throw error;
+            })
+        .catch(error => dispatch(participateError(error.message)))
+};
+
+
+export const participateHackathon = (id) => (dispatch) => {
+    dispatch(participateRequest());
+    dispatch(requestHackathons());
+    return axios.put(baseUrl + `hackathon/participation/${id}`, '', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        }
+    )
+        .then(response => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            dispatch(participateSuccess());
+        })
+        .catch(error => dispatch(participateError(error.message)))
+
 };

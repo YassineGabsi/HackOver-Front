@@ -9,6 +9,7 @@ import {Feedbacks} from "./reducers/feedbacks";
 import {Registration} from "./reducers/registration";
 import {Reset} from "./reducers/resetPassword";
 import {ProfileUpdate} from "./reducers/profileUpdate";
+import {Participation} from "./reducers/participation";
 
 
 export const ConfigureStore = () => {
@@ -20,7 +21,8 @@ export const ConfigureStore = () => {
             auth: Auth,
             reset: Reset,
             profileUpdate: ProfileUpdate,
-            registration: Registration
+            registration: Registration,
+            participation: Participation,
         }),
         applyMiddleware(thunk, logger)
     );

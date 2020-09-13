@@ -31,17 +31,18 @@ class AddHackathon extends Component{
 
 
     handleSubmit (values)   {
+        const prizes ={
+            firstPlace: values.firstPlace,
+            secondPlace: values.secondPlace,
+            thirdPlace: values.thirdPlace,
+        };
         const data = {
             name : values.name,
             emplacement: values.emplacement,
             description: values.description,
             cible: values.cible,
             prizes: !!(values.firstPlace || values.secondPlace || values.thirdPlace),
-            prizescontent: [
-                {firstPlace: values.firstPlace},
-                {secondPlace: values.secondPlace},
-                {thirdPlace: values.thirdPlace},
-            ],
+            prizescontent: prizes,
             linkFB : values.linkFB,
             linkIN : values.linkIN,
             linkTW : values.linkTW,

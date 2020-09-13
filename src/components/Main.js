@@ -14,7 +14,9 @@ import {
     removeHackathon,
     verifEmail,
     resetPassword,
-    updateProfile
+    updateProfile,
+    participateHackathon,
+    getParticipations,
 } from "../redux/ActionCreators";
 
 import Header from "./header/Header";
@@ -48,11 +50,15 @@ const mapDispatchToProps = dispatch => ({
 
     updateProfile: (data , id) => dispatch(updateProfile(data , id)),
 
-
     getHackathons: () => dispatch(getHackathons()),
     addHackathon: (data) => dispatch(addHackathon(data)),
     updateHackathon: (data, id) => dispatch(updateHackathon(data, id)),
     removeHackathon: (data, id) => dispatch(removeHackathon(data, id)),
+
+    participateHackathon: (id) => dispatch(participateHackathon(id)),
+    getParticipations: () => dispatch(getParticipations()),
+
+
 
 });
 
@@ -64,7 +70,8 @@ const mapStateToProps = state => {
         auth: state.auth,
         reset: state.reset,
         profileUpdate: state.profileUpdate,
-        registration: state.registration
+        registration: state.registration,
+        participation: state.participation
     };
 };
 
@@ -138,9 +145,12 @@ const Main = props => {
                 propId={match.params.id}
                 oneHack={props.hackathons.hackathons.filter((hackathon) => hackathon._id === match.params.id, 10)[0]}
                 auth={props.auth}
+                participation={props.participation}
                 feedbacks={props.feedbacks.feedbacks}
                 updateHackathon={props.updateHackathon}
                 removeHackathon={props.removeHackathon}
+                participateHackathon={props.participateHackathon}
+                getParticipations={props.getParticipations}
             />
         );
     };
