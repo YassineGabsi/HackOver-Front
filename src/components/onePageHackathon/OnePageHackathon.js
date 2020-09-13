@@ -16,6 +16,7 @@ class OnePageHackathon extends Component {
         this.toggleEdit = this.toggleEdit.bind(this);
         this.removeHack = this.removeHack.bind(this);
         this.participateInHackathon = this.participateInHackathon.bind(this);
+        this.disparticipateInHackathon = this.disparticipateInHackathon.bind(this);
         // this.bg = require(`../../img/${this.props.oneHack.image}`);
         this.bg = require(`../../img/${this.props.oneHack.image}`);
 
@@ -51,6 +52,12 @@ class OnePageHackathon extends Component {
 
     }
 
+    disparticipateInHackathon() {
+        this.props.disparticipateHackathon(this.props.oneHack._id);
+        window.location.reload(false);
+
+    }
+
     toggleEdit() {
         this.setState({
             edit: !this.state.edit
@@ -79,7 +86,7 @@ class OnePageHackathon extends Component {
                     />
                 ) : (
                     <>
-                        {this.props.participation.isLoading ? (
+                        {this.props.participation.isLoading  ? (
                             <div className="my-5 vertical-center">
                                 <Loader/>
                             </div>
@@ -160,9 +167,18 @@ class OnePageHackathon extends Component {
                                                             this.props.auth.user.role === "Participant" ? (
                                                                 <>
                                                                     {this.state.participatedIn ? (
-                                                                        <h3 className="mt-4 font-weight-bold vivify fadeIn delay-200">
-                                                                            You are already participating in this hackathon
-                                                                        </h3>
+                                                                        <>
+                                                                            <h3 className="mt-4 font-weight-bold vivify fadeIn delay-200">
+                                                                                You are already participating in this hackathon
+                                                                            </h3>
+                                                                            <button
+                                                                                className="button button-reg-log row mx-3 vivify fadeIn delay-200"
+                                                                                onClick={this.disparticipateInHackathon}
+                                                                            >
+                                                                                Stop participation
+                                                                            </button>
+                                                                            </>
+
                                                                     ) : (
                                                                         <button
                                                                             className="button button-reg-log row mx-3 vivify fadeIn delay-200"

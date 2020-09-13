@@ -474,6 +474,13 @@ export const participateSuccess = () => {
     }
 };
 
+
+export const disparticipateSuccess = () => {
+    return {
+        type: ActionTypes.DISPARTICIPATION_SUCCESS,
+    }
+};
+
 export const participateRequest = () => {
     return {
         type: ActionTypes.REQUEST_PARTICIPATION,
@@ -516,7 +523,6 @@ export const getParticipations = () => (dispatch) => {
 
 export const participateHackathon = (id) => (dispatch) => {
     dispatch(participateRequest());
-    dispatch(requestHackathons());
     return axios.put(baseUrl + `hackathon/participation/${id}`, '', {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -538,6 +544,35 @@ export const participateHackathon = (id) => (dispatch) => {
         .then(response => {
             console.log(response);
             dispatch(participateSuccess());
+        })
+        .catch(error => dispatch(participateError(error.message)))
+
+};
+
+
+export const disparticipateHackathon = (id) => (dispatch) => {
+    dispatch(participateRequest());
+    return axios.put(baseUrl + `hackathon/disParticipate/${id}`, '', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        }
+    )
+        .then(response => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            dispatch(disparticipateSuccess());
         })
         .catch(error => dispatch(participateError(error.message)))
 

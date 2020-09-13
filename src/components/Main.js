@@ -17,6 +17,7 @@ import {
     updateProfile,
     participateHackathon,
     getParticipations,
+    disparticipateHackathon,
 } from "../redux/ActionCreators";
 
 import Header from "./header/Header";
@@ -57,6 +58,7 @@ const mapDispatchToProps = dispatch => ({
     removeHackathon: (data, id) => dispatch(removeHackathon(data, id)),
 
     participateHackathon: (id) => dispatch(participateHackathon(id)),
+    disparticipateHackathon: (id) => dispatch(disparticipateHackathon(id)),
     getParticipations: () => dispatch(getParticipations()),
 
 
@@ -151,6 +153,7 @@ const Main = props => {
                 updateHackathon={props.updateHackathon}
                 removeHackathon={props.removeHackathon}
                 participateHackathon={props.participateHackathon}
+                disparticipateHackathon={props.disparticipateHackathon}
                 getParticipations={props.getParticipations}
             />
         );
