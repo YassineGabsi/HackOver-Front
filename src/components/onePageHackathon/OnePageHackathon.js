@@ -15,6 +15,8 @@ class OnePageHackathon extends Component {
         this.toggleWinnersModal = this.toggleWinnersModal.bind(this);
         this.toggleEdit = this.toggleEdit.bind(this);
         this.removeHack = this.removeHack.bind(this);
+        this.catchFeedback = this.catchFeedback.bind(this);
+        this.sendFeedback = this.sendFeedback.bind(this);
         this.participateInHackathon = this.participateInHackathon.bind(this);
         this.disparticipateInHackathon = this.disparticipateInHackathon.bind(this);
         // this.bg = require(`../../img/${this.props.oneHack.image}`);
@@ -22,9 +24,10 @@ class OnePageHackathon extends Component {
 
         this.state = {
             isWinnersModalOpen: false,
-            feedbacks: this.props.feedbacks,
+            feedbacks: null,
             edit: this.props.location.state.edit,
             participatedIn: false,
+            feedback: null,
         }
     }
 
@@ -36,16 +39,31 @@ class OnePageHackathon extends Component {
         hacks = hacks.filter(item => {
             return item._id === this.props.oneHack._id
         });
-        let specificFeeds = this.props.feedbacks;
-        specificFeeds = specificFeeds.filter(item =>
-            item.hackId === this.props.oneHack._id
-        );
         this.setState({
-            feedbacks: specificFeeds,
             participatedIn: !!hacks.length
         });
 
+        if(!this.props.feedbacks.isLoaded && !this.props.feedbacks.isLoading){
+            this.props.getFeedbacks(this.props.oneHack._id);
+        }
+        if (this.props.feedbacks.isLoaded && !this.props.feedbacks.isLoading)
+            this.setState({
+                feedbacks:this.props.feedbacks.feedbacks.data
+            });
+
+
     }
+    catchFeedback(e) {
+        this.setState({
+            feedback: e.target.value
+        });
+        console.log(this.state.feedback);
+    }
+
+    sendFeedback () {
+        this.props.addFeedback(this.state.feedback,this.props.oneHack._id);
+    }
+
     participateInHackathon() {
         this.props.participateHackathon(this.props.oneHack._id);
         window.location.reload(false);
@@ -279,16 +297,28 @@ class OnePageHackathon extends Component {
                                     <ExternalLink href={this.props.oneHack.linkTW}>
                                         <a className="fa fa-twitter ml-3 mr-1 fa-2x" aria-hidden="true"/>
                                     </ExternalLink>
+                                    {new Date(this.props.oneHack.dateFin).getTime() <= new Date().getTime() ? (
+                                        <>
+                                            <p className="brand small-titles vivify flipInX delay-150 mt-3">Feedbacks</p>
+                                            <div className="line-squared vivify fadeIn delay-200"/>
+                                            { this.state.feedbacks ? this.state.feedbacks.map((feedback) => {
+                                                return (
 
-                                    <p className="brand small-titles vivify flipInX delay-150 mt-3">Feedbacks</p>
-                                    <div className="line-squared vivify fadeIn delay-200"/>
-                                    {this.state.feedbacks.map((feedback) => {
-                                        return (
-                                            <Feedbacks
-                                                feedback={feedback}
-                                            />
-                                        )
-                                    })}
+                                                    <Feedbacks
+                                                        feedback={feedback}
+                                                    />
+                                                )
+                                            }): null}
+                                            <p className="brand small-titles vivify flipInX delay-150 mt-3">Add a feedback</p>
+                                            <div className="line-squared vivify fadeIn delay-200"/>
+                                            <input type="text" className="input col-lg-7 col-12 vivify fadeIn mt-3   mb-4"
+                                                   placeholder="Add Feedback"  onChange={this.catchFeedback}/>
+                                            <button className="button button-reg-log row mx-3 vivify fadeIn delay-200"
+                                                    onClick={this.sendFeedback}>
+                                                Add Feedback
+                                            </button>
+                                        </>
+                                    ) : null}
 
                                 </div>
                             </div>

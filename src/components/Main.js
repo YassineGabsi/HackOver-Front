@@ -18,6 +18,8 @@ import {
     participateHackathon,
     getParticipations,
     disparticipateHackathon,
+    addFeedback,
+    getFeedbacks,
 } from "../redux/ActionCreators";
 
 import Header from "./header/Header";
@@ -61,8 +63,8 @@ const mapDispatchToProps = dispatch => ({
     disparticipateHackathon: (id) => dispatch(disparticipateHackathon(id)),
     getParticipations: () => dispatch(getParticipations()),
 
-
-
+    addFeedback: (data,id) => dispatch(addFeedback(data,id)),
+    getFeedbacks: (id) => dispatch(getFeedbacks(id)),
 });
 
 const mapStateToProps = state => {
@@ -149,12 +151,15 @@ const Main = props => {
                 oneHack={props.hackathons.hackathons.filter((hackathon) => hackathon._id === match.params.id, 10)[0]}
                 auth={props.auth}
                 participation={props.participation}
-                feedbacks={props.feedbacks.feedbacks}
+                feedbacks={props.feedbacks}
                 updateHackathon={props.updateHackathon}
                 removeHackathon={props.removeHackathon}
                 participateHackathon={props.participateHackathon}
                 disparticipateHackathon={props.disparticipateHackathon}
                 getParticipations={props.getParticipations}
+                addFeedback={props.addFeedback}
+                getFeedbacks={props.getFeedbacks}
+
             />
         );
     };

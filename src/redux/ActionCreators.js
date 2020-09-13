@@ -12,7 +12,89 @@ export const loginModalClose = () => ({
 });
 
 //---------------------- Feedback actions------------------------
+export const requestFeedbacks = () => {
+    return {
+        type: ActionTypes.REQUEST_FEEDBACKS
+    }
+};
 
+export const feedbackAdded = () => {
+    return {
+        type: ActionTypes.FEEDBACKS_SUCCESS
+    }
+};
+
+
+export const listFeedbacks = (feedbacks) => {
+    return {
+        type: ActionTypes.LIST_FEEDBACKS,
+        feedbacks
+    }
+};
+
+export const feedbackError = (message) => {
+    return {
+        type: ActionTypes.FEEDBACK_FAILED,
+        message
+    }
+};
+
+
+export const getFeedbacks = (id) => (dispatch) => {
+    dispatch(requestFeedbacks());
+    return axios.get(baseUrl + `hackathon/feedback/${id}`, {headers: {
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        }})
+        .then(response => {
+                console.log(response.status);
+                if (response.status === 200 || 201) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            dispatch(listFeedbacks(response.data));
+            dispatch(feedbackAdded());
+        })
+
+        .catch(error => dispatch(feedbackError(error.message)))
+};
+
+export const addFeedback = (data, id) => (dispatch) => {
+    dispatch(requestFeedbacks());
+    var comment = {
+        comment: data
+    };
+    return axios.post(baseUrl + `hackathon/feedback/${id}`, comment, {headers: {
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        }})
+        .then(response => {
+                console.log(response.status);
+                if (response.status === 200 || 201) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            dispatch(feedbackAdded());
+        })
+
+        .catch(error => dispatch(feedbackError(error.message)))
+};
 //---------------------- Search actions------------------------
 
 //---------------------- Hackathons actions------------------------
