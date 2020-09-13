@@ -32,7 +32,7 @@ class OnePageHackathon extends Component {
     }
 
     componentDidMount() {
-        if(!this.props.participation.isLoaded && !this.props.participation.isLoading) {
+        if (!this.props.participation.isLoaded && !this.props.participation.isLoading) {
             this.props.getParticipations();
         }
         let hacks = this.props.participation.hackathons;
@@ -43,16 +43,17 @@ class OnePageHackathon extends Component {
             participatedIn: !!hacks.length
         });
 
-        if(!this.props.feedbacks.isLoaded && !this.props.feedbacks.isLoading){
+        if (!this.props.feedbacks.isLoaded && !this.props.feedbacks.isLoading) {
             this.props.getFeedbacks(this.props.oneHack._id);
         }
         if (this.props.feedbacks.isLoaded && !this.props.feedbacks.isLoading)
             this.setState({
-                feedbacks:this.props.feedbacks.feedbacks.data
+                feedbacks: this.props.feedbacks.feedbacks.data
             });
 
 
     }
+
     catchFeedback(e) {
         this.setState({
             feedback: e.target.value
@@ -60,19 +61,18 @@ class OnePageHackathon extends Component {
         console.log(this.state.feedback);
     }
 
-    sendFeedback () {
-        this.props.addFeedback(this.state.feedback,this.props.oneHack._id);
+    sendFeedback() {
+        this.props.addFeedback(this.state.feedback, this.props.oneHack._id);
+
     }
 
     participateInHackathon() {
         this.props.participateHackathon(this.props.oneHack._id);
-        window.location.reload(false);
 
     }
 
     disparticipateInHackathon() {
         this.props.disparticipateHackathon(this.props.oneHack._id);
-        window.location.reload(false);
 
     }
 
@@ -82,7 +82,7 @@ class OnePageHackathon extends Component {
         });
     }
 
-    removeHack () {
+    removeHack() {
         this.props.removeHackathon(this.props.oneHack, this.props.oneHack._id);
         this.props.history.push("/hackathons-organized");
     }
@@ -104,7 +104,7 @@ class OnePageHackathon extends Component {
                     />
                 ) : (
                     <>
-                        {this.props.participation.isLoading  ? (
+                        {this.props.participation.isLoading ? (
                             <div className="my-5 vertical-center">
                                 <Loader/>
                             </div>
@@ -161,8 +161,9 @@ class OnePageHackathon extends Component {
 
                                         {new Date(this.props.oneHack.dateFin).getTime() <= new Date().getTime() ? (
                                             <>
-                                                <button className="button button-reg-log row mx-3 vivify fadeIn delay-200"
-                                                        onClick={this.toggleWinnersModal}>
+                                                <button
+                                                    className="button button-reg-log row mx-3 vivify fadeIn delay-200"
+                                                    onClick={this.toggleWinnersModal}>
                                                     Winners
                                                 </button>
                                                 {this.state.isWinnersModalOpen ? (
@@ -171,7 +172,8 @@ class OnePageHackathon extends Component {
                                                         oneHack={this.props.oneHack}
                                                     />
                                                 ) : null}
-                                                <h3 className="mt-4 font-weight-bold vivify fadeIn delay-200">This hackathon is
+                                                <h3 className="mt-4 font-weight-bold vivify fadeIn delay-200">This
+                                                    hackathon is
                                                     over,
                                                     You can Participate in other
                                                     <a href="/hackathons" className="red-colored"> hackathons</a>
@@ -187,7 +189,8 @@ class OnePageHackathon extends Component {
                                                                     {this.state.participatedIn ? (
                                                                         <>
                                                                             <h3 className="mt-4 font-weight-bold vivify fadeIn delay-200">
-                                                                                You are already participating in this hackathon
+                                                                                You are already participating in this
+                                                                                hackathon
                                                                             </h3>
                                                                             <button
                                                                                 className="button button-reg-log row mx-3 vivify fadeIn delay-200"
@@ -195,7 +198,7 @@ class OnePageHackathon extends Component {
                                                                             >
                                                                                 Stop participation
                                                                             </button>
-                                                                            </>
+                                                                        </>
 
                                                                     ) : (
                                                                         <button
@@ -211,17 +214,20 @@ class OnePageHackathon extends Component {
                                                                 <> {this.props.oneHack.author === this.props.auth.user.fullName ? (
                                                                     <div className="row">
                                                                         <button
-                                                                            className="button button-reg-log row mx-3 vivify fadeIn delay-200" onClick={this.toggleEdit}>
+                                                                            className="button button-reg-log row mx-3 vivify fadeIn delay-200"
+                                                                            onClick={this.toggleEdit}>
                                                                             Edit
                                                                         </button>
                                                                         <button
-                                                                            className="button button-reg-log row mx-3 vivify fadeIn delay-200" onClick={this.removeHack}>
+                                                                            className="button button-reg-log row mx-3 vivify fadeIn delay-200"
+                                                                            onClick={this.removeHack}>
                                                                             Remove
                                                                         </button>
                                                                     </div>
                                                                 ) : (
                                                                     <h3 className="mt-4 font-weight-bold vivify fadeIn delay-200">
-                                                                        You can't participate because you are an organizator
+                                                                        You can't participate because you are an
+                                                                        organizator
                                                                     </h3>
                                                                 )}
                                                                 </>
@@ -244,7 +250,8 @@ class OnePageHackathon extends Component {
                                     </div>
                                 </div>
                                 <div className="col-12">
-                                    <p className="brand small-titles vivify flipInX delay-150 mt-2">Event Description </p>
+                                    <p className="brand small-titles vivify flipInX delay-150 mt-2">Event
+                                        Description </p>
                                     <div className="line-squared vivify fadeIn delay-200"/>
                                     <p className="mt-3">{this.props.oneHack.description}</p>
 
@@ -301,22 +308,36 @@ class OnePageHackathon extends Component {
                                         <>
                                             <p className="brand small-titles vivify flipInX delay-150 mt-3">Feedbacks</p>
                                             <div className="line-squared vivify fadeIn delay-200"/>
-                                            { this.state.feedbacks ? this.state.feedbacks.map((feedback) => {
-                                                return (
+                                            {this.props.feedbacks.isLoading && !this.props.feedbacks.loaded ? (
+                                                <div className="my-5 vertical-center">
+                                                    <Loader/>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    {this.state.feedbacks ? this.state.feedbacks.map((feedback) => {
+                                                        return (
 
-                                                    <Feedbacks
-                                                        feedback={feedback}
-                                                    />
-                                                )
-                                            }): null}
-                                            <p className="brand small-titles vivify flipInX delay-150 mt-3">Add a feedback</p>
-                                            <div className="line-squared vivify fadeIn delay-200"/>
-                                            <input type="text" className="input col-lg-7 col-12 vivify fadeIn mt-3   mb-4"
-                                                   placeholder="Add Feedback"  onChange={this.catchFeedback}/>
-                                            <button className="button button-reg-log row mx-3 vivify fadeIn delay-200"
-                                                    onClick={this.sendFeedback}>
-                                                Add Feedback
-                                            </button>
+                                                            <Feedbacks
+                                                                feedback={feedback}
+                                                                user={this.props.auth.user}
+                                                                deleteFeedback={this.props.deleteFeedback}
+                                                                oneHack={this.props.oneHack}
+                                                            />
+                                                        )
+                                                    }) : null}
+                                                    <p className="brand small-titles vivify flipInX delay-150 mt-3">Add
+                                                        a feedback</p>
+                                                    <div className="line-squared vivify fadeIn delay-200"/>
+                                                    <input type="text"
+                                                           className="input col-lg-7 col-12 vivify fadeIn mt-3   mb-4"
+                                                           placeholder="Add Feedback" onChange={this.catchFeedback}/>
+                                                    <button
+                                                        className="button button-reg-log row mx-3 vivify fadeIn delay-200"
+                                                        onClick={this.sendFeedback}>
+                                                        Add Feedback
+                                                    </button>
+                                                </>
+                                            )}
                                         </>
                                     ) : null}
 

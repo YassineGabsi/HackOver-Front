@@ -18,12 +18,18 @@ export const requestFeedbacks = () => {
     }
 };
 
+export const feedbackDeleted = () => {
+    return {
+        type: ActionTypes.DELETE_FEEDBACK
+    }
+};
+
+
 export const feedbackAdded = () => {
     return {
         type: ActionTypes.FEEDBACKS_SUCCESS
     }
 };
-
 
 export const listFeedbacks = (feedbacks) => {
     return {
@@ -67,6 +73,34 @@ export const getFeedbacks = (id) => (dispatch) => {
         .catch(error => dispatch(feedbackError(error.message)))
 };
 
+
+export const deleteFeedback = (hackId, id) => (dispatch) => {
+    dispatch(requestFeedbacks());
+    return axios.delete(baseUrl + `hackathon/feedback/${hackId}/${id}`, {headers: {
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        }})
+        .then(response => {
+                console.log(response.status);
+                if (response.status === 200 || 201) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            dispatch(feedbackDeleted());
+            dispatch(getFeedbacks(hackId));
+        })
+
+        .catch(error => dispatch(feedbackError(error.message)))
+};
+
 export const addFeedback = (data, id) => (dispatch) => {
     dispatch(requestFeedbacks());
     var comment = {
@@ -91,6 +125,8 @@ export const addFeedback = (data, id) => (dispatch) => {
         .then(response => {
             console.log(response);
             dispatch(feedbackAdded());
+            dispatch(getFeedbacks(id));
+
         })
 
         .catch(error => dispatch(feedbackError(error.message)))
@@ -626,6 +662,7 @@ export const participateHackathon = (id) => (dispatch) => {
         .then(response => {
             console.log(response);
             dispatch(participateSuccess());
+            dispatch(getParticipations());
         })
         .catch(error => dispatch(participateError(error.message)))
 
@@ -655,6 +692,7 @@ export const disparticipateHackathon = (id) => (dispatch) => {
         .then(response => {
             console.log(response);
             dispatch(disparticipateSuccess());
+            dispatch(getParticipations());
         })
         .catch(error => dispatch(participateError(error.message)))
 
