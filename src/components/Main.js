@@ -15,6 +15,7 @@ import {
     verifEmail,
     resetPassword,
     updateProfile,
+    updatePicture,
     participateHackathon,
     getParticipations,
     disparticipateHackathon,
@@ -54,6 +55,8 @@ const mapDispatchToProps = dispatch => ({
     resetPassword: (creds , token) => dispatch(resetPassword(creds , token)),
 
     updateProfile: (data , id) => dispatch(updateProfile(data , id)),
+    updatePicture: (data , id) => dispatch(updatePicture(data , id)),
+
 
     getHackathons: () => dispatch(getHackathons()),
     addHackathon: (data) => dispatch(addHackathon(data)),
@@ -77,6 +80,7 @@ const mapStateToProps = state => {
         auth: state.auth,
         reset: state.reset,
         profileUpdate: state.profileUpdate,
+        updatePicture: state.updatePicture,
         registration: state.registration,
         participation: state.participation
     };
@@ -198,6 +202,7 @@ const Main = props => {
             <ProfileSettings
                 user={props.auth.user}
                 updateProfile={props.updateProfile}
+                updatePicture={props.updatePicture}
             />
         );
     };

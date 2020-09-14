@@ -20,7 +20,7 @@ class OnePageHackathon extends Component {
         this.participateInHackathon = this.participateInHackathon.bind(this);
         this.disparticipateInHackathon = this.disparticipateInHackathon.bind(this);
         // this.bg = require(`../../img/${this.props.oneHack.image}`);
-        this.bg = require(`../../img/${this.props.oneHack.image}`);
+        this.bg= `http://localhost:5000/uploads/user_${this.props.oneHack.picture}`;
 
         this.state = {
             isWinnersModalOpen: false,
@@ -51,7 +51,7 @@ class OnePageHackathon extends Component {
                 feedbacks: this.props.feedbacks.feedbacks.data
             });
 
-
+            console.log('lenaaa',this.props.oneHack)
     }
 
     catchFeedback(e) {

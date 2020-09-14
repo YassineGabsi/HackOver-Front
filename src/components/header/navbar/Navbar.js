@@ -22,9 +22,9 @@ class Navb extends Component {
     }
 
     componentDidMount  ( ) {
-        if (this.props.auth.isAuthenticated && !this.props.auth.isLoading)
+       if (this.props.auth.isAuthenticated && !this.props.auth.isLoading)
             this.setState({
-                bg: require(`../../../img/${this.props.auth.user.picture}`)
+                bg: `http://localhost:5000/uploads/user_${this.props.auth.user.picture}`
             });
 
     }
@@ -87,6 +87,7 @@ class Navb extends Component {
                                         <h3 className="mt-4 mr-3">{this.props.auth.user.fullName}</h3>
                                         <DropdownToggle className="drop-toggle">
                                             <div className="user-circle" style={{backgroundImage: "url("+this.state.bg+") "}}/>
+                                            {/* <a href="#">  <img className="img-responsive img-blog" src={`http://localhost:5000/uploads/${this.props.auth.user.picture}`} width="100%" alt="" /></a> */}
                                         </DropdownToggle>
                                     </div>
                                     <DropdownMenu right>

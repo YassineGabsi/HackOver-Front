@@ -9,6 +9,7 @@ import {Feedbacks} from "./reducers/feedbacks";
 import {Registration} from "./reducers/registration";
 import {Reset} from "./reducers/resetPassword";
 import {ProfileUpdate} from "./reducers/profileUpdate";
+import {PictureUpdate} from "./reducers/pictureUpdate";
 import {Participation} from "./reducers/participation";
 
 
@@ -21,6 +22,7 @@ export const ConfigureStore = () => {
             auth: Auth,
             reset: Reset,
             profileUpdate: ProfileUpdate,
+            pictureUpdate: PictureUpdate,
             registration: Registration,
             participation: Participation,
         }),

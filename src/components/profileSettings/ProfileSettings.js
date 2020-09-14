@@ -5,7 +5,7 @@ import {LocalForm} from "react-redux-form";
 class ProfileSettings extends Component {
     constructor(props) {
         super(props);
-        this.bg = require(`../../img/${props.user.picture}`);
+        this.bg = `http://localhost:5000/uploads/user_${props.user.picture}`
         this.uploadPhoto = this.uploadPhoto.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
 
@@ -34,6 +34,7 @@ class ProfileSettings extends Component {
         this.image = React.createRef();
 
         this.state = {
+            selectedFile: null,
             name: this.props.user.fullName,
             email: this.props.user.email,
             phone: this.props.user.phone,
@@ -55,13 +56,17 @@ class ProfileSettings extends Component {
 
     saveChanges() {
         var data = {
-            fullName : this.state.name,
-            phone: this.state.phone,
-            city: this.state.city,
-            domain: this.state.domain,
-            age: this.state.age,
+            // fullName : this.state.name,
+            // phone: this.state.phone,
+            // city: this.state.city,
+            // domain: this.state.domain,
+            // age: this.state.age,
+
+            file:this.state.image,
+            
         };
-        this.props.updateProfile(data, this.props.user._id);
+        console.log(data)
+        this.props.updatePicture(data, this.props.user._id);
 
     }
     changeEmail() {
@@ -164,7 +169,12 @@ class ProfileSettings extends Component {
 
 
     uploadPhoto() {
-        console.log(this.image.current.files[0].name);
+        
+        const data = new FormData()
+        data.append('file', this.image.current.files[0])
+        //this.state.image= this.image.current.files[0].name;
+        console.log(this.image.current.files[0]);
+        console.log(data);
     }
 
     upload() {

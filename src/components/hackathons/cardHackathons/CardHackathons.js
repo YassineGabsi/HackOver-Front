@@ -18,8 +18,11 @@ function CardHackathons(props) {
             state: { edit: false }
         })
     );
+    console.log('lena  ',props.oneHack.prizescontent)
     // var bg = require(`../../../img/${props.oneHack.photos}`);
-    var bg = require(`../../../img/${props.oneHack.image}`);
+    //var bg = require(`../../../img/${props.oneHack.image}`);
+    var bg= `http://localhost:5000/uploads/user_${props.oneHack.picture}`;
+
     return (
         <div className="col-lg-4 col-md-6 mb-4">
             <a onClick={redirectToHackathonNormal} >

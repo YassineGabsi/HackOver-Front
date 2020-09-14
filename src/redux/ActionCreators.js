@@ -577,6 +577,58 @@ export const updateProfile = (data, id) => (dispatch) => {
         .catch(error => dispatch(updateError(error.message)))
 };
 
+
+//---------------------- Update Profile Pict------------------------
+
+
+
+export const updatePictError = (message) => {
+    return {
+        type: ActionTypes.UPDATE_PICT_FAILURE,
+        message
+    }
+};
+
+export const updatePictSuccess = () => {
+    return {
+        type: ActionTypes.UPDATE_PICT_SUCCESS,
+    }
+};
+
+export const updatePictRequest = () => {
+    return {
+        type: ActionTypes.UPDATE_REQUEST,
+    }
+}; 
+
+export const updatePicture = (data, id) => (dispatch) => {
+    dispatch(updatePictRequest());
+    console.log(data);
+    return axios.post(baseUrl + `user/updatePict/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('accessToken')}`}})
+        .then(response => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            if (response.data.message) {
+                dispatch(updatePictSuccess())
+            } else {
+                var error = new Error('Error ' + response.status);
+                error.response = response;
+                throw error;
+            }
+        })
+        .catch(error => dispatch(updatePictError(error.message)))
+};
 //---------------------- Participate in hackathons actions------------------------
 
 export const participateError = (message) => {
