@@ -494,6 +494,59 @@ export const logoutUser = () => (dispatch) => {
     })
 };
 
+
+//---------------------- change Password actions------------------------
+
+
+export const requestChangePass = () => {
+    return {
+        type: ActionTypes.REQUEST_CHANGE_PASS
+    }
+};
+
+export const changePassError = (message) => {
+    return {
+        type: ActionTypes.PASS_FAILURE,
+        message
+    }
+};
+
+export const changePassSuccess = () => {
+    return {
+        type: ActionTypes.CHANGE_PASS_SUCCESS,
+    }
+};
+
+
+export const changePasswordAction = (data, email) => (dispatch) => {
+    dispatch(requestChangePass());
+    console.log(data);
+    return axios.put(baseUrl + `auth/changePassword/${email}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('accessToken')}`}})
+        .then(response => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                dispatch(changePassSuccess())
+            } else {
+                var error = new Error('Error ' + response.status);
+                error.response = response;
+                throw error;
+            }
+        })
+        .catch(error => dispatch(changePassError(error.message)))
+};
+
 //---------------------- change Email actions------------------------
 
 

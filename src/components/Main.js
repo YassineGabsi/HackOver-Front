@@ -23,7 +23,8 @@ import {
     getFeedbacks,
     deleteFeedback,
     verifOldEmail,
-    changeNewEmail
+    changeNewEmail,
+    changePasswordAction
 } from "../redux/ActionCreators";
 
 import Header from "./header/Header";
@@ -57,6 +58,8 @@ const mapDispatchToProps = dispatch => ({
     verifEmail: (creds) => dispatch(verifEmail(creds)),
     resetPassword: (creds , token) => dispatch(resetPassword(creds , token)),
 
+    changePasswordAction: (token, email) => dispatch(changePasswordAction(token, email)),
+
     verifOldEmail: (creds) => dispatch(verifOldEmail(creds)),
     changeNewEmail: (creds , token) => dispatch(changeNewEmail(creds , token)),
 
@@ -89,6 +92,7 @@ const mapStateToProps = state => {
         registration: state.registration,
         participation: state.participation,
         changeEmail: state.changeEmail,
+        changePassword: state.changePassword,
     };
 };
 
@@ -211,7 +215,9 @@ const Main = props => {
                 updatePicture={props.updatePicture}
                 verifOldEmail={props.verifOldEmail}
                 changeNewEmail={props.changeNewEmail}
+                changePasswordAction={props.changePasswordAction}
                 changeEmail={props.changeEmail}
+                changePassword={props.changePassword}
             />
         );
     };

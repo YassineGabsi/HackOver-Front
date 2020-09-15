@@ -3,6 +3,12 @@ import "./profile-settings.sass";
 import {LocalForm} from "react-redux-form";
 import Loader from "../loader/Loader";
 
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+const isNumber = (val) => !isNaN(Number(val));
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+
 class ProfileSettings extends Component {
     constructor(props) {
         super(props);
@@ -16,6 +22,8 @@ class ProfileSettings extends Component {
         this.changeEmail = this.changeEmail.bind(this);
         this.verifEmail = this.verifEmail.bind(this);
 
+        this.changePasswordUser = this.changePasswordUser.bind(this);
+
         this.changePass = this.changePass.bind(this);
         this.changePhone = this.changePhone.bind(this);
         this.changeName = this.changeName.bind(this);
@@ -24,6 +32,9 @@ class ProfileSettings extends Component {
         this.changeAge = this.changeAge.bind(this);
 
         this.addEmail = this.addEmail.bind(this);
+        this.oldPass = this.oldPass.bind(this);
+        this.newPass = this.newPass.bind(this);
+        this.confirmNewPass = this.confirmNewPass.bind(this);
         this.addPhone = this.addPhone.bind(this);
         this.addCity = this.addCity.bind(this);
         this.addDomain = this.addDomain.bind(this);
@@ -43,19 +54,20 @@ class ProfileSettings extends Component {
             name: this.props.user.fullName,
             email: this.props.user.email,
             phone: this.props.user.phone,
+            password: null,
+            newPass: null,
+            confirmNewPass: null,
             city: this.props.user.role === "Participant" ? '' : this.props.user.city,
             domain: this.props.user.domain,
             age: this.props.user.role === "Participant" ? this.props.user.age : '',
 
             changeEmail: this.props.changeEmail.isEmailGet,
-            changePass: false,
+            changePass: this.props.changePassword.isPassChanged ||this.props.changePassword.isPasswordWrong,
             changePhone: false,
             changeName: false,
             changeCity: false,
             changeDomain: false,
             changeAge: false,
-
-
         }
     }
 
@@ -69,11 +81,7 @@ class ProfileSettings extends Component {
         };
         this.props.updateProfile(data, this.props.user._id);
         // window.location.reload(false);
-
-
     }
-
-
     savePictChanges() {
         console.log("hhh");
         let data = new FormData();
@@ -81,6 +89,16 @@ class ProfileSettings extends Component {
         // console.log(this.state.selectedFile);
         this.props.updatePicture(data, this.props.user._id);
 
+    }
+
+    changePasswordUser() {
+
+        var data = {
+            newPassword: this.state.newPass,
+            confirmNewPassword: this.state.confirmNewPass,
+            oldConfirmPassword: this.state.password,
+        };
+        this.props.changePasswordAction(data, this.props.user.email);
     }
 
     verifEmail() {
@@ -125,6 +143,15 @@ class ProfileSettings extends Component {
 
     addPhone(e) {
         this.state.phone = e.target.value;
+    }
+    oldPass(e) {
+        this.state.password = e.target.value;
+    }
+    newPass(e) {
+        this.state.newPass = e.target.value;
+    }
+    confirmNewPass(e) {
+        this.state.confirmNewPass = e.target.value;
     }
 
     cancelPhone() {
@@ -260,14 +287,34 @@ class ProfileSettings extends Component {
                         <div className="line-squared vivify fadeIn delay-200"/>
                         {this.state.changePass ? (
                             <>
-                                <input type="text" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
-                                       placeholder="Email" value={this.props.user.password}/>
-                                <a className="font-weight-bold text-size" onClick={this.changePass}>Cancel</a>
+                                {this.props.changePassword.isLoading ? (
+                                    <div className="my-5">
+                                        <Loader/>
+                                    </div>
+                                ) : (
+                                    <>
+                                        {this.props.changePassword.isPassChanged ? (
+                                            <h2 className="text-size mt-3  text-center">Your password has changed succefully!</h2>
+                                        ) : null}
+                                        {this.props.changePassword.isPasswordWrong ? (
+                                            <h2 className="text-size mt-3 red-colored text-center">Something is wrong, Please check the infos you entered</h2>
+                                        ) : null}
+                                        <input type="password" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
+                                               placeholder="Old Password" defaultValue={this.state.password} onChange={this.oldPass}/>
+                                        <input type="password" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
+                                               placeholder="New Password" defaultValue={this.state.newPass} onChange={this.newPass}/>
+                                        <input type="password" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
+                                               placeholder="Confrim New Password" defaultValue={this.state.confirmNewPass} onChange={this.confirmNewPass}/>
+                                        <a className="font-weight-bold text-size" onClick={this.changePass}>Cancel</a>
+                                        <a className="font-weight-bold text-size ml-3 red-colored"
+                                           onClick={this.changePasswordUser}>Change</a>
+                                        </>
+                                )}
                             </>
 
                         ) : (
                             <div className="row col-12">
-                                <p className="text-size vivify flipInX delay-250 mt-2 ">***************</p>
+                                <p className="text-size vivify flipInX delay-250 mt-2 ">*****************</p>
                                 <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true"
                                       onClick={this.changePass}/>
                             </div>
