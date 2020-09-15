@@ -11,6 +11,7 @@ import {Reset} from "./reducers/resetPassword";
 import {ProfileUpdate} from "./reducers/profileUpdate";
 import {PictureUpdate} from "./reducers/pictureUpdate";
 import {Participation} from "./reducers/participation";
+import {ChangeEmail} from "./reducers/changeEmail";
 
 
 export const ConfigureStore = () => {
@@ -25,6 +26,7 @@ export const ConfigureStore = () => {
             pictureUpdate: PictureUpdate,
             registration: Registration,
             participation: Participation,
+            changeEmail: ChangeEmail,
         }),
         applyMiddleware(thunk, logger)
     );

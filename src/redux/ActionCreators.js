@@ -356,11 +356,30 @@ export const requestLogin = (creds) => {
     }
 };
 
+export const userRequest = () => {
+    return {
+        type: ActionTypes.GET_USER,
+    }
+};
+
+export const userSuccess = () => {
+    return {
+        type: ActionTypes.USER_SUCCESS,
+    }
+};
+
 export const receiveLogin = (response) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
         accessToken: response.data.accessToken,
         user: response.data.user,
+    }
+};
+
+export const receiveUpdate = (response) => {
+    return {
+        type: ActionTypes.UPDATE_PROFILE,
+        user: response.data.data
     }
 };
 
@@ -370,6 +389,46 @@ export const loginError = (message) => {
         message
     }
 };
+
+// export const getUser = (email) => (dispatch) => {
+//     dispatch(userRequest());
+//     var data = {
+//         email : email
+//     };
+//     console.log(email);
+//     return axios.get(baseUrl + 'user/getUser', {headers: {'Authorization': `Bearer ${localStorage.getItem('accessToken')}`}} )
+//         .then(response => {
+//                 console.log(response);
+//                 if (response.status === 200) {
+//                     return response;
+//                 } else {
+//                     var error = new Error('Error ' + response.status + ': ' + response.statusText);
+//                     error.response = response;
+//                     throw error;
+//                 }
+//             },
+//             error => {
+//                 throw error;
+//             })
+//         .then(response => {
+//             console.log(response);
+//             if (response.data.success) {
+//                 console.log(response.data.accessToken);
+//                 // If login was successful, set the token in local storage
+//                 localStorage.setItem('accessToken', response.data.accessToken);
+//                 localStorage.setItem('creds', JSON.stringify(response.data.user));
+//                 // Dispatch the success action
+//                 dispatch(userSuccess());
+//             } else {
+//
+//                 var error = new Error('Error ' + response.status);
+//                 error.response = response;
+//                 throw error;
+//             }
+//         })
+//         .catch(error => dispatch(loginError(error.message)))
+// };
+
 
 export const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
@@ -434,6 +493,108 @@ export const logoutUser = () => (dispatch) => {
         },
     })
 };
+
+//---------------------- change Email actions------------------------
+
+
+export const receiveEmailUpdate = (response) => {
+    return {
+        type: ActionTypes.UPDATE_PROFILE,
+        user: response.data.user
+    }
+};
+
+export const requestChangeEmail = () => {
+    return {
+        type: ActionTypes.REQUEST_CHANGE_EMAIL
+    }
+};
+
+export const changeEmailError = (message) => {
+    return {
+        type: ActionTypes.MAIL_FAILURE,
+        message
+    }
+};
+
+export const oldEmailSuccess = () => {
+    return {
+        type: ActionTypes.OLD_EMAIL_SUCCESS,
+    }
+};
+
+
+export const changeEmailSuccess = () => {
+    return {
+        type: ActionTypes.CHANGE_EMAIL_SUCCESS,
+    }
+};
+
+
+export const verifOldEmail = (email) => (dispatch) => {
+    dispatch(requestChangeEmail());
+    console.log(email);
+    var data = {
+        email: email
+    };
+    return axios.post(baseUrl + 'auth/recoverEmail', data)
+        .then(response => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                dispatch(oldEmailSuccess())
+            } else {
+                var error = new Error('Error ' + response.status);
+                error.response = response;
+                throw error;
+            }
+        })
+        .catch(error => dispatch(changeEmailError(error.message)))
+};
+
+
+export const changeNewEmail = (creds, token) => (dispatch) => {
+    dispatch(requestChangeEmail());
+    console.log(creds);
+    return axios.put(baseUrl + `auth/changeEmail/${token}`, creds,)
+        .then(response => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            if (response.status === 200) {
+                dispatch(changeEmailSuccess());
+                localStorage.setItem('creds', JSON.stringify(response.data.user));
+                dispatch(receiveEmailUpdate(response));
+            } else {
+                var error = new Error('Error ' + response.status);
+                error.response = response;
+                throw error;
+            }
+        })
+        .catch(error => dispatch(changeEmailError(error.message)))
+};
+
+
 
 //---------------------- Reset Password actions------------------------
 
@@ -550,8 +711,7 @@ export const updateRequest = () => {
 
 export const updateProfile = (data, id) => (dispatch) => {
     dispatch(updateRequest());
-    console.log(data);
-    return axios.put(baseUrl + `auth/updateProfile/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('accessToken')}`}})
+    return axios.put(baseUrl + `user/updateProfile/${id}`, data, {headers: {'Authorization': `Bearer ${localStorage.getItem('accessToken')}`}})
         .then(response => {
                 if (response.status === 200) {
                     return response;
@@ -565,9 +725,10 @@ export const updateProfile = (data, id) => (dispatch) => {
                 throw error;
             })
         .then(response => {
-            console.log(response);
-            if (response.data.message) {
-                dispatch(updateSuccess())
+            if (response.status === 200) {
+                localStorage.setItem('creds', JSON.stringify(response.data.data));
+                dispatch(updateSuccess());
+                dispatch(receiveUpdate(response))
             } else {
                 var error = new Error('Error ' + response.status);
                 error.response = response;
@@ -618,9 +779,9 @@ export const updatePicture = (data, id) => (dispatch) => {
                 throw error;
             })
         .then(response => {
-            console.log(response);
             if (response.data.message) {
-                dispatch(updatePictSuccess())
+                dispatch(updatePictSuccess());
+                dispatch(receiveUpdate(response));
             } else {
                 var error = new Error('Error ' + response.status);
                 error.response = response;

@@ -5,88 +5,90 @@ import {Control, LocalForm} from "react-redux-form";
 import withRouter from "react-router-dom/es/withRouter";
 import Loader from "../loader/Loader";
 
-class ResetPassword extends Component {
+class ChangeNewEmail extends Component {
     constructor(props) {
         super(props);
+        this.handleChangeSubmit = this.handleChangeSubmit.bind(this);
         this.state = {
-            passwordValid: true
+            emailValid: true
         }
     }
 
-    handleResetSubmit(values) {
+    handleChangeSubmit(values) {
         const {match: {params}} = this.props;
         var data = {
-            password: values.password,
-            confirmPassword: values.confirmPassword
+            email: values.email,
+            confirmEmail: values.confirmEmail
         };
-        if (values.password === values.confirmPassword) {
-            this.props.resetPassword(data, params.token);
+        if (values.email === values.confirmEmail) {
+            this.props.changeNewEmail(data, params.token);
             this.setState({
-                passwordValid: true
+                emailValid: true
             });
         } else {
             this.setState({
-                passwordValid: false
+                emailValid: false
             });
         }
-
         console.log(values);
     }
 
     render() {
         return (
             <>
-                {this.props.reset.isLoading ? (
+                {this.props.changeEmail.isLoading ? (
                     <div className="my-5 vertical-center">
                         <Loader/>
                     </div>
                 ) : (
+
                     <div className="container vivify pullUp middle-content vertical-center">
-                        <h2 className="text-center vivify flipInX delay-150">Reset your password</h2>
+                        <h2 className="text-center vivify flipInX delay-150">Change your Email</h2>
                         <div className="row d-flex justify-content-center">
                             <div className="line-squared my-3"/>
                         </div>
-                        {this.props.reset.isLoading ? (
+                        {this.props.changeEmail.isLoading ? (
                             <div className="my-5 vertical-center">
                                 <Loader/>
                             </div>
                         ) : (
                             <>
-                                {this.props.reset.isPassReset ? (
+                                {this.props.changeEmail.isEmailChanged ? (
                                     <Label className="label col-12 text-center mt-5">
-                                        Your password has been changed succefully, you can login now with your new password,
+                                        Your Email has been changed succefully, you can login now with your new email,
                                         Enjoy!
                                     </Label>
                                 ) : (
                                     <>
-                                        {!this.state.passwordValid ? (
+                                        {!this.state.emailValid ? (
                                             <Label className="label col-12 text-center mt-5 red-colored">
-                                                Your should type the same password in the two fields
+                                                Your should type the same email in the two fields
                                             </Label>
                                         ) : null}
-                                        <LocalForm onSubmit={(values) => this.handleResetSubmit(values)}
+                                        <LocalForm onSubmit={(values) => this.handleChangeSubmit(values)}
                                                    className="col-lg-8 col-md-10 col-12  mx-auto">
                                             <div className="form-group mx-3">
-                                                <Label htmlFor="password" className="label">New Password</Label>
-                                                <Control.text model=".password" type="password"
+                                                <Label htmlFor="password" className="label">New Email</Label>
+                                                <Control.text model=".email" type="email"
                                                               id="password"
                                                               name="password"
                                                               className="form-control input"
-                                                              placeholder="New Password"
+                                                              placeholder="New Email"
                                                 />
                                             </div>
 
                                             <div className="form-group mx-3">
-                                                <Label htmlFor="confirm" className="label">Confirm New Password</Label>
-                                                <Control.text model=".confirmPassword" type="password"
-                                                              id="confirmPassword"
-                                                              name="confirmPassword"
+                                                <Label htmlFor="confirm" className="label">Confirm New Email</Label>
+                                                <Control.text model=".confirmEmail" type="email"
+                                                              id="confirmEmail"
+                                                              name="confirmEmail"
                                                               className="form-control input"
-                                                              placeholder="Confirm New Password"
+                                                              placeholder="Confirm New Email"
                                                 />
                                             </div>
 
-                                            <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
+                                            <button type="submit"
+                                                    className="button button-reg-log row mx-auto d-flex mb-3">
                                                 Send
                                             </button>
                                         </LocalForm>
@@ -95,11 +97,10 @@ class ResetPassword extends Component {
                             </>
                         )}
                     </div>
-                ) }
-
+                )}
             </>
         );
     }
 }
 
-export default withRouter(ResetPassword);
+export default withRouter(ChangeNewEmail);

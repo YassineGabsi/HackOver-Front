@@ -1,18 +1,21 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import "./profile-settings.sass";
-import { LocalForm } from "react-redux-form";
+import {LocalForm} from "react-redux-form";
+import Loader from "../loader/Loader";
 
 class ProfileSettings extends Component {
     constructor(props) {
         super(props);
-        console.log(props.user.picture)
-        this.bg = `http://localhost:5000/uploads/user_${props.user.picture}`
+        this.bg = `http://localhost:5000/uploads/user_${props.user.picture}`;
+        console.log(this.bg);
         this.uploadPhoto = this.uploadPhoto.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
 
         this.savePictChanges = this.savePictChanges.bind(this);
 
         this.changeEmail = this.changeEmail.bind(this);
+        this.verifEmail = this.verifEmail.bind(this);
+
         this.changePass = this.changePass.bind(this);
         this.changePhone = this.changePhone.bind(this);
         this.changeName = this.changeName.bind(this);
@@ -40,11 +43,11 @@ class ProfileSettings extends Component {
             name: this.props.user.fullName,
             email: this.props.user.email,
             phone: this.props.user.phone,
-            city: this.props.user.role === "Participant" ? this.props.user.city : '',
+            city: this.props.user.role === "Participant" ? '' : this.props.user.city,
             domain: this.props.user.domain,
             age: this.props.user.role === "Participant" ? this.props.user.age : '',
 
-            changeEmail: false,
+            changeEmail: this.props.changeEmail.isEmailGet,
             changePass: false,
             changePhone: false,
             changeName: false,
@@ -55,7 +58,7 @@ class ProfileSettings extends Component {
 
         }
     }
-   
+
     saveChanges() {
         var data = {
             fullName: this.state.name,
@@ -63,26 +66,39 @@ class ProfileSettings extends Component {
             city: this.state.city,
             domain: this.state.domain,
             age: this.state.age,
-
         };
         this.props.updateProfile(data, this.props.user._id);
+        // window.location.reload(false);
+
 
     }
 
 
     savePictChanges() {
-
-        let data = new FormData()
-        data.append('file', this.image.current.files[0])
-        console.log(this.stateselectedFile)
+        console.log("hhh");
+        let data = new FormData();
+        data.append('file', this.image.current.files[0]);
+        // console.log(this.state.selectedFile);
         this.props.updatePicture(data, this.props.user._id);
 
     }
+
+    verifEmail() {
+        this.props.verifOldEmail(this.props.user.email);
+        console.log(this.state.changeEmail);
+        this.setState({
+            changeEmail: true,
+        });
+        console.log(this.state.changeEmail);
+
+    }
+
     changeEmail() {
         this.setState({
             changeEmail: !this.state.changeEmail,
         });
     }
+
     addEmail(e) {
         this.state.email = e.target.value;
     }
@@ -106,9 +122,11 @@ class ProfileSettings extends Component {
             changePhone: !this.state.changePhone
         });
     }
+
     addPhone(e) {
         this.state.phone = e.target.value;
     }
+
     cancelPhone() {
         this.setState({
             changePhone: !this.state.changePhone,
@@ -121,9 +139,11 @@ class ProfileSettings extends Component {
             changeName: !this.state.changeName
         });
     }
+
     addName(e) {
         this.state.name = e.target.value;
     }
+
     cancelName() {
         this.setState({
             changeName: !this.state.changeName,
@@ -136,9 +156,11 @@ class ProfileSettings extends Component {
             changeCity: !this.state.changeCity
         });
     }
+
     addCity(e) {
         this.state.city = e.target.value;
     }
+
     cancelCity() {
         this.setState({
             changeCity: !this.state.changeCity,
@@ -151,9 +173,11 @@ class ProfileSettings extends Component {
             changeDomain: !this.state.changeDomain
         });
     }
+
     addDomain(e) {
         this.state.domain = e.target.value;
     }
+
     cancelDomain() {
         this.setState({
             changeDomain: !this.state.changeDomain,
@@ -166,9 +190,11 @@ class ProfileSettings extends Component {
             changeAge: !this.state.changeAge
         });
     }
+
     addAge(e) {
         this.state.age = e.target.value;
     }
+
     cancelAge() {
         this.setState({
             changeAge: !this.state.changeAge,
@@ -188,161 +214,181 @@ class ProfileSettings extends Component {
     render() {
         return (
             <div className="container middle-content vivify fadeIn  ">
-                <div className="profile-user-circle" style={{ backgroundImage: "url(" + this.bg + ") " }} />
+                <div className="profile-user-circle" style={{backgroundImage: "url(" + this.bg + ") "}}/>
                 <a className=" text-size change-text" aria-hidden="true" onClick={this.upload}>
-                    <i className="fa fa-pencil mr-3" aria-hidden="true" />
+                    <i className="fa fa-pencil mr-3" aria-hidden="true"/>
                     Change photo
                 </a>
                 <input type="file"
-                    id="upload-photo"
-                    style={{ display: "none" }}
-                    name="file"
-                    ref={this.image}
-                    onChange={this.uploadPhoto}
+                       id="upload-photo"
+                       style={{display: "none"}}
+                       name="file"
+                       ref={this.image}
+                       onChange={this.uploadPhoto}
                 />
                 <div className="row d-flex justify-content-center profile-rectangle">
                     <div className="col-lg-5 col-md-5 ">
                         <p className="brand small-titles vivify flipInX delay-150 mt-3">Email</p>
-                        <div className="line-squared vivify fadeIn delay-200" />
+                        <div className="line-squared vivify fadeIn delay-200"/>
                         <div className="row col-12">
-                            {this.state.changeEmail ? (
-                                <>
-                                    <input type="text" className="input  vivify fadeIn mt-3 d-flex mx-auto "
-                                        placeholder="Email" defaultValue={this.state.email} onChange={this.addEmail} />
-                                    <a className="font-weight-bold text-size" onClick={this.cancelEmail}>Cancel</a>
-                                    <a className="font-weight-bold text-size ml-3 red-colored" onClick={this.changeEmail}>Change</a>
-                                </>
-
+                            {this.props.changeEmail.isLoading ? (
+                                <div className="my-5">
+                                    <Loader/>
+                                </div>
                             ) : (
-                                    <>
-                                        <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.email}</p>
-                                        <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true" onClick={this.changeEmail} />
-                                    </>
-                                )}
+                                <>
+                                    {this.props.changeEmail.isEmailGet ? (
+                                        <h2 className="text-size mt-3">We sent you an email change link on your old
+                                            mail. Please check your Email</h2>
+                                    ) : (
+                                        <>
+                                            <>
+                                                <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.email}</p>
+                                                <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true"
+                                                      onClick={this.verifEmail}/>
+                                            </>
+                                        </>
+                                    )}
+                                </>
+                            )}
+
 
                         </div>
 
 
                         <p className="brand small-titles vivify flipInX delay-150 mt-3">Password</p>
-                        <div className="line-squared vivify fadeIn delay-200" />
+                        <div className="line-squared vivify fadeIn delay-200"/>
                         {this.state.changePass ? (
                             <>
                                 <input type="text" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
-                                    placeholder="Email" value={this.props.user.password} />
+                                       placeholder="Email" value={this.props.user.password}/>
                                 <a className="font-weight-bold text-size" onClick={this.changePass}>Cancel</a>
                             </>
 
                         ) : (
-                                <div className="row col-12">
-                                    <p className="text-size vivify flipInX delay-250 mt-2 ">***************</p>
-                                    <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true" onClick={this.changePass} />
-                                </div>
-                            )}
+                            <div className="row col-12">
+                                <p className="text-size vivify flipInX delay-250 mt-2 ">***************</p>
+                                <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true"
+                                      onClick={this.changePass}/>
+                            </div>
+                        )}
 
 
                         <p className="brand small-titles vivify flipInX delay-150 mt-3">Phone Number</p>
-                        <div className="line-squared vivify fadeIn delay-200" />
+                        <div className="line-squared vivify fadeIn delay-200"/>
                         {this.state.changePhone ? (
                             <>
                                 <input type="number" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
-                                    placeholder="Phone" defaultValue={this.state.phone} onChange={this.addPhone} />
+                                       placeholder="Phone" defaultValue={this.state.phone} onChange={this.addPhone}/>
                                 <a className="font-weight-bold text-size" onClick={this.cancelPhone}>Cancel</a>
-                                <a className="font-weight-bold text-size ml-3 red-colored" onClick={this.changePhone}>Change</a>
+                                <a className="font-weight-bold text-size ml-3 red-colored"
+                                   onClick={this.changePhone}>Change</a>
 
                             </>
                         ) : (
-                                <div className="row col-12">
-                                    <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.phone}</p>
-                                    <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true" onClick={this.changePhone} />
-                                </div>
-                            )}
+                            <div className="row col-12">
+                                <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.phone}</p>
+                                <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true"
+                                      onClick={this.changePhone}/>
+                            </div>
+                        )}
 
 
                     </div>
                     <div className="col-lg-2 col-md-2 d-flex justify-content-center tablet-and-desktop-only">
-                        <div className="vertical-line vertical-center" />
+                        <div className="vertical-line vertical-center"/>
                     </div>
                     <div className="col-lg-5 col-md-5 ">
                         <p className="brand small-titles vivify flipInX delay-150 mt-3">Name</p>
-                        <div className="line-squared vivify fadeIn delay-200" />
+                        <div className="line-squared vivify fadeIn delay-200"/>
                         {this.state.changeName ? (
                             <>
                                 <input type="text" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
-                                    placeholder="Email" defaultValue={this.state.name} onChange={this.addName} />
+                                       placeholder="Email" defaultValue={this.state.name} onChange={this.addName}/>
                                 <a className="font-weight-bold text-size" onClick={this.cancelName}>Cancel</a>
-                                <a className="font-weight-bold text-size ml-3 red-colored" onClick={this.changeName}>Change</a>
+                                <a className="font-weight-bold text-size ml-3 red-colored"
+                                   onClick={this.changeName}>Change</a>
                             </>
                         ) : (
-                                <div className="row col-12">
-                                    <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.name}</p>
-                                    <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true" onClick={this.changeName} />
-                                </div>
-                            )}
+                            <div className="row col-12">
+                                <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.name}</p>
+                                <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true"
+                                      onClick={this.changeName}/>
+                            </div>
+                        )}
                         <p className="brand small-titles vivify flipInX delay-150 mt-3">Domain</p>
-                        <div className="line-squared vivify fadeIn delay-200" />
+                        <div className="line-squared vivify fadeIn delay-200"/>
                         {this.state.changeDomain ? (
                             <>
                                 <input type="text" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
-                                    placeholder="Email" defaultValue={this.state.domain} onChange={this.addDomain} />
+                                       placeholder="Email" defaultValue={this.state.domain} onChange={this.addDomain}/>
                                 <a className="font-weight-bold text-size" onClick={this.cancelDomain}>Cancel</a>
-                                <a className="font-weight-bold text-size ml-3 red-colored" onClick={this.changeDomain}>Change</a>
+                                <a className="font-weight-bold text-size ml-3 red-colored"
+                                   onClick={this.changeDomain}>Change</a>
 
                             </>
                         ) : (
-                                <div className="row col-12">
-                                    <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.domain}</p>
-                                    <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true" onClick={this.changeDomain} />
-                                </div>
-                            )}
+                            <div className="row col-12">
+                                <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.domain}</p>
+                                <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true"
+                                      onClick={this.changeDomain}/>
+                            </div>
+                        )}
                         {this.props.user.role === "Organizator" ? (
                             <>
                                 <p className="brand small-titles vivify flipInX delay-150 mt-3">City</p>
-                                <div className="line-squared vivify fadeIn delay-200" />
+                                <div className="line-squared vivify fadeIn delay-200"/>
                                 {this.state.changeCity ? (
                                     <>
                                         <input type="text" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
-                                            placeholder="City" defaultValue={this.state.city} onChange={this.addCity} />
+                                               placeholder="City" defaultValue={this.state.city}
+                                               onChange={this.addCity}/>
                                         <a className="font-weight-bold text-size" onClick={this.cancelCity}>Cancel</a>
-                                        <a className="font-weight-bold text-size ml-3 red-colored" onClick={this.changeCity}>Change</a>
+                                        <a className="font-weight-bold text-size ml-3 red-colored"
+                                           onClick={this.changeCity}>Change</a>
 
                                     </>
                                 ) : (
-                                        <div className="row col-12">
-                                            <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.city}</p>
-                                            <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true" onClick={this.changeCity} />
-                                        </div>
-                                    )}
-
+                                    <div className="row col-12">
+                                        <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.city}</p>
+                                        <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true"
+                                              onClick={this.changeCity}/>
+                                    </div>
+                                )}
 
 
                             </>
                         ) : (
-                                <>
-                                    <p className="brand small-titles vivify flipInX delay-150 mt-3">Age</p>
-                                    <div className="line-squared vivify fadeIn delay-200" />
-                                    {this.state.changeAge ? (
-                                        <>
-                                            <input type="text" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
-                                                placeholder="Age" defaultValue={this.state.age} onChange={this.addAge} />
-                                            <a className="font-weight-bold text-size" onClick={this.cancelAge}>Cancel</a>
-                                            <a className="font-weight-bold text-size ml-3 red-colored" onClick={this.changeAge}>Change</a>
+                            <>
+                                <p className="brand small-titles vivify flipInX delay-150 mt-3">Age</p>
+                                <div className="line-squared vivify fadeIn delay-200"/>
+                                {this.state.changeAge ? (
+                                    <>
+                                        <input type="text" className="input  vivify fadeIn mt-3 d-flex mx-auto mb-4"
+                                               placeholder="Age" defaultValue={this.state.age} onChange={this.addAge}/>
+                                        <a className="font-weight-bold text-size" onClick={this.cancelAge}>Cancel</a>
+                                        <a className="font-weight-bold text-size ml-3 red-colored"
+                                           onClick={this.changeAge}>Change</a>
 
-                                        </>
-                                    ) : (
-                                            <div className="row col-12">
-                                                <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.age}</p>
-                                                <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true" onClick={this.changeAge} />
-                                            </div>
-                                        )}
-                                </>
-                            )}
+                                    </>
+                                ) : (
+                                    <div className="row col-12">
+                                        <p className="text-size vivify flipInX delay-250 mt-2 ">{this.state.age}</p>
+                                        <span className="fa fa-pencil  ml-5 mt-3 fa-lg" aria-hidden="true"
+                                              onClick={this.changeAge}/>
+                                    </div>
+                                )}
+                            </>
+                        )}
 
                     </div>
                 </div>
-                <button type="submit" className="button button-reg-log row mx-auto d-flex my-4" onClick={this.saveChanges}>
+                <button type="submit" className="button button-reg-log row mx-auto d-flex my-4"
+                        onClick={this.saveChanges}>
                     Save Changes
                 </button>
-                <button type="submit" className="button button-reg-log row mx-auto d-flex my-4" onClick={this.savePictChanges}>
+                <button type="submit" className="button button-reg-log row mx-auto d-flex my-4"
+                        onClick={this.savePictChanges}>
                     Save Pict Changes
                 </button>
             </div>

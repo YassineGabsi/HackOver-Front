@@ -22,6 +22,13 @@ export  const  Auth = (state = {
                 accessToken: action.accessToken,
                 user: action.user
             };
+        case ActionTypes.UPDATE_PROFILE:
+            return {...state,
+                isLoading: false,
+                isAuthenticated: true,
+                errMess: null,
+                user: action.user
+            };
         case ActionTypes.LOGIN_FAILURE:
             return {...state,
                 isLoading: false,

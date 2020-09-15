@@ -106,7 +106,7 @@ class HackathonEdit extends Component {
                                                     label="Add your photos"
                                                     buttonText="Add your photos"
                                                     onChange={this.onDropCover}
-                                                    imgExtension={['.jpg', '.png', 'jpeg']}
+                                                    imgExtension={['.jpg', '.png', 'jpeg', 'PNG', 'JPG', 'JPEG']}
                                                     maxFileSize={5242880}
                                                     fileSizeError="Photo size is too big"
                                                     singleImage="true"

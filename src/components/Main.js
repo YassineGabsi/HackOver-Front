@@ -21,7 +21,9 @@ import {
     disparticipateHackathon,
     addFeedback,
     getFeedbacks,
-    deleteFeedback
+    deleteFeedback,
+    verifOldEmail,
+    changeNewEmail
 } from "../redux/ActionCreators";
 
 import Header from "./header/Header";
@@ -36,6 +38,7 @@ import OnePageHackathon from "./onePageHackathon/OnePageHackathon";
 import Loader from "./loader/Loader";
 import GeneralLoader from "./loader/GeneralLoader";
 import ProfileSettings from "./profileSettings/ProfileSettings";
+import ChangeNewEmail from "./profileSettings/ChangeEmail";
 import AddHackathon from "./addHackathon/AddHackathon";
 import CardHackOrg from "./cardHackathonsOrganizator/CardHackOrg";
 import ResetPassword from "./resetPassword/ResetPassword";
@@ -54,9 +57,11 @@ const mapDispatchToProps = dispatch => ({
     verifEmail: (creds) => dispatch(verifEmail(creds)),
     resetPassword: (creds , token) => dispatch(resetPassword(creds , token)),
 
+    verifOldEmail: (creds) => dispatch(verifOldEmail(creds)),
+    changeNewEmail: (creds , token) => dispatch(changeNewEmail(creds , token)),
+
     updateProfile: (data , id) => dispatch(updateProfile(data , id)),
     updatePicture: (data , id) => dispatch(updatePicture(data , id)),
-
 
     getHackathons: () => dispatch(getHackathons()),
     addHackathon: (data) => dispatch(addHackathon(data)),
@@ -82,7 +87,8 @@ const mapStateToProps = state => {
         profileUpdate: state.profileUpdate,
         updatePicture: state.updatePicture,
         registration: state.registration,
-        participation: state.participation
+        participation: state.participation,
+        changeEmail: state.changeEmail,
     };
 };
 
@@ -203,6 +209,9 @@ const Main = props => {
                 user={props.auth.user}
                 updateProfile={props.updateProfile}
                 updatePicture={props.updatePicture}
+                verifOldEmail={props.verifOldEmail}
+                changeNewEmail={props.changeNewEmail}
+                changeEmail={props.changeEmail}
             />
         );
     };
@@ -213,6 +222,16 @@ const Main = props => {
                 user={props.auth.user}
                 resetPassword={props.resetPassword}
                 reset = {props.reset}
+            />
+        );
+    };
+
+    const ChangeEmailPassword = () => {
+        return (
+            <ChangeNewEmail
+                user={props.auth.user}
+                changeEmail={props.changeEmail}
+                changeNewEmail = {props.changeNewEmail}
             />
         );
     };
@@ -268,6 +287,7 @@ const Main = props => {
                     <Route exact path='/contact' component={Contact}/>
                     <LoggedOutRoute exact path='/register' component={RegisterPage}/>
                     <LoggedOutRoute exact path='/reset-password/:token' component={ResetPasswordPage}/>
+                    <LoggedInRoute exact path='/change-email/:token' component={ChangeEmailPassword}/>
                     <LoggedInRoute exact path='/profile' component={ProfileSettingsPage}/>
                     <LoggedInRoute exact path='/add-hackathon' component={AddHackathonPage}/>
                     <LoggedInRoute exact path='/hackathons-organized' component={HackathonsOrganized}/>
