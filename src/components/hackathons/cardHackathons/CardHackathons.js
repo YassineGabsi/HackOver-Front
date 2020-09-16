@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "./card.sass";
 import { withRouter } from "react-router-dom";
+import Participants from "../../cardHackathonsOrganizator/participantsModal/Participants";
+import Winners from "../../onePageHackathon/winnersModal/Winners";
 
 
 function CardHackathons(props) {
+
+    const [isParticipantsModalOpen, setIsParticipantsModalOpen] = useState(false);
+
+
 
     const redirectToHackathon = (e) => (
         props.history.push({
@@ -42,13 +48,23 @@ function CardHackathons(props) {
             <h5 className="brand vivify flipInX delay-150 mt-2 text-size">{props.oneHack.name} </h5>
             {props.organized ? (
                 <>
-                    <h5 className="red-colored vivify flipInX delay-150 mt-2 text-size">xx Participants </h5>
+                    <a className="red-colored vivify flipInX delay-150 mt-2 text-size font-weight-bold" onClick={() => setIsParticipantsModalOpen(true)}>{props.oneHack.particpants.length} Participants </a>
+
+                    <br/>
                     <a className="vivify flipInX delay-150 mt-2 text-size" onClick={e => redirectToHackathon(e)}>
                         <span className="fa fa-pencil  mr-3 mt-3 " aria-hidden="true"/>
                         Edit
                     </a>
                 </>
             ) : null}
+            {isParticipantsModalOpen ? (
+                <Participants
+                    setIsParticipantsModalOpen={setIsParticipantsModalOpen}
+                    isParticipantsModalOpen={isParticipantsModalOpen}
+                    oneHack={props.oneHack}
+                />
+            ) : null}
+
 
 
         </div>
