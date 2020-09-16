@@ -1,5 +1,4 @@
 import * as ActionTypes from '../ActionTypes';
-import { FEEDBACKS } from "../../shared/feedbacks";
 
 export const Feedbacks = (state = {
     feedbacks: [],
@@ -7,6 +6,7 @@ export const Feedbacks = (state = {
     isLoaded: false,
     isDeleted: false,
     isAdded: false,
+    isUpdated: false,
     errMess: null,
 }, action) => {
     switch(action.type) {
@@ -21,10 +21,13 @@ export const Feedbacks = (state = {
             return { ...state, isLoading: false, isLoaded: true, isAdded: true };
 
         case ActionTypes.LIST_FEEDBACKS:
-            return { ...state, isLoading: true, isLoaded: false, feedbacks: action.feedbacks };
+            return { ...state, isLoading: true, isLoaded: false, feedbacks: action.feedbacks.data };
 
         case ActionTypes.DELETE_FEEDBACK:
             return { ...state, isLoading: false, isLoaded: true, isDeleted: true};
+
+        case ActionTypes.UPDATE_FEEDBACK:
+            return { ...state, isLoading: false, isLoaded: true, isDeleted: false, isUpdated: true};
 
         case ActionTypes.FEEDBACK_FAILED:
             return {...state, isLoading: false, isLoaded: true, errMess: action.message};

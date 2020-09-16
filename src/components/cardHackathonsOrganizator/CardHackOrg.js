@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import "./card-org.sass";
-import Card from "reactstrap/es/Card";
 import CardHackathons from "../hackathons/cardHackathons/CardHackathons";
 import Loader from "../loader/Loader";
 

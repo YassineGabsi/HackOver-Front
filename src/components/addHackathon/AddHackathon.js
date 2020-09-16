@@ -3,16 +3,12 @@ import "./add-hackathon.sass";
 import {Control, Errors, LocalForm} from "react-redux-form";
 import Label from "reactstrap/es/Label";
 import Datepicker from "react-datepicker";
-import ModalBody from "reactstrap/es/ModalBody";
 import ImageUploader from 'react-images-upload';
 import Loader from "../loader/Loader";
 
 
 const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
-const isNumber = (val) => !isNaN(Number(val));
-const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 
 class AddHackathon extends Component{

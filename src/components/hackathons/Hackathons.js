@@ -99,8 +99,8 @@ class Hackathons extends Component {
 
                 <div className=" text-center col-12 mx-auto mb-5 ">
                     <i className="fa fa-search fa-2x mt-4 mr-4 vivify fadeIn" aria-hidden="true"/>
-                    <a className="brand small-titles vivify fadeIn mt-3 mb-5 text-center adv-search"
-                       onClick={this.toggleAdv}>Advanced search</a>
+                    <span className="brand small-titles vivify fadeIn mt-3 mb-5 text-center adv-search"
+                       onClick={this.toggleAdv}>Advanced search</span>
                     {!this.state.renderedHackathons.length ? (
                         <div
                             className="row d-flex justify-content-center text-center vertical-center vivify popIn delay-250">

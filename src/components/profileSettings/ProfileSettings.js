@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import "./profile-settings.sass";
-import {LocalForm} from "react-redux-form";
 import Loader from "../loader/Loader";
 
 const required = (val) => val && val.length;

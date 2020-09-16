@@ -1,7 +1,7 @@
 import React from "react";
 import "./about.sass";
 
-function About(props) {
+function About() {
     return (
         <div className="container middle-content">
             <div className="row d-flex justify-content-center ">

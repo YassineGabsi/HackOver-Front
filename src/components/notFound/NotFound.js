@@ -3,7 +3,7 @@ import "./notFound.sass";
 import { useHistory } from 'react-router-dom';
 
 
-function NotFound (props) {
+function NotFound () {
     const history = useHistory();
     return(
         <div className="container middle-content">

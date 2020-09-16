@@ -4,8 +4,7 @@ import {Navbar, NavbarBrand} from 'reactstrap';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import NavbarToggler from "reactstrap/es/NavbarToggler";
 import Login from "../../loginModal/Login";
-import withRouter from "react-router-dom/es/withRouter";
-import Header from "../Header";
+import { withRouter } from "react-router-dom";
 
 
 class Navb extends Component {
@@ -55,12 +54,10 @@ class Navb extends Component {
                 <Navbar className=" navbar navbar-expand-lg navbar-dark vivify fadeIn delay-150">
                     <div className="mid col-12 row">
                         <NavbarToggler className="button-toggler" onClick={this.toggleNav}/>
-                        <NavbarBrand className="left col-lg-2 col-md-3 col-sm-4 col-xs-5 mr-auto">
-                            <a href="/">
+                        <NavbarBrand className="left col-lg-2 col-md-3 col-sm-4 col-xs-5 mr-auto" href="/">
                                 <img  src={require('../../../img/logo.png')} alt=""
                                       className="col-lg-12 navbar-brand-image"
                                 />
-                            </a>
 
                         </NavbarBrand>
                         <div className="collapse navbar-collapse col-lg-10 ">

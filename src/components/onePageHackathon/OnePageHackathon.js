@@ -5,7 +5,7 @@ import {ExternalLink} from 'react-external-link';
 import Winners from "./winnersModal/Winners";
 import Feedbacks from "./feedbacks/Feedbacks";
 import HackathonEdit from "../hackathonEdit/HackathonEdit";
-import withRouter from "react-router-dom/es/withRouter";
+import { withRouter } from "react-router-dom";
 import Loader from "../loader/Loader";
 
 
@@ -32,6 +32,7 @@ class OnePageHackathon extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props.feedbacks.feedbacks.length);
         if (!this.props.participation.isLoaded && !this.props.participation.isLoading) {
             this.props.getParticipations();
         }
@@ -48,10 +49,10 @@ class OnePageHackathon extends Component {
         }
         if (this.props.feedbacks.isLoaded && !this.props.feedbacks.isLoading)
             this.setState({
-                feedbacks: this.props.feedbacks.feedbacks.data
+                feedbacks: this.props.feedbacks.feedbacks
             });
 
-            console.log('lenaaa',this.props.oneHack)
+
     }
 
     catchFeedback(e) {
@@ -63,7 +64,6 @@ class OnePageHackathon extends Component {
 
     sendFeedback() {
         this.props.addFeedback(this.state.feedback, this.props.oneHack._id);
-
     }
 
     participateInHackathon() {
@@ -161,11 +161,29 @@ class OnePageHackathon extends Component {
 
                                         {new Date(this.props.oneHack.dateFin).getTime() <= new Date().getTime() ? (
                                             <>
-                                                <button
-                                                    className="button button-reg-log row mx-3 vivify fadeIn delay-200"
-                                                    onClick={this.toggleWinnersModal}>
-                                                    Winners
-                                                </button>
+                                                {this.props.auth.isAuthenticated &&
+                                                this.props.auth.user.role === "Organizator" && this.props.oneHack.author === this.props.auth.user.fullName ?
+                                                    (
+                                                        <div className="row">
+                                                            <button
+                                                                className="button button-reg-log row mx-3 vivify fadeIn delay-200"
+                                                                onClick={this.toggleEdit}>
+                                                                Edit
+                                                            </button>
+                                                            <button
+                                                                className="button button-reg-log row mx-3 vivify fadeIn delay-200"
+                                                                onClick={this.removeHack}>
+                                                                Remove
+                                                            </button>
+                                                        </div>
+                                                    ) : (
+                                                        <button
+                                                            className="button button-reg-log row mx-3 vivify fadeIn delay-200"
+                                                            onClick={this.toggleWinnersModal}>
+                                                            Winners
+                                                        </button>
+                                                    )}
+
                                                 {this.state.isWinnersModalOpen ? (
                                                     <Winners
                                                         toggleWinnersModal={this.toggleWinnersModal}
@@ -293,16 +311,16 @@ class OnePageHackathon extends Component {
                                     <p className="brand small-titles vivify flipInX delay-150 mt-2">Links</p>
                                     <div className="line-squared vivify fadeIn delay-200"/>
                                     <ExternalLink href={this.props.oneHack.linkFB}>
-                                        <a className="fa fa-facebook ml-3 mr-1 fa-2x" aria-hidden="true"/>
+                                        <i className="fa fa-facebook ml-3 mr-1 fa-2x mt-3" aria-hidden="true"/>
                                     </ExternalLink>
                                     <ExternalLink href={this.props.oneHack.linkIN}>
-                                        <a className="fa fa-instagram ml-3 mr-1 fa-2x" aria-hidden="true"/>
+                                        <i className="fa fa-instagram ml-3 mr-1 fa-2x mt-3" aria-hidden="true"/>
                                     </ExternalLink>
                                     <ExternalLink href={this.props.oneHack.linkLN}>
-                                        <a className="fa fa-linkedin ml-3 mr-1 fa-2x" aria-hidden="true"/>
+                                        <i className="fa fa-linkedin ml-3 mr-1 fa-2x mt-3" aria-hidden="true"/>
                                     </ExternalLink>
                                     <ExternalLink href={this.props.oneHack.linkTW}>
-                                        <a className="fa fa-twitter ml-3 mr-1 fa-2x" aria-hidden="true"/>
+                                        <i className="fa fa-twitter ml-3 mr-1 fa-2x mt-3" aria-hidden="true"/>
                                     </ExternalLink>
                                     {new Date(this.props.oneHack.dateFin).getTime() <= new Date().getTime() ? (
                                         <>
@@ -314,17 +332,27 @@ class OnePageHackathon extends Component {
                                                 </div>
                                             ) : (
                                                 <>
-                                                    {this.state.feedbacks ? this.state.feedbacks.map((feedback) => {
+                                                    {this.state.feedbacks? this.state.feedbacks.map((feedback) => {
                                                         return (
 
                                                             <Feedbacks
                                                                 feedback={feedback}
                                                                 user={this.props.auth.user}
                                                                 deleteFeedback={this.props.deleteFeedback}
+                                                                updateFeedback={this.props.updateFeedback}
                                                                 oneHack={this.props.oneHack}
                                                             />
                                                         )
-                                                    }) : null}
+                                                    }) : (
+                                                        <span className="text-size mt-5 font-weight-bold vivify fadeIn delay-200">
+                                                           There is no feedbacks yet, Be the first one to comment.
+                                                        </span>
+                                                    )}
+                                                    {this.props.feedbacks.feedbacks.length === 0 ? (
+                                                        <span className="text-size mt-5 font-weight-bold vivify fadeIn delay-200">
+                                                           There is no feedbacks yet, Be the first one to comment.
+                                                        </span>
+                                                    ) : null }
                                                     <p className="brand small-titles vivify flipInX delay-150 mt-3">Add
                                                         a feedback</p>
                                                     <div className="line-squared vivify fadeIn delay-200"/>

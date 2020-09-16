@@ -2,15 +2,8 @@ import React, {Component} from 'react';
 import "./login.sass";
 import Modal from "reactstrap/es/Modal";
 import ModalBody from "reactstrap/es/ModalBody";
-import ModalHeader from "reactstrap/es/ModalHeader";
-import Form from "reactstrap/es/Form";
-import FormGroup from "reactstrap/es/FormGroup";
 import Label from "reactstrap/es/Label";
-import Input from "reactstrap/es/Input";
-
-import {Control, LocalForm, Errors, Field} from 'react-redux-form';
-import Row from "reactstrap/es/Row";
-import Button from "reactstrap/es/Button";
+import {Control, LocalForm} from 'react-redux-form';
 import Loader from "../loader/Loader";
 
 
@@ -70,7 +63,7 @@ class Login extends Component {
         return (
             <>
                 {!this.props.auth.isAuthenticated ? (
-                    <Modal isOpen="active">
+                    <Modal isOpen={true}>
                         <div className="align-items-center modal-header">
                             <img src={require("../../img/logo.png")} className="mx-auto col-7 top-logo" alt=""/>
                             <button type="button" className="close close-button float-right" data-dismiss="modal"
@@ -117,9 +110,9 @@ class Login extends Component {
                                                 </Label>
 
                                                 <Label className="label col-12">Remember Password?
-                                                    <a className="red-colored"
+                                                    <span className="red-colored"
                                                        onClick={this.toggleResetPass}> Login
-                                                    </a>
+                                                    </span>
                                                 </Label>
                                                 <button type="submit" className="button button-reg-log row mx-auto d-flex mb-3">
                                                     Send

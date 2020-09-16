@@ -1,7 +1,6 @@
 import React from 'react';
 import "./card.sass";
-import Redirect from "react-router-dom/es/Redirect";
-import withRouter from "react-router-dom/es/withRouter";
+import { withRouter } from "react-router-dom";
 
 
 function CardHackathons(props) {
@@ -18,14 +17,13 @@ function CardHackathons(props) {
             state: { edit: false }
         })
     );
-    console.log('lena  ',props.oneHack.prizescontent)
     // var bg = require(`../../../img/${props.oneHack.photos}`);
     //var bg = require(`../../../img/${props.oneHack.image}`);
     var bg= `http://localhost:5000/uploads/user_${props.oneHack.picture}`;
 
     return (
         <div className="col-lg-4 col-md-6 mb-4">
-            <a onClick={redirectToHackathonNormal} >
+            <span onClick={redirectToHackathonNormal} >
                 <div className="card  box-shadow mb-3 vivify popIn "
                      style={{backgroundImage: "url(" + bg + ") "}}
                 >
@@ -39,7 +37,7 @@ function CardHackathons(props) {
                         </h5>
                     </div>
                 </div>
-            </a>
+            </span>
             <div className="line-squared vivify fadeIn delay-200"/>
             <h5 className="brand vivify flipInX delay-150 mt-2 text-size">{props.oneHack.name} </h5>
             {props.organized ? (

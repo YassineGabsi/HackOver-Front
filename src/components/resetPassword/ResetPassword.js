@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import ModalBody from "reactstrap/es/ModalBody";
 import Label from "reactstrap/es/Label";
 import {Control, LocalForm} from "react-redux-form";
-import withRouter from "react-router-dom/es/withRouter";
+import { withRouter } from "react-router-dom";
 import Loader from "../loader/Loader";
 
 class ResetPassword extends Component {

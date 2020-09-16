@@ -24,7 +24,8 @@ import {
     deleteFeedback,
     verifOldEmail,
     changeNewEmail,
-    changePasswordAction
+    changePasswordAction,
+    updateFeedback
 } from "../redux/ActionCreators";
 
 import Header from "./header/Header";
@@ -78,6 +79,7 @@ const mapDispatchToProps = dispatch => ({
     addFeedback: (data,id) => dispatch(addFeedback(data,id)),
     getFeedbacks: (id) => dispatch(getFeedbacks(id)),
     deleteFeedback: (hackId,id) => dispatch(deleteFeedback(hackId,id)),
+    updateFeedback: (data,hackId,id) => dispatch(updateFeedback(data,hackId,id)),
 });
 
 const mapStateToProps = state => {
@@ -176,6 +178,7 @@ const Main = props => {
                 addFeedback={props.addFeedback}
                 getFeedbacks={props.getFeedbacks}
                 deleteFeedback={props.deleteFeedback}
+                updateFeedback={props.updateFeedback}
 
             />
         );

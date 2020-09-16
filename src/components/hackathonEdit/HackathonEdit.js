@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import "./hackathon-edit.sass";
-import {LocalForm, Control, Errors} from "react-redux-form";
+import {LocalForm, Control} from "react-redux-form";
 import Label from "reactstrap/es/Label";
 import Datepicker from "react-datepicker";
 import ImageUploader from "react-images-upload";
 import Loader from "../loader/Loader";
-import withRouter from "react-router-dom/es/withRouter";
+import { withRouter } from "react-router-dom";
 
 class HackathonEdit extends Component {
     constructor(props) {
@@ -21,9 +21,12 @@ class HackathonEdit extends Component {
             emplacement: this.props.oneHack.emplacement,
             description: this.props.oneHack.description,
             cible: this.props.oneHack.cible,
-            firstPlace: this.props.oneHack.prizescontent[0].firstPlace,
-            secondPlace: this.props.oneHack.prizescontent[0].secondPlace,
-            thirdPlace: this.props.oneHack.prizescontent[0].thirdPlace,
+            firstPlace: this.props.oneHack.prizescontent.firstPlace,
+            secondPlace: this.props.oneHack.prizescontent.secondPlace,
+            thirdPlace: this.props.oneHack.prizescontent.thirdPlace,
+            first: this.props.oneHack.winners ? this.props.oneHack.winners.first : null,
+            second: this.props.oneHack.winners ? this.props.oneHack.winners.second : null,
+            third: this.props.oneHack.winners ? this.props.oneHack.winners.third : null,
             linkFB: this.props.oneHack.linkFB,
             linkIN: this.props.oneHack.linkIN,
             linkTW: this.props.oneHack.linkTW,
@@ -49,6 +52,11 @@ class HackathonEdit extends Component {
                 {firstPlace: values.firstPlace},
                 {secondPlace: values.secondPlace},
                 {thirdPlace: values.thirdPlace},
+            ],
+            winners: [
+                {first: values.first},
+                {second: values.second},
+                {third: values.third},
             ],
             linkFB: values.linkFB,
             linkIN: values.linkIN,
@@ -226,6 +234,53 @@ class HackathonEdit extends Component {
                                                 />
                                             </div>
 
+                                            {new Date(this.props.oneHack.dateFin).getTime() <= new Date().getTime() ? (
+                                                <>
+                                                    <p className="brand small-titles vivify flipInX delay-150 mt-2">Winners </p>
+                                                    <div className="line-squared vivify fadeIn delay-200"/>
+                                                    <div className="row mx-auto mt-2 col-12 col-md-10 col-lg-8">
+                                                        <Label htmlFor="firstPlace"
+                                                               className="label col-12 col-lg-6 col-md-6 my-auto red-colored">First
+                                                            winner</Label>
+                                                        <Control.text model=".first"
+                                                                      id="first"
+                                                                      name="first"
+                                                                      className="form-control input col-12 col-lg-6 col-md-6 "
+                                                                      placeholder="First Winner"
+                                                                      defaultValue={this.props.oneHack.firstPlace}
+
+                                                        />
+                                                    </div>
+
+                                                    <div className="row mx-auto mt-2 col-12 col-md-10 col-lg-8 mt-3">
+                                                        <Label htmlFor="secondPlace"
+                                                               className="label col-12 col-lg-6 col-md-6 my-auto red-colored">Second
+                                                            Winner</Label>
+                                                        <Control.text model=".second"
+                                                                      id="second"
+                                                                      name="second"
+                                                                      className="form-control input col-12 col-lg-6 col-md-6 "
+                                                                      placeholder="Second Winner"
+                                                                      defaultValue={this.props.oneHack.secondPlace}
+                                                        />
+                                                    </div>
+
+                                                    <div className="row mx-auto mt-2 col-12 col-md-10 col-lg-8 mt-3">
+                                                        <Label htmlFor="thirdPlace"
+                                                               className="label col-12 col-lg-6 col-md-6 my-auto red-colored">Third
+                                                            Winner</Label>
+                                                        <Control.text model=".third"
+                                                                      id="third"
+                                                                      name="third"
+                                                                      className="form-control input col-12 col-lg-6 col-md-6 "
+                                                                      placeholder="Third Winner"
+                                                                      defaultValue={this.props.oneHack.thirdPlace}
+
+                                                        />
+                                                    </div>
+
+                                                </>
+                                            ) : null}
 
                                             <p className="brand small-titles vivify flipInX delay-150 mt-2">Links </p>
                                             <div className="line-squared vivify fadeIn delay-200"/>

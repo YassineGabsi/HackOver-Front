@@ -2,7 +2,6 @@ import React from 'react';
 import "./contact.sass";
 import Label from "reactstrap/es/Label";
 import {Control, Errors, LocalForm} from "react-redux-form";
-import Button from "reactstrap/es/Button";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -11,7 +10,7 @@ const isNumber = (val) => !isNaN(Number(val));
 const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 
-function Contact(props) {
+function Contact() {
     const handleSubmit = values => {
         console.log(JSON.stringify(values));
     };

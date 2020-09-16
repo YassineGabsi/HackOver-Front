@@ -1,7 +1,7 @@
 import React from 'react';
 import "./loader.sass";
 
-function GeneralLoader (props) {
+function GeneralLoader () {
     return(
         <div className="loader general">
             <div className="inner one"/>

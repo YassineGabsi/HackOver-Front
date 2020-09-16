@@ -31,6 +31,13 @@ export const feedbackAdded = () => {
     }
 };
 
+
+export const feedbackUpdated = () => {
+    return {
+        type: ActionTypes.FEEDBACKS_SUCCESS
+    }
+};
+
 export const listFeedbacks = (feedbacks) => {
     return {
         type: ActionTypes.LIST_FEEDBACKS,
@@ -131,7 +138,39 @@ export const addFeedback = (data, id) => (dispatch) => {
 
         .catch(error => dispatch(feedbackError(error.message)))
 };
-//---------------------- Search actions------------------------
+
+
+export const updateFeedback = (data, id, idFeedback) => (dispatch) => {
+    dispatch(requestFeedbacks());
+    var comment = {
+        comment: data
+    };
+    return axios.put(baseUrl + `hackathon/feedback/${id}/${idFeedback}`, comment, {headers: {
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        }})
+        .then(response => {
+                console.log(response.status);
+                if (response.status === 200 || 201) {
+                    return response;
+                } else {
+                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                throw error;
+            })
+        .then(response => {
+            console.log(response);
+            dispatch(feedbackUpdated());
+            dispatch(getFeedbacks(id));
+
+        })
+
+        .catch(error => dispatch(feedbackError(error.message)))
+};
+
 
 //---------------------- Hackathons actions------------------------
 export const requestHackathons = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import "./footer.sass";
 
-function Footer (props) {
+function Footer () {
     return(
         <footer className="vivify fadeIn delay-150">
             <div className="container">
@@ -11,11 +11,11 @@ function Footer (props) {
             </div>
             <div className="mid"/>
             <div className="right">
-                <div >
-                    <a className="fa fa-facebook ml-3 mr-1 fa-lg" aria-hidden="true"/>
-                    <a className="fa fa-instagram ml-3 mr-1 fa-lg" aria-hidden="true"/>
-                    <a className="fa fa-linkedin ml-3 mr-1 fa-lg" aria-hidden="true"/>
-                    <a className="fa fa-twitter ml-3 mr-1 fa-lg" aria-hidden="true"/>
+                <div className="mt-3" >
+                    <i className="fa fa-facebook ml-3 mr-1 fa-lg" aria-hidden="true"/>
+                    <i className="fa fa-instagram ml-3 mr-1 fa-lg" aria-hidden="true"/>
+                    <i className="fa fa-linkedin ml-3 mr-1 fa-lg" aria-hidden="true"/>
+                    <i className="fa fa-twitter ml-3 mr-1 fa-lg" aria-hidden="true"/>
                 </div>
             </div>
         </footer>
