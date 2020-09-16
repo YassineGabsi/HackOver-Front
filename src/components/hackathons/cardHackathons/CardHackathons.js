@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import "./card.sass";
 import { withRouter } from "react-router-dom";
 import Participants from "../../cardHackathonsOrganizator/participantsModal/Participants";
-import Winners from "../../onePageHackathon/winnersModal/Winners";
 
 
 function CardHackathons(props) {
@@ -25,7 +24,8 @@ function CardHackathons(props) {
     );
     // var bg = require(`../../../img/${props.oneHack.photos}`);
     //var bg = require(`../../../img/${props.oneHack.image}`);
-    var bg= `http://localhost:5000/uploads/user_${props.oneHack.picture}`;
+    var bg= `http://localhost:5000/uploads/user_${props.oneHack.image}`;
+
 
     return (
         <div className="col-lg-4 col-md-6 mb-4">
