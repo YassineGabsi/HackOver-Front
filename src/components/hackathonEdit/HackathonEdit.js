@@ -10,7 +10,7 @@ import { withRouter } from "react-router-dom";
 class HackathonEdit extends Component {
     constructor(props) {
         super(props);
-        this.bg = require(`../../img/${this.props.oneHack.image}`);
+        this.bg= `http://localhost:5000/uploads/user_${this.props.oneHack.picture}`;
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onDropCover = this.onDropCover.bind(this);
         this.state = {
@@ -24,9 +24,9 @@ class HackathonEdit extends Component {
             firstPlace: this.props.oneHack.prizescontent.firstPlace,
             secondPlace: this.props.oneHack.prizescontent.secondPlace,
             thirdPlace: this.props.oneHack.prizescontent.thirdPlace,
-            first: this.props.oneHack.winners ? this.props.oneHack.winners.first : null,
-            second: this.props.oneHack.winners ? this.props.oneHack.winners.second : null,
-            third: this.props.oneHack.winners ? this.props.oneHack.winners.third : null,
+            first: this.props.oneHack.winners ? this.props.oneHack.winners.first : "aa",
+            second: this.props.oneHack.winners ? this.props.oneHack.winners.second : "aa",
+            third: this.props.oneHack.winners ? this.props.oneHack.winners.third : "aa",
             linkFB: this.props.oneHack.linkFB,
             linkIN: this.props.oneHack.linkIN,
             linkTW: this.props.oneHack.linkTW,
@@ -48,16 +48,17 @@ class HackathonEdit extends Component {
             description: values.description,
             cible: values.cible,
             prizes: !!(values.firstPlace || values.secondPlace || values.thirdPlace),
-            prizescontent: [
-                {firstPlace: values.firstPlace},
-                {secondPlace: values.secondPlace},
-                {thirdPlace: values.thirdPlace},
-            ],
-            winners: [
-                {first: values.first},
-                {second: values.second},
-                {third: values.third},
-            ],
+            prizescontent: {
+                firstPlace: values.firstPlace,
+                secondPlace: values.secondPlace,
+                thirdPlace: values.thirdPlace,
+            },
+            winners: {
+                first: values.first,
+                second: values.second,
+                third: values.third,
+            },
+
             linkFB: values.linkFB,
             linkIN: values.linkIN,
             linkTW: values.linkTW,
@@ -247,7 +248,7 @@ class HackathonEdit extends Component {
                                                                       name="first"
                                                                       className="form-control input col-12 col-lg-6 col-md-6 "
                                                                       placeholder="First Winner"
-                                                                      defaultValue={this.props.oneHack.firstPlace}
+                                                                      defaultValue={this.props.oneHack.winners.first}
 
                                                         />
                                                     </div>
@@ -261,7 +262,7 @@ class HackathonEdit extends Component {
                                                                       name="second"
                                                                       className="form-control input col-12 col-lg-6 col-md-6 "
                                                                       placeholder="Second Winner"
-                                                                      defaultValue={this.props.oneHack.secondPlace}
+                                                                      defaultValue={this.props.oneHack.winners.second}
                                                         />
                                                     </div>
 
@@ -274,7 +275,7 @@ class HackathonEdit extends Component {
                                                                       name="third"
                                                                       className="form-control input col-12 col-lg-6 col-md-6 "
                                                                       placeholder="Third Winner"
-                                                                      defaultValue={this.props.oneHack.thirdPlace}
+                                                                      defaultValue={this.props.oneHack.winners.third}
 
                                                         />
                                                     </div>

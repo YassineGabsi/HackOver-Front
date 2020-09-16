@@ -183,7 +183,6 @@ class OnePageHackathon extends Component {
                                                             Winners
                                                         </button>
                                                     )}
-
                                                 {this.state.isWinnersModalOpen ? (
                                                     <Winners
                                                         toggleWinnersModal={this.toggleWinnersModal}
