@@ -32,7 +32,7 @@ class OnePageHackathon extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.feedbacks.feedbacks.length);
+        console.log('------------',this.props.oneHack);
         if (!this.props.participation.isLoaded && !this.props.participation.isLoading) {
             this.props.getParticipations();
         }

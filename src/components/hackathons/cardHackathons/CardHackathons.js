@@ -24,7 +24,7 @@ function CardHackathons(props) {
     );
     // var bg = require(`../../../img/${props.oneHack.photos}`);
     //var bg = require(`../../../img/${props.oneHack.image}`);
-    var bg= `http://localhost:5000/uploads/user_${props.oneHack.image}`;
+    var bg= `http://localhost:5000/uploads/user_${props.oneHack.picture}`;
 
 
     return (

@@ -21,6 +21,7 @@ class Navb extends Component {
     }
 
     componentDidMount  ( ) {
+        console.log("******",this.props.auth.user)
        if (this.props.auth.isAuthenticated && !this.props.auth.isLoading)
             this.setState({
                 bg: `http://localhost:5000/uploads/user_${this.props.auth.user.picture}`
